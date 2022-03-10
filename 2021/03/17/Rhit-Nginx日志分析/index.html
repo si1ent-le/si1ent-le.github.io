@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="si1ent">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Rhit-Nginx日志分析(可视化) | si1ent
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>si1ent</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Rhit-Nginx日志分析(可视化)</h2>
+  <p class="post-date">2021-03-17</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Rhit 可以从标准文件夹中读取 Nginx 的日志文件（gzipped 的压缩文件也可以），并进行分析统计，在控制台中以可视化的表格形式展示，并且不会产生任何多余的临时文件或数据。</p>
+<p>可以按照日期、响应值、请求来源等进行过滤匹配，并进行分析，Rhit 具有很高的效率，每秒可以处理百万行日志数据。</p>
+<h4 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;dystroy.org&#x2F;rhit&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h4 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;Canop&#x2F;rhit</span><br></pre></td></tr></table></figure>
+
+<h4 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;dystroy.org&#x2F;rhit&#x2F;download&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h4><p>CentOS Linux 7 (Core)</p>
+<p>1、下载</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://dystroy.org/rhit/download/rhit_1.4.1.zip</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Rhit/image-20210317142037436.png" alt="image-20210317142037436"></p>
+<p>2、解压</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip -o rhit_1.4.1.zip -d rhit/</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Rhit/image-20210317142745608.png" alt="image-20210317142745608"></p>
+<p>3、切换目录</p>
+<p><img src="/images/Rhit/image-20210317142728977.png" alt="image-20210317142728977"></p>
+<p>4、获取帮助文档</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./rhit --help</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Rhit/image-20210317142856316.png" alt="image-20210317142856316"></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="显示指定字段"><a href="#显示指定字段" class="headerlink" title="显示指定字段"></a>显示指定字段</h4><p>工具会自动提取nginx存放日志的目录文件，也可指定存放目录。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@si1ent x86_64-unknown-linux-musl]# ./rhit ./access.log-20210308.gz</span><br></pre></td></tr></table></figure>
+
+<p>如下提取默认保存目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@si1ent x86_64-unknown-linux-musl]# ./rhit</span><br><span class="line">I&#x27;ve read 11 files in &quot;/var/log/nginx&quot;</span><br><span class="line">9,303 hits and 1.7G from 2021/03/07 to 2021/03/17</span><br></pre></td></tr></table></figure>
+
+<h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">--color						默认是auto,可设置yes、或no来颜色区分.</span><br><span class="line">--help						获取帮助文档</span><br><span class="line">--length					获取更多详细信息(1～6级别默认为1)</span><br><span class="line">--fields					指显示字段信息：ip、method、等</span><br><span class="line">其他字段</span><br><span class="line">--date		-d			日期</span><br><span class="line">--ip			-i			IP</span><br><span class="line">--method	-m			请求方法</span><br><span class="line">--path		-p			路径</span><br><span class="line">--referer	-r			来源</span><br><span class="line">--status	-s			状态码</span><br></pre></td></tr></table></figure>
+
+<h4 id="显示每日请求"><a href="#显示每日请求" class="headerlink" title="显示每日请求"></a>显示每日请求</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@si1ent x86_64-unknown-linux-musl]# ./rhit -f date</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Rhit/image-20210317152052601.png" alt="image-20210317152052601"></p>
+<h4 id="显示IP"><a href="#显示IP" class="headerlink" title="显示IP"></a>显示IP</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@si1ent x86_64-unknown-linux-musl]# ./rhit -f ip</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Rhit/image-20210317152220569.png" alt="image-20210317152220569"></p>
+<h4 id="显示状态码"><a href="#显示状态码" class="headerlink" title="显示状态码"></a>显示状态码</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@si1ent x86_64-unknown-linux-musl]# ./rhit -f status</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Rhit/image-20210317152312770.png" alt="image-20210317152312770"></p>
+<h4 id="筛选IP"><a href="#筛选IP" class="headerlink" title="筛选IP"></a>筛选IP</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@si1ent x86_64-unknown-linux-musl]# ./rhit -i 221.225.31.88</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Rhit/image-20210317152607352.png" alt="image-20210317152607352"></p>
+<h4 id="筛选日期"><a href="#筛选日期" class="headerlink" title="筛选日期"></a>筛选日期</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@si1ent x86_64-unknown-linux-musl]# ./rhit  -d  2021/03/07-2021/03/08</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Rhit/image-20210317152843328.png" alt="image-20210317152843328"></p>
+<h4 id="其他高级筛选"><a href="#其他高级筛选" class="headerlink" title="其他高级筛选"></a>其他高级筛选</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@si1ent x86_64-unknown-linux-musl]# ./rhit -d 2021/03/07-2021/03/17 -p /tag</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Rhit/image-20210317153707809.png" alt="image-20210317153707809"></p>
+<h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>其他参数适用请各位大佬继续发掘并结合其他工具使用。</p>
+<h3 id="Referer"><a href="#Referer" class="headerlink" title="Referer"></a>Referer</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;Canop&#x2F;rhit</span><br><span class="line">https:&#x2F;&#x2F;dystroy.org&#x2F;rhit&#x2F;</span><br></pre></td></tr></table></figure>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Tools" >
+    <span class="tag-code">Tools</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2021/03/04/CVE-2020-7961/">
+        <span class="nav-arrow">← </span>
+        
+          CVE-2020-7961
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2021/03/25/Solr%E6%BC%8F%E6%B4%9E/">
+        
+          Solr漏洞学习
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概述</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">工具介绍</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">项目地址</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">下载地址</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">安装</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">环境</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">使用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%98%BE%E7%A4%BA%E6%8C%87%E5%AE%9A%E5%AD%97%E6%AE%B5"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">显示指定字段</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">参数</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%98%BE%E7%A4%BA%E6%AF%8F%E6%97%A5%E8%AF%B7%E6%B1%82"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">显示每日请求</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%98%BE%E7%A4%BAIP"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">显示IP</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%98%BE%E7%A4%BA%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">显示状态码</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%AD%9B%E9%80%89IP"><span class="toc-nav-number">3.6.</span> <span class="toc-nav-text">筛选IP</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%AD%9B%E9%80%89%E6%97%A5%E6%9C%9F"><span class="toc-nav-number">3.7.</span> <span class="toc-nav-text">筛选日期</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%85%B6%E4%BB%96%E9%AB%98%E7%BA%A7%E7%AD%9B%E9%80%89"><span class="toc-nav-number">3.8.</span> <span class="toc-nav-text">其他高级筛选</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E8%AF%B4%E6%98%8E"><span class="toc-nav-number">3.9.</span> <span class="toc-nav-text">说明</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Referer"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Referer</span></a></li></ol>
+    
+  </div>
+</aside>
+
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2021/03/17/Rhit-Nginx日志分析/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://www.si1ent.xyz/css/images/logo.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://www.si1ent.xyz/css/images/logo.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "si1ent";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Rhit-Nginx日志分析(可视化)",
+        owner: "si1ent",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    </p>
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/?spm=a2c4g.11186623.J_9220772140.115.26b47b3dkZ3BnL#/Integrated/index"><p class="copyright">
+    皖ICP备19004273号-1
+  </p>
+    </a>
+</footer>
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="si1ent">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      业务逻辑漏洞 | si1ent
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>si1ent</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>业务逻辑漏洞</h2>
+  <p class="post-date">2020-12-03</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="业务逻辑漏洞"><a href="#业务逻辑漏洞" class="headerlink" title="业务逻辑漏洞"></a>业务逻辑漏洞</h3><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>由于程序逻辑控制不够严谨或逻辑设计太过复杂，导致一些逻辑分支不能正常处理或处理错误，统称为 <code>业务逻辑漏洞</code>。</p>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>1、业务流程</p>
+<p>2、<code>HTTP/HTTPS</code> 请求分析</p>
+<h3 id="漏洞分类"><a href="#漏洞分类" class="headerlink" title="漏洞分类"></a>漏洞分类</h3><h4 id="身份认证"><a href="#身份认证" class="headerlink" title="身份认证"></a>身份认证</h4><h5 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h5><p>在 <code>没有</code>验证码限制或者验证码可以 <code>多次</code> 使用的情况下</p>
+<ul>
+<li>使用已知用户名对密码进行暴力破解</li>
+<li>使用一个弱口令密码对用户进行暴力破解</li>
+</ul>
+<h6 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h6><ul>
+<li><code>Burpsuite</code></li>
+<li><code>Hydra</code></li>
+</ul>
+<p>暴力破解可参考此篇文章：<a href="">逻辑漏洞之暴力破解</a></p>
+<h5 id="Cookie-amp-Session"><a href="#Cookie-amp-Session" class="headerlink" title="Cookie&amp;Session"></a>Cookie&amp;Session</h5><ul>
+<li><code>Cookie</code>：机制采用的是在客户端保持状态的方案，用来记录用户的一些信息，也是实现 <code>Session</code> 的一种方式.</li>
+</ul>
+<p><code>Session</code>：机制采用的是在服务器端保持状态的方案，用来跟踪用户的状态，可以保存在集群、数据库、文件中.</p>
+<ul>
+<li><p><code>Cookie</code>：的内容主要包括：名字、值、过期时间、路径和域名，其中路径和域名一起构成 <code>Cookie</code> 的作用范围，若不设置过期时间，则表示这个 <code>Cookie</code> 的生命周期为浏览器会话期间，关闭浏览器窗口，则消失，这种生命期为浏览器会话期的 <code>Cookie</code> 被称为会话 <code>Cookie</code></p>
+</li>
+<li><p><code>Session</code>：机制是一种服务端的机制，当程序需要为某个客户端的请求创建一个 <code>Session</code> 时，服务器会首先检查这个客户端的请求里是否包含了一个 <code>Session</code> 标识（<code>Session id</code>），如果已包含说明此前已经为此客户端创建过 <code>Session</code>，服务器会按照 <code>Session id</code> 将这个 <code>Session</code> 检索出来使用（检索不到，会新建一个），如果客户端请求不包含 <code>Session id</code>，则会为此客户端创建一个 <code>Session</code> 并且生成一个 <code>Session id</code>，这个 <code>Session id</code> 将被在本次响应中返回给客户端保存，保存这个 <code>Session id</code> 的方式可以采用 <code>Cookie</code>，如果客户端浏览器禁用了 <code>Cookie</code>，一般这种情况下，会使用一种 <code>URL</code> 重写的技术来进行会话跟踪，即每次 <code>HTTP</code> 交互，<code>URL</code> 后都会被附加一个诸如 <code>sid=xxxxxxxx</code> 这样的参数，服务端根据此来识别用户。</p>
+</li>
+</ul>
+<p>一些网站会利用 <code>Cookie</code> 是否为空、<code>Session</code> 是否为 <code>true</code> 来判断用户是否可以登录，只要构造一个 <code>Cookie</code> 或 <code>Session</code> 为 <code>true</code> 就可以绕过认证登录。</p>
+<h5 id="Session会话固定攻击"><a href="#Session会话固定攻击" class="headerlink" title="Session会话固定攻击"></a><code>Session</code>会话固定攻击</h5><p>​    会话固定（Session fixtation）是一种诱骗用户去访问攻击者构造后的会话标识（session id）（攻击者构造的session id是非服务器分配出来的，而普通账户具有网站相应权限。如果用户访问了攻击者构造好的URL，导致原本的session id不具有相应权限经过用户访问后具有与服务器正常通信的session id了。</p>
+<h6 id="攻击步骤"><a href="#攻击步骤" class="headerlink" title="攻击步骤"></a>攻击步骤</h6><ol>
+<li>攻击者通过其他手段获得用户与服务器进行通信&lt;非session id&gt;信息</li>
+<li>构造URL附带自己设置的session id&lt;个人觉得这里最难，如果构造的URL中包含了session id值易被发现&gt;</li>
+<li>用户访问攻击者构造好的URL（其中包含攻击者设定的session id）</li>
+<li>攻击者构造的session id具有与服务器通信权限</li>
+</ol>
+<p><img src="/images/%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/B46E3330-ADCA-4BE3-B582-CEA98C739EEE.png"></p>
+<h5 id="Cookie伪造攻击"><a href="#Cookie伪造攻击" class="headerlink" title="Cookie伪造攻击"></a>Cookie伪造攻击</h5><p>​    通过修改 <code>Cookie</code> 中的某个参数来实现登录其他用户，例如：uid或其他信息。</p>
+<h5 id="弱加密"><a href="#弱加密" class="headerlink" title="弱加密"></a>弱加密</h5><p>​    传输未使用 <code>HTTPS</code>、前端加密，用密文去后台验证，可以利用 <code>smart decode</code> 进行解码。</p>
+<h4 id="数据篡改"><a href="#数据篡改" class="headerlink" title="数据篡改"></a>数据篡改</h4><h5 id="手机号篡改"><a href="#手机号篡改" class="headerlink" title="手机号篡改"></a>手机号篡改</h5><p>​    抓包修改手机号参数为其他号码进行尝试，例如办理查询页面，输入自己的号码然后抓包，修改手机号为他人号码，查看是否可以查询他人业务或个人信息等。</p>
+<h5 id="邮箱或用户篡改"><a href="#邮箱或用户篡改" class="headerlink" title="邮箱或用户篡改"></a>邮箱或用户篡改</h5><p>​    抓包修改用户或者邮箱为其他用户或者邮箱。</p>
+<p>例如</p>
+<ul>
+<li>修改普通用户密码，抓包</li>
+<li>将 <code>Referer</code> 和 <code>POST</code> 中的普通用户改成 <code>admin</code></li>
+<li>提交数据后，直接返回了 <code>admin</code> 的密码修改页面，利用逻辑漏洞获取超级权限</li>
+</ul>
+<h5 id="订单ID篡改"><a href="#订单ID篡改" class="headerlink" title="订单ID篡改"></a>订单ID篡改</h5><p>​    查看自己订单，修改 <code>订单ID</code> 查看是否能查看其他订单信息</p>
+<p>参考：<a href="">某旅游系统越权/篡改</a></p>
+<h5 id="商品编号篡改"><a href="#商品编号篡改" class="headerlink" title="商品编号篡改"></a>商品编号篡改</h5><p>可测试积分兑换功能处测试</p>
+<ul>
+<li>积分商城，利用低积分兑换高积分礼物</li>
+<li>选取低积分礼物兑换，提交抓包</li>
+<li>修改其中的 <code>goods_id</code>（商品编号）为高积分的商品编号</li>
+<li>提交，就可以发现逻辑漏洞的实现</li>
+</ul>
+<h5 id="用户ID篡改"><a href="#用户ID篡改" class="headerlink" title="用户ID篡改"></a>用户ID篡改</h5><p>​    抓包查看自己的 <code>用户ID</code>，修改 <code>ID</code> 查看是否能查看其他用户信息</p>
+<p>例如：</p>
+<ul>
+<li>查看简历处，抓包修改 <code>简历ID</code></li>
+<li>提交，就可以查看其他用户的简历</li>
+</ul>
+<h5 id="金额篡改"><a href="#金额篡改" class="headerlink" title="金额篡改"></a>金额篡改</h5><p>​    抓包修改金额等字段再进行重放查看是否被修改。</p>
+<p>例如：</p>
+<ul>
+<li>将支付页面抓取请求中商品的金额字段，修改成任意数额的金额（如负数）</li>
+<li>提交，查看能否以修改后的金额数据完成业务流程</li>
+</ul>
+<h5 id="商品数量篡改"><a href="#商品数量篡改" class="headerlink" title="商品数量篡改"></a>商品数量篡改</h5><p>​    抓包修改商品数量等字段再进行重放查看是否被修改。</p>
+<p>例如：</p>
+<ul>
+<li>将支付页面抓取请求中商品数量字段，修改成任意数量（如负数）</li>
+<li>提交，查看能否以修改后的数量完成业务流程</li>
+</ul>
+<p>最大数量突破限制</p>
+<ul>
+<li>很多商品限制用户购买数量，服务器仅在页面通过 <code>JS</code> 脚本限制，未在服务端校验用户提交的数量，通过抓包修改商品最大限制数量，即将请求中的商品数量改为大于最大数值限制，查看是否能完成修改后的数量完成业务流程</li>
+</ul>
+<h4 id="密码找回"><a href="#密码找回" class="headerlink" title="密码找回"></a>密码找回</h4><p>常见的密码找回方式</p>
+<ul>
+<li>邮箱找回密码</li>
+<li>根据密码保护问题找回密码</li>
+<li>根据手机号找回密码</li>
+</ul>
+<p>密码找回逻辑测试流程</p>
+<ul>
+<li>尝试正常密码找回流程</li>
+<li>选择不同的找回方式，记录所有数据包</li>
+<li>分析数据包，找出敏感部分</li>
+<li>分析后台找回机制所采用的验证手段</li>
+<li>修改数据包进行验证是否存在密码找回漏洞</li>
+</ul>
+<h5 id="用户凭证爆破-验证码"><a href="#用户凭证爆破-验证码" class="headerlink" title="用户凭证爆破(验证码)"></a>用户凭证爆破(验证码)</h5><ul>
+<li>四位或六位纯数字，验证码次数未限制</li>
+</ul>
+<p>例如</p>
+<ul>
+<li>根据手机号找回密码，随便输个验证码，抓包</li>
+<li>暴力破解验证码（假如只有四位），很快就可以破解出来</li>
+</ul>
+<p>参考：<a href="">逻辑漏洞之验证码爆破</a></p>
+<p>注意：如果验证码次数限制，破解一会就会提示请求过于频繁，尝试以下绕过限制：</p>
+<ul>
+<li>根据手机号找回密码，但是验证次数被限制，抓包可以尝试在手机号后面添加不为数字的字符，查看是否过滤</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phone&#x3D;18888888888abc</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>只要更换手机号后面的字符，就可以绕过请求过于频繁的限制</li>
+<li>但是校验时，手机号后面的字符会被过滤，也就是可以利用暴力破解验证码</li>
+<li>所以只要在暴力破解的同时，改变手机号后面的字符即可达到漏洞效果</li>
+</ul>
+<h6 id="返回凭证-验证码或token"><a href="#返回凭证-验证码或token" class="headerlink" title="返回凭证(验证码或token)"></a>返回凭证(验证码或token)</h6><p>​    对整个请求进行抓包重放分析，是否会把敏感信息泄漏至响应体内。</p>
+<p>例如</p>
+<ul>
+<li>根据手机号找回密码、抓包，可以发现验证码直接显示 <code>verifycode=xxxx</code>，或者由 <code>md5</code> 加密后显示，解密即可（同理，有的时候输入用户名，抓包可以看到返回的手机号等其他信息）</li>
+<li>根据邮箱找回密码<ul>
+<li>抓包，可以发现返回的数据中有一个加密的字符串（<code>token</code>），先记录下这个加密字符串</li>
+<li>继续按照正常流程，登录邮箱获得验证码，返回填写验证码后，进入下一个填写新密码页面，发现 <code>URL</code> 后新增了一个加密验证的字符串</li>
+<li>这个字符串就是之前数据包中记录的字符串，所以邮箱验证码这个环节可以绕过，直接用他人邮箱抓包获得加密字符串就可以重置他人密码</li>
+</ul>
+</li>
+</ul>
+<h6 id="页面存储凭证"><a href="#页面存储凭证" class="headerlink" title="页面存储凭证"></a>页面存储凭证</h6><p>​    通过密保问题找回密码，查看源码，密保问题和答案就在源码中显示。</p>
+<h6 id="邮箱弱token"><a href="#邮箱弱token" class="headerlink" title="邮箱弱token"></a>邮箱弱token</h6><ul>
+<li>重置密码链接直接使用用户名来区别，改变用户名即可更改他人密码</li>
+<li>Unix时间戳 + md5<ul>
+<li>通过邮箱找回密码，正常流程去邮箱查看重置密码链接，发现链接处有一串 <code>md5</code> 加密字符串</li>
+<li>字符串解密，类似 <code>1491293277</code>（10位），可以判断为 <code>Unix时间戳</code></li>
+<li>重置他人密码只需要利用他人邮箱发送重置密码邮箱，在短时间内对 <code>Unix时间戳</code> 进行暴力破解，即可获得重置密码的链接</li>
+</ul>
+</li>
+</ul>
+<h6 id="服务器时间"><a href="#服务器时间" class="headerlink" title="服务器时间"></a>服务器时间</h6><p>例如</p>
+<ul>
+<li>利用两个帐号同时点击找回密码，去邮箱查看找回密码的链接，发现两者的随机 <code>token</code> 只差 <code>1-2</code>，而且可以猜测出为服务器时间</li>
+<li>所以可以用一个未知帐号和一个已知帐号同时点击找回密码，稍微遍历一下随机 <code>token</code>，就可以构造出未知帐号的密码找回链接</li>
+</ul>
+<h5 id="用户凭证有效性"><a href="#用户凭证有效性" class="headerlink" title="用户凭证有效性"></a>用户凭证有效性</h5><h6 id="短信验证码"><a href="#短信验证码" class="headerlink" title="短信验证码"></a>短信验证码</h6><p>例如</p>
+<ul>
+<li>通过他人手机号找回密码，抓包，将他人手机号替换成自己的手机号，获取验证码，提交后修改密码</li>
+<li>通过自己手机号找回密码，获取验证码后抓包，将数据包中的 <code>username</code> 改为他人用户名，提交后成功修改他人密码</li>
+</ul>
+<h6 id="邮箱-token"><a href="#邮箱-token" class="headerlink" title="邮箱 token"></a>邮箱 <code>token</code></h6><p>例如</p>
+<ul>
+<li>通过邮箱找回密码，访问链接重置密码，输入新密码后提交时抓包，虽然有 <code>token</code>，但是依然可以直接修改 <code>用户ID</code> 进而修改他人密码</li>
+</ul>
+<h6 id="重置密码-token"><a href="#重置密码-token" class="headerlink" title="重置密码 token"></a>重置密码 <code>token</code></h6><p> 例如</p>
+<ul>
+<li>正常流程下，对每个功能模块进行抓包，分别是发送验证码，验证验证码是否正确，获取 <code>token</code>，重置密码</li>
+<li>接下来，用他人帐号通过邮箱验证，抓包，将其中 <code>Cookie</code> 内从 <code>JSESSIONID</code> 开始的内容替换至正常流程的发生验证码包内，同时替换自己接受验证码的邮箱，提交</li>
+<li>通过邮箱获取验证码后，将验证码、<code>Cookie</code>、他人帐号、自己邮箱替换至验证验证码模块，提交（不用在意返回是否错误）</li>
+<li>继续替换内至获取 <code>token</code> 模块，提交获取 <code>token</code></li>
+<li>最后将获取的 <code>token</code> 和上面的内容替换至最后的重置密码模块，提交成功修改密码</li>
+</ul>
+<h5 id="重新绑定"><a href="#重新绑定" class="headerlink" title="重新绑定"></a>重新绑定</h5><h6 id="手机绑定"><a href="#手机绑定" class="headerlink" title="手机绑定"></a>手机绑定</h6><p>例如</p>
+<ul>
+<li>给已知账户绑定手机，发现绑定手机的 <code>URL</code> 链接中有 <code>uid</code> 参数，修改 <code>uid</code> 参数为他人的，即可实现将他人的账户绑定上自己的手机，之后通过手机来修改密码</li>
+<li>修改个人资料处抓包，修改 <code>userId</code> 为他人，修改 <code>mobilePhone</code> 为自己的手机，即可实现将他人的账户绑定上自己的手机，之后通过手机来修改密码</li>
+</ul>
+<h6 id="邮箱绑定"><a href="#邮箱绑定" class="headerlink" title="邮箱绑定"></a>邮箱绑定</h6><p>例如</p>
+<ul>
+<li>通过邮箱找回密码，<code>URL</code> 链接中修改 <code>用户ID</code> 为他人，邮箱不变，之后通过链接可以将他人账户绑定为自己的邮箱，之后通过邮箱找回密码</li>
+</ul>
+<h5 id="服务器验证"><a href="#服务器验证" class="headerlink" title="服务器验证"></a>服务器验证</h5><h6 id="最终提交步骤"><a href="#最终提交步骤" class="headerlink" title="最终提交步骤"></a>最终提交步骤</h6><p>例如</p>
+<ul>
+<li>通过邮箱找回密码，最后通过链接至修改密码页面，修改密码后提交，抓包，获得 <code>Uid</code> 参数，修改为他人，即可修改其他用户密码</li>
+</ul>
+<h6 id="服务器验证可控内容"><a href="#服务器验证可控内容" class="headerlink" title="服务器验证可控内容"></a>服务器验证可控内容</h6><p> 例如</p>
+<ul>
+<li>正常流程，通过手机号提交验证码找回密码处抓包，记录下这个包的内容</li>
+<li>通过已知用户名找回密码，查看源代码可以发现用户其他信息（比如：手机号、邮箱）</li>
+<li>通过发现的手机号选择通过手机找回密码，随便输入短信验证码，抓包</li>
+<li>修改之前记录下的包的内容，将其中 <code>Session id</code>、<code>用户ID</code> 修改为刚刚从其他用户名抓包获得的内容，提交这个包，即可成功修改他人密码</li>
+</ul>
+<h6 id="绕过认证"><a href="#绕过认证" class="headerlink" title="绕过认证"></a>绕过认证</h6><p>例如</p>
+<ul>
+<li>通过密码保护问题找回密码，抓包，将密码保护问题删除，直接修改密码，提交</li>
+<li>注：此处密保问题和新密码在同一页面</li>
+</ul>
+<h5 id="用户身份认证"><a href="#用户身份认证" class="headerlink" title="用户身份认证"></a>用户身份认证</h5><h6 id="帐号与手机号的绑定"><a href="#帐号与手机号的绑定" class="headerlink" title="帐号与手机号的绑定"></a>帐号与手机号的绑定</h6><p>例如</p>
+<ul>
+<li>通过手机找回密码，输入验证码和新的密码，<code>F12</code> 审查元素，修改自己的手机为他人手机，提交成功修改他人手机（也可以抓包修改）</li>
+</ul>
+<h6 id="帐号与邮箱的绑定"><a href="#帐号与邮箱的绑定" class="headerlink" title="帐号与邮箱的绑定"></a>帐号与邮箱的绑定</h6><p>例如</p>
+<ul>
+<li>通过邮箱找回密码，点击请重新发送邮件处抓包，将邮箱改为自己的邮箱，通过链接成功修改密码</li>
+</ul>
+<h5 id="找回步骤"><a href="#找回步骤" class="headerlink" title="找回步骤"></a>找回步骤</h5><p>跳过验证步骤、找回方式、直接到设置新密码页面</p>
+<p>例如</p>
+<ul>
+<li>正常流程下，密码找回，查看最后设置新密码页面的 <code>URL</code>，记录下来</li>
+<li>继续返回密码找回处，输入其他用户名，提交找回申请，直接访问上面记录下的修改密码页面，成功修改密码</li>
+<li>也可以正常流程下，修改密码页面抓包，修改其中的 <code>USERNAME_COOKIE</code> 为其他用户（有可能会经过编码，比如 <code>base64</code>），提交即可修改其他用户密码</li>
+<li>如果抓包其中有 <code>step</code> 参数，可以修改这个参数为最后一步（比如：5），提交便可略过之前的步骤</li>
+</ul>
+<h5 id="本地验证"><a href="#本地验证" class="headerlink" title="本地验证"></a>本地验证</h5><p>​    在本地验证服务器的返回信息，确定是否执行密码重置，但是其返回信息是可控的内容，或者是可以获得的内容。</p>
+<p> 例如</p>
+<ul>
+<li><p>通过手机找回密码，随便输入验证码，抓包，发送，拦截返回包（<code>Burpsuite</code> 中可以选取 <code>do intercept --&gt; response to this request</code>）</p>
+</li>
+<li><p>修改返回包中的返回码，继续发送，说不定就可以绕过验证，直接跳到修改密码的页面</p>
+</li>
+<li><p>通过手机找回密码，正常流程下到重置密码页面，抓包查看返回数据中有一段加密字符串</p>
+</li>
+<li><p>利用他人手机找回密码，<code>URL</code> 跳转到验证身份页面，链接中就有一段加密字符串，记录下，随便输入验证码，抓包，修改包中数据为正常流程下的数据，替换加密字符串，<code>Forward</code> 发送，就可以绕过验证码，直接修改密码</p>
+</li>
+</ul>
+<p>  发生短信等验证信息的动作在本地执行，可以通过修改返回包进行控制。</p>
+<p>例如</p>
+<ul>
+<li>通过用户名找回密码，提交后会自动发送验证码到手机中，所以抓包，修改手机为自己的手机（如果其中有 <code>type</code> 之类的参数，也可以尝试修改，有 <code>email</code> 之类的参数，可以尝试删除内容），发送修改后的包，手机成功接收验证码</li>
+<li>输入验证码，继续发送，抓包，如果有 <code>type</code> 之类的参数，可以继续尝试修改，发送就可以成功修改密码</li>
+</ul>
+<h5 id="注入"><a href="#注入" class="headerlink" title="注入"></a>注入</h5><p>找回密码处存在注入漏洞</p>
+<ul>
+<li>输入用户名，加个单引号报错，说明可能存在报错，抓包，保存为 <code>txt</code> 文件，导入 <code>Sqlmap</code> 中跑一遍</li>
+</ul>
+<h5 id="token-生成"><a href="#token-生成" class="headerlink" title="token 生成"></a><code>token</code> 生成</h5><h6 id="token-生成可控"><a href="#token-生成可控" class="headerlink" title="token 生成可控"></a><code>token</code> 生成可控</h6><ul>
+<li>通过邮箱找回密码，正常流程下，抓包查看提交验证码后返回的数据，发现有加密字符串，这个加密字符串和后面重新设置新密码 <code>URL</code> 链接中的加密字符串一样，所以可以利用这个加密字符串</li>
+<li>根据上面提交验证码的抓包，修改其中的 <code>User</code> 为其他用户（<code>User</code> 有可能会使用 <code>md5</code> 加密），发送，就可以返回其他用户的加密字符串</li>
+<li>重新返回到找回密码首页，利用其他用户找回，点下一步，到输入验证码处（也有可能需要点击发送验证码），直接修改 <code>URL</code> 链接，加入加密字符串，可以直接绕过验证码，重置密码</li>
+</ul>
+<h5 id="注册覆盖"><a href="#注册覆盖" class="headerlink" title="注册覆盖"></a>注册覆盖</h5><p>​    注册重复的用户名，例如 <code>admin</code>，相当于修改了密码</p>
+<h5 id="seesion覆盖"><a href="#seesion覆盖" class="headerlink" title="seesion覆盖"></a>seesion覆盖</h5><p>例如</p>
+<ul>
+<li>同一浏览器，首先输入自己的账户进行邮箱密码找回，进入邮箱查看链接，接着输入他人账户，进行密码找回，返回刚刚自己的邮箱点击链接，由于 <code>session</code> 覆盖导致了，这个链接成为了修改他人密码的链接，成功修改他人密码</li>
+</ul>
+<h4 id="授权绕过"><a href="#授权绕过" class="headerlink" title="授权绕过"></a>授权绕过</h4><h5 id="未授权访问"><a href="#未授权访问" class="headerlink" title="未授权访问"></a>未授权访问</h5><ul>
+<li>用户在没有通过认证授权的情况下直接访问需要通过认证才能访问的页面或文本。</li>
+</ul>
+<h5 id="水平越权"><a href="#水平越权" class="headerlink" title="水平越权"></a>水平越权</h5><ul>
+<li>相同级别（权限）的用户或者同一角色不同的用户之间，可以越权访问、修改或者删除的非法操作，如果出现此漏洞，可能会造成大批量的数据泄漏，严重的甚至会造成用户信息被恶意篡改</li>
+</ul>
+<h5 id="垂直越权"><a href="#垂直越权" class="headerlink" title="垂直越权"></a>垂直越权</h5><p>不同级别角色或不同角色之间的越权。</p>
+<p>垂直越权可以分为</p>
+<ul>
+<li>向上越权<ul>
+<li>普通用户可以执行管理员权限，比如发布文章、删除文章等操作</li>
+<li>修复方法<ul>
+<li>如果管理员和普通用户是同一张数据库表，就必须要存在权限验证字段，权限验证字段用于区分是否为管理员，如果不在同一张表，在过滤器中直接去除管理员信息即可</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>向下越权<ul>
+<li>一个高级用户可以访问低级用户信息（暴露用户隐私）</li>
+</ul>
+</li>
+</ul>
+<h4 id="验证码"><a href="#验证码" class="headerlink" title="验证码"></a>验证码</h4><h5 id="验证码暴力破解"><a href="#验证码暴力破解" class="headerlink" title="验证码暴力破解"></a>验证码暴力破解</h5><h6 id="工具-1"><a href="#工具-1" class="headerlink" title="工具"></a>工具</h6><ul>
+<li><p><code>Burpsuite</code></p>
+</li>
+<li><p><code>Hydra</code></p>
+</li>
+<li><p>验证码时间、次数测试</p>
+<ul>
+<li>重复提交携带验证码的数据包，查看返回包，判断次数</li>
+</ul>
+</li>
+<li><p>验证码客户端回显测试</p>
+<ul>
+<li>抓包测试，是否有回显，验证码是否会被返回</li>
+</ul>
+</li>
+<li><p>验证码绕过测试</p>
+<ul>
+<li>抓包，删除验证码字段，查看是否可以成功发送</li>
+<li>抓包，正常流程下，记录验证码后的数据包，替换目标包中内容，直接发送，查看是否可以直接绕过验证码</li>
+</ul>
+</li>
+</ul>
+<h4 id="流程乱序"><a href="#流程乱序" class="headerlink" title="流程乱序"></a>流程乱序</h4><h5 id="顺序执行"><a href="#顺序执行" class="headerlink" title="顺序执行"></a>顺序执行</h5><p> 在一个逻辑流程中，按照第一步、第二步、第三步这种模式进行一步一步的验证，有顺序的执行逻辑过程</p>
+<p>常见的顺序执行漏洞</p>
+<ul>
+<li><p>密码找回的顺序执行</p>
+<ul>
+<li>可以绕过验证，直接跳转至重置密码页面</li>
+<li>绕过的方式有很多种<ul>
+<li>更改 <code>用户名</code>（邮箱等等）</li>
+<li>替换正常流程数据包</li>
+<li>分析数据包中关键字符串（加密后），进行关联替换</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>支付环节的顺序执行</p>
+<ul>
+<li>商品数量正负数（最大值）</li>
+<li>价格正负数（不局限与商品价格，还有运费等待）</li>
+<li>同一订单重复发送请求包，使购买数量增加</li>
+<li>抓包，分析是否有 <code>type</code> 之类的参数用于判断执行顺序，可直接更改跳转至支付成功页面</li>
+</ul>
+</li>
+<li><p>登录验证的顺序执行</p>
+<ul>
+<li>登录验证处，有的厂商会先检验验证码，正确后然后检验账户密码，这样就可以实现暴力破解</li>
+</ul>
+</li>
+</ul>
+<h4 id="API安全"><a href="#API安全" class="headerlink" title="API安全"></a>API安全</h4><h5 id="重放攻击"><a href="#重放攻击" class="headerlink" title="重放攻击"></a>重放攻击</h5><ul>
+<li>在短信、邮件调用业务或生成业务数据环节中（类：短信验证码，邮件验证码，订单生成，评论提交等），对其业务环节进行调用（重放）测试</li>
+<li>常见类型<ul>
+<li>短信轰炸</li>
+<li>恶意注册</li>
+</ul>
+</li>
+</ul>
+<p>参考：<a target="_blank" rel="noopener" href="http://si1ent.xyz/2020/06/09/API%E5%8F%8A%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-1/">API及客户端漏洞挖掘</a></p>
+<h5 id="内容编辑"><a href="#内容编辑" class="headerlink" title="内容编辑"></a>内容编辑</h5><p>例如</p>
+<ul>
+<li>点击获取短信验证码，抓包，可以修改短信内容，实施下一步攻击</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li>首先了解清楚业务整体流程，可利用思维导图快速理清各个业务之间的关系，也可以通过查看 <code>JS</code> 了解（<code>JS</code> 中可能会存在信息泄漏：前后端会把路由泄漏在JS源码中）</li>
+<li>关注业务：个人（他人）信息、密码修改（找回）、支付流程、注册流程、需要手机（邮箱）验证的业务。</li>
+<li>测试过程中各功能进行抓包，分析其中各种请求，注意 <code>特殊参数</code>，很有可能就是这些 <code>特殊参数</code> 决定了业务步骤。</li>
+<li>抓包重放的过程，需要多次实验，判断是否可以跳过（绕过），如何跳过（绕过），纯数字可以用 <code>数字 + 字母</code> 尝试绕过</li>
+<li>响应数据分析，关注特殊字符串和特殊参数</li>
+<li>业务流程需同时结合 <code>HTTP/HTTPS</code> 请求分析，关注重点在各种可以用于区别的参数，绕过必要验证，跳过业务步骤</li>
+</ol>
+<h3 id="实战汇总"><a href="#实战汇总" class="headerlink" title="实战汇总"></a>实战汇总</h3><p><a target="_blank" rel="noopener" href="http://si1ent.xyz/2020/06/09/API%E5%8F%8A%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95-1/">API及客户端漏洞挖掘</a></p>
+<p><a target="_blank" rel="noopener" href="http://si1ent.xyz/2019/12/06/%E8%B6%8A%E6%9D%83%E8%AE%BF%E9%97%AE/">逻辑漏洞—-越权类</a></p>
+<p><a href="">逻辑漏洞—-Session会话攻击</a>–待更新</p>
+<p><a href="">逻辑漏洞—-密码找回</a>–待更新</p>
+<p><a href="">逻辑漏洞—-验证码漏洞</a>–待更新</p>
+<h3 id="Refrere"><a href="#Refrere" class="headerlink" title="Refrere"></a>Refrere</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;PyxYuYu&#x2F;MyBlog&#x2F;issues&#x2F;102</span><br><span class="line">http:&#x2F;&#x2F;www.luckyzmj.cn&#x2F;posts&#x2F;4abdabd1.html</span><br></pre></td></tr></table></figure>
+
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#漏洞学习" >
+    <span class="tag-code">漏洞学习</span>
+  </a>
+
+  <a href="/tags#逻辑漏洞" >
+    <span class="tag-code">逻辑漏洞</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/11/27/CVE-2020-14882/">
+        <span class="nav-arrow">← </span>
+        
+          CVE-2020-14882
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/12/09/OpenSSH%E6%BC%8F%E6%B4%9E%E6%B1%87%E6%80%BB/">
+        
+          OpenSSH漏洞汇总
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">业务逻辑漏洞</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">特点</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E7%B1%BB"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">漏洞分类</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">身份认证</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3"><span class="toc-nav-number">2.1.1.</span> <span class="toc-nav-text">暴力破解</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="toc-nav-number">2.1.1.1.</span> <span class="toc-nav-text">工具</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Cookie-amp-Session"><span class="toc-nav-number">2.1.2.</span> <span class="toc-nav-text">Cookie&amp;Session</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Session%E4%BC%9A%E8%AF%9D%E5%9B%BA%E5%AE%9A%E6%94%BB%E5%87%BB"><span class="toc-nav-number">2.1.3.</span> <span class="toc-nav-text">Session会话固定攻击</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E6%94%BB%E5%87%BB%E6%AD%A5%E9%AA%A4"><span class="toc-nav-number">2.1.3.1.</span> <span class="toc-nav-text">攻击步骤</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Cookie%E4%BC%AA%E9%80%A0%E6%94%BB%E5%87%BB"><span class="toc-nav-number">2.1.4.</span> <span class="toc-nav-text">Cookie伪造攻击</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BC%B1%E5%8A%A0%E5%AF%86"><span class="toc-nav-number">2.1.5.</span> <span class="toc-nav-text">弱加密</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%95%B0%E6%8D%AE%E7%AF%A1%E6%94%B9"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">数据篡改</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%89%8B%E6%9C%BA%E5%8F%B7%E7%AF%A1%E6%94%B9"><span class="toc-nav-number">2.2.1.</span> <span class="toc-nav-text">手机号篡改</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E9%82%AE%E7%AE%B1%E6%88%96%E7%94%A8%E6%88%B7%E7%AF%A1%E6%94%B9"><span class="toc-nav-number">2.2.2.</span> <span class="toc-nav-text">邮箱或用户篡改</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E8%AE%A2%E5%8D%95ID%E7%AF%A1%E6%94%B9"><span class="toc-nav-number">2.2.3.</span> <span class="toc-nav-text">订单ID篡改</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%95%86%E5%93%81%E7%BC%96%E5%8F%B7%E7%AF%A1%E6%94%B9"><span class="toc-nav-number">2.2.4.</span> <span class="toc-nav-text">商品编号篡改</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%94%A8%E6%88%B7ID%E7%AF%A1%E6%94%B9"><span class="toc-nav-number">2.2.5.</span> <span class="toc-nav-text">用户ID篡改</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E9%87%91%E9%A2%9D%E7%AF%A1%E6%94%B9"><span class="toc-nav-number">2.2.6.</span> <span class="toc-nav-text">金额篡改</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%95%86%E5%93%81%E6%95%B0%E9%87%8F%E7%AF%A1%E6%94%B9"><span class="toc-nav-number">2.2.7.</span> <span class="toc-nav-text">商品数量篡改</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%AF%86%E7%A0%81%E6%89%BE%E5%9B%9E"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">密码找回</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%94%A8%E6%88%B7%E5%87%AD%E8%AF%81%E7%88%86%E7%A0%B4-%E9%AA%8C%E8%AF%81%E7%A0%81"><span class="toc-nav-number">2.3.1.</span> <span class="toc-nav-text">用户凭证爆破(验证码)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E8%BF%94%E5%9B%9E%E5%87%AD%E8%AF%81-%E9%AA%8C%E8%AF%81%E7%A0%81%E6%88%96token"><span class="toc-nav-number">2.3.1.1.</span> <span class="toc-nav-text">返回凭证(验证码或token)</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E9%A1%B5%E9%9D%A2%E5%AD%98%E5%82%A8%E5%87%AD%E8%AF%81"><span class="toc-nav-number">2.3.1.2.</span> <span class="toc-nav-text">页面存储凭证</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E9%82%AE%E7%AE%B1%E5%BC%B1token"><span class="toc-nav-number">2.3.1.3.</span> <span class="toc-nav-text">邮箱弱token</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%97%B6%E9%97%B4"><span class="toc-nav-number">2.3.1.4.</span> <span class="toc-nav-text">服务器时间</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%94%A8%E6%88%B7%E5%87%AD%E8%AF%81%E6%9C%89%E6%95%88%E6%80%A7"><span class="toc-nav-number">2.3.2.</span> <span class="toc-nav-text">用户凭证有效性</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%9F%AD%E4%BF%A1%E9%AA%8C%E8%AF%81%E7%A0%81"><span class="toc-nav-number">2.3.2.1.</span> <span class="toc-nav-text">短信验证码</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E9%82%AE%E7%AE%B1-token"><span class="toc-nav-number">2.3.2.2.</span> <span class="toc-nav-text">邮箱 token</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E9%87%8D%E7%BD%AE%E5%AF%86%E7%A0%81-token"><span class="toc-nav-number">2.3.2.3.</span> <span class="toc-nav-text">重置密码 token</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E9%87%8D%E6%96%B0%E7%BB%91%E5%AE%9A"><span class="toc-nav-number">2.3.3.</span> <span class="toc-nav-text">重新绑定</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E6%89%8B%E6%9C%BA%E7%BB%91%E5%AE%9A"><span class="toc-nav-number">2.3.3.1.</span> <span class="toc-nav-text">手机绑定</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E9%82%AE%E7%AE%B1%E7%BB%91%E5%AE%9A"><span class="toc-nav-number">2.3.3.2.</span> <span class="toc-nav-text">邮箱绑定</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%AA%8C%E8%AF%81"><span class="toc-nav-number">2.3.4.</span> <span class="toc-nav-text">服务器验证</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E6%9C%80%E7%BB%88%E6%8F%90%E4%BA%A4%E6%AD%A5%E9%AA%A4"><span class="toc-nav-number">2.3.4.1.</span> <span class="toc-nav-text">最终提交步骤</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%AA%8C%E8%AF%81%E5%8F%AF%E6%8E%A7%E5%86%85%E5%AE%B9"><span class="toc-nav-number">2.3.4.2.</span> <span class="toc-nav-text">服务器验证可控内容</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87%E8%AE%A4%E8%AF%81"><span class="toc-nav-number">2.3.4.3.</span> <span class="toc-nav-text">绕过认证</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81"><span class="toc-nav-number">2.3.5.</span> <span class="toc-nav-text">用户身份认证</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%B8%90%E5%8F%B7%E4%B8%8E%E6%89%8B%E6%9C%BA%E5%8F%B7%E7%9A%84%E7%BB%91%E5%AE%9A"><span class="toc-nav-number">2.3.5.1.</span> <span class="toc-nav-text">帐号与手机号的绑定</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%B8%90%E5%8F%B7%E4%B8%8E%E9%82%AE%E7%AE%B1%E7%9A%84%E7%BB%91%E5%AE%9A"><span class="toc-nav-number">2.3.5.2.</span> <span class="toc-nav-text">帐号与邮箱的绑定</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%89%BE%E5%9B%9E%E6%AD%A5%E9%AA%A4"><span class="toc-nav-number">2.3.6.</span> <span class="toc-nav-text">找回步骤</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%9C%AC%E5%9C%B0%E9%AA%8C%E8%AF%81"><span class="toc-nav-number">2.3.7.</span> <span class="toc-nav-text">本地验证</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%B3%A8%E5%85%A5"><span class="toc-nav-number">2.3.8.</span> <span class="toc-nav-text">注入</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#token-%E7%94%9F%E6%88%90"><span class="toc-nav-number">2.3.9.</span> <span class="toc-nav-text">token 生成</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#token-%E7%94%9F%E6%88%90%E5%8F%AF%E6%8E%A7"><span class="toc-nav-number">2.3.9.1.</span> <span class="toc-nav-text">token 生成可控</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%B3%A8%E5%86%8C%E8%A6%86%E7%9B%96"><span class="toc-nav-number">2.3.10.</span> <span class="toc-nav-text">注册覆盖</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#seesion%E8%A6%86%E7%9B%96"><span class="toc-nav-number">2.3.11.</span> <span class="toc-nav-text">seesion覆盖</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%8E%88%E6%9D%83%E7%BB%95%E8%BF%87"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">授权绕过</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE"><span class="toc-nav-number">2.4.1.</span> <span class="toc-nav-text">未授权访问</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%B0%B4%E5%B9%B3%E8%B6%8A%E6%9D%83"><span class="toc-nav-number">2.4.2.</span> <span class="toc-nav-text">水平越权</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%9E%82%E7%9B%B4%E8%B6%8A%E6%9D%83"><span class="toc-nav-number">2.4.3.</span> <span class="toc-nav-text">垂直越权</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E9%AA%8C%E8%AF%81%E7%A0%81"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">验证码</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E9%AA%8C%E8%AF%81%E7%A0%81%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3"><span class="toc-nav-number">2.5.1.</span> <span class="toc-nav-text">验证码暴力破解</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%B7%A5%E5%85%B7-1"><span class="toc-nav-number">2.5.1.1.</span> <span class="toc-nav-text">工具</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%B5%81%E7%A8%8B%E4%B9%B1%E5%BA%8F"><span class="toc-nav-number">2.6.</span> <span class="toc-nav-text">流程乱序</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C"><span class="toc-nav-number">2.6.1.</span> <span class="toc-nav-text">顺序执行</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#API%E5%AE%89%E5%85%A8"><span class="toc-nav-number">2.7.</span> <span class="toc-nav-text">API安全</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E9%87%8D%E6%94%BE%E6%94%BB%E5%87%BB"><span class="toc-nav-number">2.7.1.</span> <span class="toc-nav-text">重放攻击</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%86%85%E5%AE%B9%E7%BC%96%E8%BE%91"><span class="toc-nav-number">2.7.2.</span> <span class="toc-nav-text">内容编辑</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">总结</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98%E6%B1%87%E6%80%BB"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">实战汇总</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Refrere"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Refrere</span></a></li></ol>
+    
+  </div>
+</aside>
+
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2020/12/03/逻辑漏洞/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://www.si1ent.xyz/css/images/logo.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://www.si1ent.xyz/css/images/logo.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "si1ent";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "业务逻辑漏洞",
+        owner: "si1ent",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    </p>
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/?spm=a2c4g.11186623.J_9220772140.115.26b47b3dkZ3BnL#/Integrated/index"><p class="copyright">
+    皖ICP备19004273号-1
+  </p>
+    </a>
+</footer>
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

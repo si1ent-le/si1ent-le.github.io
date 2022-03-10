@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="si1ent">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Upload File | si1ent
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>si1ent</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Upload File</h2>
+  <p class="post-date">2021-01-22</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h4 id="上传漏洞"><a href="#上传漏洞" class="headerlink" title="上传漏洞"></a>上传漏洞</h4><p>文件上传是Web系统提供的文件上传入口，头像更换、exls上传、其他类型文件上传等(更多文字描述可参考网络详细描述.)</p>
+<p>攻击者一旦找到上传入口，可能导致系统被植入恶意程序及系统权限被盗取等风险。</p>
+<h4 id="检测类型"><a href="#检测类型" class="headerlink" title="检测类型"></a>检测类型</h4><p><img src="/images/upload-file/upload-labs.png" alt="upload-labs"></p>
+<h4 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h4><h5 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h5><p>Centos 7 armv7l、Windows 7 </p>
+<p>Apache</p>
+<p>phpstudy pro</p>
+<p>PHP Version 5.4.16、PHP Version 5.2.17</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/c0ny1/upload-labs">upload-labs</a></p>
+<p><img src="/images/upload-file/image-20210119172948063.png" alt="image-20210119172948063"></p>
+<h5 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h5><p>搭建部分省略参考网络.部分实战均参考网上姿势，并未按照每关实战。</p>
+<p>以下一定区分目标系统及对应PHP所属版本，否则将无法复现对应漏洞。</p>
+<h4 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h4><h5 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h5><h6 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h6><p>针对客户端的安全检测，存在安全隐患，攻击者一旦对用户提交及客户端其他信息可控时，导致可能上传一些恶意程序。</p>
+<h6 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h6><ul>
+<li>图片上传、修改文件后缀</li>
+<li>禁用相关检测JavaScript：Chrome 内核的浏览器在审查元素的状态下可以找到 Settings 选项，然后找到 「Debugger」 选项下面直接勾选 「Disable JavaScript」即可。</li>
+</ul>
+<h6 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h6><p>1、上传php文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php文件上传报错！提醒只能传图片</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210119202825058.png" alt="image-20210119202825058"></p>
+<p>2、截获并修改后缀上传</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如下图：php文件上传成功</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210119203305321.png" alt="image-20210119203305321"></p>
+<p>禁用JS之后进行文件上传</p>
+<p><img src="/images/upload-file/image-20210122140414231.png" alt="image-20210122140414231"></p>
+<h5 id="可解析后缀"><a href="#可解析后缀" class="headerlink" title="可解析后缀"></a>可解析后缀</h5><h6 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h6><p>后台设置黑名单，不允许上传指定后缀文件，如：<code>asp</code>、<code>aspx</code>、<code>php</code>、<code>jsp</code>等后缀。</p>
+<h6 id="绕过-1"><a href="#绕过-1" class="headerlink" title="绕过"></a>绕过</h6><p>需结合apache配置文件中<code>http.conf</code>添加多种后缀来实现对上传文件的绕过</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .php .phtml .phps .php5 .pht .php2 .php3</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210119210506106.png" alt="image-20210119210506106"></p>
+<h6 id="实战-1"><a href="#实战-1" class="headerlink" title="实战"></a>实战</h6><p>1、上传php文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">提示后缀文件不满足系统要求</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210119204757406.png" alt="image-20210119204757406"></p>
+<p>2、修改后缀</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">修改后缀为：php2</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210119205013968.png" alt="image-20210119205013968"></p>
+<p>3、URL直接方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 观察URL</span><br><span class="line">http:&#x2F;&#x2F;192.168.3.32&#x2F;upload-labs&#x2F;upload&#x2F;202101192103033733.php2</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210119210544026.png" alt="image-20210119210544026"></p>
+<h5 id="htaccess"><a href="#htaccess" class="headerlink" title=".htaccess"></a>.htaccess</h5><h6 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h6><p>.htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能。</p>
+<h6 id="绕过-2"><a href="#绕过-2" class="headerlink" title="绕过"></a>绕过</h6><p>Apache配置文件httpd.conf中<code>AllowOverride</code>的None修改为<code>All</code>即可绕过;</p>
+<p>注意：针对目录一定要在项目所在目录；配置完成后httpd重启即可。</p>
+<p><img src="/images/upload-file/image-20210121103141134.png" alt="image-20210121103141134"></p>
+<h6 id="实战-2"><a href="#实战-2" class="headerlink" title="实战"></a>实战</h6><p>1、本地新建.htaccess文件内容如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 让Apache将其他类型文件均以php格式解析</span></span><br><span class="line">SetHandler application/x-httpd-php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210121102634932.png" alt="image-20210121102634932"></p>
+<p>2、然后上传图片马</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 图片马内容如下</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">phpinfo();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210121102748916.png" alt="image-20210121102748916"></p>
+<p>3、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.3.32&#x2F;upload-labs&#x2F;upload&#x2F;test.jpg</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210121103343955.png" alt="image-20210121103343955"></p>
+<h5 id="后缀大小写"><a href="#后缀大小写" class="headerlink" title="后缀大小写"></a>后缀大小写</h5><h6 id="原理-3"><a href="#原理-3" class="headerlink" title="原理"></a>原理</h6><p>确保apache的配置文件中<code>httpd.conf</code>修改可解析指定类型或所有类型文件。</p>
+<p>源码中过滤所有可能后缀文件，但未针对大写文件过滤。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$deny_ext = <span class="keyword">array</span>(<span class="string">&quot;.php&quot;</span>,<span class="string">&quot;.php5&quot;</span>,<span class="string">&quot;.php4&quot;</span>,<span class="string">&quot;.php3&quot;</span>,<span class="string">&quot;.php2&quot;</span>,<span class="string">&quot;.html&quot;</span>,<span class="string">&quot;.htm&quot;</span>,<span class="string">&quot;.phtml&quot;</span>,<span class="string">&quot;.pht&quot;</span>,<span class="string">&quot;.pHp&quot;</span>,<span class="string">&quot;.pHp5&quot;</span>,<span class="string">&quot;.pHp4&quot;</span>,<span class="string">&quot;.pHp3&quot;</span>,<span class="string">&quot;.pHp2&quot;</span>,<span class="string">&quot;.Html&quot;</span>,<span class="string">&quot;.Htm&quot;</span>,<span class="string">&quot;.pHtml&quot;</span>,<span class="string">&quot;.jsp&quot;</span>,<span class="string">&quot;.jspa&quot;</span>,<span class="string">&quot;.jspx&quot;</span>,<span class="string">&quot;.jsw&quot;</span>,<span class="string">&quot;.jsv&quot;</span>,<span class="string">&quot;.jspf&quot;</span>,<span class="string">&quot;.jtml&quot;</span>,<span class="string">&quot;.jSp&quot;</span>,<span class="string">&quot;.jSpx&quot;</span>,<span class="string">&quot;.jSpa&quot;</span>,<span class="string">&quot;.jSw&quot;</span>,<span class="string">&quot;.jSv&quot;</span>,<span class="string">&quot;.jSpf&quot;</span>,<span class="string">&quot;.jHtml&quot;</span>,<span class="string">&quot;.asp&quot;</span>,<span class="string">&quot;.aspx&quot;</span>,<span class="string">&quot;.asa&quot;</span>,<span class="string">&quot;.asax&quot;</span>,<span class="string">&quot;.ascx&quot;</span>,<span class="string">&quot;.ashx&quot;</span>,<span class="string">&quot;.asmx&quot;</span>,<span class="string">&quot;.cer&quot;</span>,<span class="string">&quot;.aSp&quot;</span>,<span class="string">&quot;.aSpx&quot;</span>,<span class="string">&quot;.aSa&quot;</span>,<span class="string">&quot;.aSax&quot;</span>,<span class="string">&quot;.aScx&quot;</span>,<span class="string">&quot;.aShx&quot;</span>,<span class="string">&quot;.aSmx&quot;</span>,<span class="string">&quot;.cEr&quot;</span>,<span class="string">&quot;.sWf&quot;</span>,<span class="string">&quot;.swf&quot;</span>,<span class="string">&quot;.htaccess&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h6 id="绕过-3"><a href="#绕过-3" class="headerlink" title="绕过"></a>绕过</h6><p>1、确保<code>    AllowOverride All</code></p>
+<p>修改文件后缀为大写：phP</p>
+<p><img src="/images/upload-file/image-20210121141028025.png" alt="image-20210121141028025"></p>
+<h6 id="实战-3"><a href="#实战-3" class="headerlink" title="实战"></a>实战</h6><p>1、修改文件后缀</p>
+<p><img src="/images/upload-file/image-20210121141032227.png" alt="image-20210121141032227"></p>
+<p>2、文件上传</p>
+<p><img src="/images/upload-file/image-20210121141218900.png" alt="image-20210121141218900"></p>
+<p>3、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.3.32&#x2F;upload-labs&#x2F;upload&#x2F;test.phP</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210121141243455.png" alt="image-20210121141243455"></p>
+<h5 id="点后缀"><a href="#点后缀" class="headerlink" title="点后缀"></a>点后缀</h5><h6 id="原理​"><a href="#原理​" class="headerlink" title="原理​"></a>原理​</h6><p>利用Windows系统的文件名特性。文件名最后增加<strong>点</strong>，写成<code>si1ent.php.</code>，上传后保存在Windows系统上的文件名最后的一个<code>.</code>会被去掉，实际上保存的文件名就是<code>si1ent.php</code></p>
+<h6 id="绕过-4"><a href="#绕过-4" class="headerlink" title="绕过"></a>绕过</h6><p>文件名尾部添加<code>.</code>尝试绕过。</p>
+<h6 id="实战-4"><a href="#实战-4" class="headerlink" title="实战"></a>实战</h6><p>1、尝试上传php文件</p>
+<p><img src="/images/upload-file/image-20210122141303212.png" alt="image-20210122141303212"></p>
+<p>2、修改请求头信息并添加.</p>
+<p><img src="/images/upload-file/image-20210122141342964.png" alt="image-20210122141342964"></p>
+<p>3、URL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.138&#x2F;upload&#x2F;si1ent.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210122141446478.png" alt="image-20210122141446478"></p>
+<h5 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h5><h6 id="原理-4"><a href="#原理-4" class="headerlink" title="原理"></a>原理</h6><p>利用Windows系统的文件名特性。文件名最后增加<strong>空格</strong>，文件上传后，系统会自动删除文件后缀的空格。</p>
+<h6 id="绕过-5"><a href="#绕过-5" class="headerlink" title="绕过"></a>绕过</h6><p>文件后缀添加<strong>空格</strong>绕过</p>
+<h6 id="实战-5"><a href="#实战-5" class="headerlink" title="实战"></a>实战</h6><p>1、php文件上传</p>
+<p><img src="/images/upload-file/image-20210122143154683.png" alt="image-20210122143154683"></p>
+<p>2、添加空格</p>
+<p><img src="/images/upload-file/image-20210122142921289.png" alt="image-20210122142921289"></p>
+<p>3、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.138&#x2F;upload&#x2F;202101221428511486.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210122143024564.png" alt="image-20210122143024564"></p>
+<h5 id="DATA"><a href="#DATA" class="headerlink" title="::$DATA"></a>::$DATA</h5><h6 id="原理-5"><a href="#原理-5" class="headerlink" title="原理"></a>原理</h6><p>Windows文件流特性绕过，文件名改成08.php::$DATA，上传成功后保存的文件名其实是08.php</p>
+<h6 id="绕过-6"><a href="#绕过-6" class="headerlink" title="绕过"></a>绕过</h6><p>文件后缀添加<code>::$DATA</code></p>
+<h6 id="实战-6"><a href="#实战-6" class="headerlink" title="实战"></a>实战</h6><p>1、php文件上传</p>
+<p><img src="/images/upload-file/image-20210122142328718.png" alt="image-20210122142328718"></p>
+<p>2、修改后缀</p>
+<p><code>::$DATA</code></p>
+<p><img src="/images/upload-file/image-20210122142253013.png" alt="image-20210122142253013"></p>
+<p>3、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.138&#x2F;upload&#x2F;202101221419595445.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210122142358270.png" alt="image-20210122142358270"></p>
+<h5 id="MIME绕过"><a href="#MIME绕过" class="headerlink" title="MIME绕过"></a>MIME绕过</h5><h6 id="原理-6"><a href="#原理-6" class="headerlink" title="原理"></a>原理</h6><p>服务器端针对用户上传文件HTTP请求头中<code>Content-Type: image/jpeg</code>是否为图片类型，否则文件无法上传。</p>
+<h6 id="绕过-7"><a href="#绕过-7" class="headerlink" title="绕过"></a>绕过</h6><p>修改<code>Content-Type: image/jpeg</code>并修改文件后缀为<code>php</code>，重新发送数据包即可绕过。</p>
+<h6 id="实战-7"><a href="#实战-7" class="headerlink" title="实战"></a>实战</h6><p>1、修改文件后缀为jpg</p>
+<p><img src="/images/upload-file/image-20210121155042175.png" alt="image-20210121155042175"></p>
+<p>2、修改文件后缀</p>
+<p><img src="/images/upload-file/image-20210121155016541.png" alt="image-20210121155016541"></p>
+<p>3、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.3.32&#x2F;upload-labs&#x2F;upload&#x2F;test.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210121155205663.png" alt="image-20210121155205663"></p>
+<h5 id="双后缀"><a href="#双后缀" class="headerlink" title="双后缀"></a>双后缀</h5><h6 id="原理-7"><a href="#原理-7" class="headerlink" title="原理"></a>原理</h6><p>此类主要以黑名单形式来过滤并替换敏感后缀名。</p>
+<h6 id="绕过-8"><a href="#绕过-8" class="headerlink" title="绕过"></a>绕过</h6><p>修改双后缀名尝试绕过。</p>
+<h6 id="实战-8"><a href="#实战-8" class="headerlink" title="实战"></a>实战</h6><p>1、上传修改后缀名</p>
+<p><img src="/images/upload-file/image-20210121163541203.png"></p>
+<p>2、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.3.32&#x2F;upload-labs&#x2F;upload&#x2F;test.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210121163621877.png" alt="image-20210121163621877"></p>
+<h5 id="00截断"><a href="#00截断" class="headerlink" title="%00截断"></a>%00截断</h5><h6 id="原理-8"><a href="#原理-8" class="headerlink" title="原理"></a>原理</h6><p>在url中%00表示ascll码中的0 ，而ascii中0作为特殊字符保留，表示字符串结束，所以当url中出现%00时就会认为读取已结束。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.138&#x2F;Pass-12&#x2F;index.php?save_path&#x3D;..&#x2F;upload&#x2F;test2.jpg           此时输出的是test2.jpg</span><br><span class="line">加上%00</span><br><span class="line">http:&#x2F;&#x2F;192.168.5.138&#x2F;Pass-12&#x2F;index.php?save_path&#x3D;..&#x2F;upload&#x2F;test2.php%00                   此时输出的是test2.php</span><br></pre></td></tr></table></figure>
+
+<p>条件：</p>
+<p>1、PHP版本小于5.3.4</p>
+<p>2、magic_quotes_gpc设置Off</p>
+<h6 id="绕过-9"><a href="#绕过-9" class="headerlink" title="绕过"></a>绕过</h6><p>在请求头中添加对应%00尝试截断绕过，添加位置需结合实际情况添加。</p>
+<h6 id="实战-9"><a href="#实战-9" class="headerlink" title="实战"></a>实战</h6><p>1、上传jpg马</p>
+<p><img src="/images/upload-file/image-20210122104458582.png" alt="image-20210122104458582"></p>
+<p>2、添加%00后缀实现截断</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 上传后文件路径信息如下</span><br><span class="line">..&#x2F;upload&#x2F;test3.php &#x2F;5620210122104612.jpg</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210122095025999.png" alt="image-20210122095025999"></p>
+<p>3、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.138&#x2F;upload&#x2F;test2.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210122095105187.png" alt="image-20210122095105187"></p>
+<h5 id="0x00截断"><a href="#0x00截断" class="headerlink" title="0x00截断"></a>0x00截断</h5><h6 id="原理-9"><a href="#原理-9" class="headerlink" title="原理"></a>原理</h6><p>和%00相似，0x00是16进制下0，在ASCII码里代表NULL；同样表示结束符。</p>
+<h6 id="绕过-10"><a href="#绕过-10" class="headerlink" title="绕过"></a>绕过</h6><p>修改文件上传路径及修改0x00后再尝试上传。</p>
+<h6 id="实战-10"><a href="#实战-10" class="headerlink" title="实战"></a>实战</h6><p>1、尝试图片上传</p>
+<p><img src="/images/upload-file/image-20210122105925351.png" alt="image-20210122105925351"></p>
+<p>2、在路径中添加新的文件名及后缀</p>
+<p><img src="/images/upload-file/image-20210122110103621.png" alt="image-20210122110103621"></p>
+<p>3、16进制下修改2b为00</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2b&#x3D;&gt;+</span><br><span class="line">00&#x3D;&gt;0</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210122110232407.png" alt="image-20210122110232407"></p>
+<p>5、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.138&#x2F;upload&#x2F;si1ent.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210122110602714.png" alt="image-20210122110602714"></p>
+<h5 id="文件头部"><a href="#文件头部" class="headerlink" title="文件头部"></a>文件头部</h5><h6 id="原理-10"><a href="#原理-10" class="headerlink" title="原理"></a>原理</h6><p>主要检测上传文件头是否满足图片，如果满足则允许上传。</p>
+<h6 id="绕过-11"><a href="#绕过-11" class="headerlink" title="绕过"></a>绕过</h6><p>POST数据包中提交GIF89a，或者其他图片类型的文件头即可绕过。</p>
+<p>图片无法直接，需要利用文件包含漏洞来加载存在恶意代码的图片</p>
+<h6 id="实战-11"><a href="#实战-11" class="headerlink" title="实战"></a>实战</h6><p>1、直接php文件上传</p>
+<p><img src="/images/upload-file/image-20210122135346384.png" alt="image-20210122135346384"></p>
+<p>2、在文件内容中添加图片头部</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GIF89a</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210122135434987.png" alt="image-20210122135434987"></p>
+<p>3、使用包含代码读取gif文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.138&#x2F;upload&#x2F;include.php?file&#x3D;2120210122135419.gif</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210122135607630.png" alt="image-20210122135607630"></p>
+<h5 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize"></a>getimagesize</h5><h6 id="原理-11"><a href="#原理-11" class="headerlink" title="原理"></a>原理</h6><p>利用php中函数getimagesize检测文件头信息是否是图片类型。</p>
+<h6 id="绕过-12"><a href="#绕过-12" class="headerlink" title="绕过"></a>绕过</h6><p>修改文件头部，或制作图片马来尝试绕过，需集合文件包含漏洞加载图片，gif、jpg类型图片马无法解析。</p>
+<h6 id="实战-12"><a href="#实战-12" class="headerlink" title="实战"></a>实战</h6><p>1、php文件上传报错</p>
+<p><img src="/images/upload-file/image-20210122144032418.png" alt="image-20210122144032418"></p>
+<p>2、修改文件头部</p>
+<p><img src="/images/upload-file/image-20210122144007909.png" alt="image-20210122144007909"></p>
+<p>3、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.138&#x2F;upload&#x2F;include.php?file&#x3D;6620210122143835.gif</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210122143944767.png" alt="image-20210122143944767"></p>
+<h5 id="exif-imagetype"><a href="#exif-imagetype" class="headerlink" title="exif_imagetype"></a>exif_imagetype</h5><h6 id="原理-12"><a href="#原理-12" class="headerlink" title="原理"></a>原理</h6><p>这里使用Pass-16，源码中提醒打开对应扩展模块<code>php_exif</code>，这里如果开启后上传php文件还是黑屏尝试开启<code>php_mbstring</code>扩展。</p>
+<p><code>exif_imagetype</code>函数读取一个图像的<strong>第一个字节</strong>并<strong>检查其签名</strong>。如果发现了恰当的签名则返回一个对应的常量</p>
+<h6 id="绕过-13"><a href="#绕过-13" class="headerlink" title="绕过"></a>绕过</h6><p>文件头部添加GIF89a或其他图片头或制作图片马；</p>
+<p>需结合文件包含漏洞</p>
+<h6 id="实战-13"><a href="#实战-13" class="headerlink" title="实战"></a>实战</h6><p>1、php上传</p>
+<p><img src="/images/upload-file/image-20210122151705666.png" alt="image-20210122151705666"></p>
+<p>2、修改文件头</p>
+<p><img src="/images/upload-file/image-20210122151741761.png" alt="image-20210122151741761"></p>
+<p>3、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.5.138&#x2F;upload&#x2F;include.php?file&#x3D;6620210122151725.gif</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/upload-file/image-20210122151816134.png" alt="image-20210122151816134"></p>
+<h5 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h5><p>未复现成功。</p>
+<h4 id="Referer"><a href="#Referer" class="headerlink" title="Referer"></a>Referer</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;www.owasp.org.cn&#x2F;OWASP_Training&#x2F;Upload_Attack_Framework.pdf</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;c0ny1&#x2F;upload-labs</span><br><span class="line">其他参考互联网</span><br></pre></td></tr></table></figure>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#文件上传" >
+    <span class="tag-code">文件上传</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/12/09/OpenSSH%E6%BC%8F%E6%B4%9E%E6%B1%87%E6%80%BB/">
+        <span class="nav-arrow">← </span>
+        
+          OpenSSH漏洞汇总
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2021/02/02/CVE-2021-3156/">
+        
+          CVE-2021-3156
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">上传漏洞</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%A3%80%E6%B5%8B%E7%B1%BB%E5%9E%8B"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">检测类型</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">环境</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%87%86%E5%A4%87"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">准备</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%90%AD%E5%BB%BA"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">搭建</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E5%AE%9E%E6%93%8D"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">实操</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#JavaScript"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">JavaScript</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-nav-number">4.1.1.</span> <span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87"><span class="toc-nav-number">4.1.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98"><span class="toc-nav-number">4.1.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%AF%E8%A7%A3%E6%9E%90%E5%90%8E%E7%BC%80"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">可解析后缀</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86-1"><span class="toc-nav-number">4.2.1.</span> <span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87-1"><span class="toc-nav-number">4.2.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98-1"><span class="toc-nav-number">4.2.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#htaccess"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">.htaccess</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86-2"><span class="toc-nav-number">4.3.1.</span> <span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87-2"><span class="toc-nav-number">4.3.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98-2"><span class="toc-nav-number">4.3.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%90%8E%E7%BC%80%E5%A4%A7%E5%B0%8F%E5%86%99"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">后缀大小写</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86-3"><span class="toc-nav-number">4.4.1.</span> <span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87-3"><span class="toc-nav-number">4.4.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98-3"><span class="toc-nav-number">4.4.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%82%B9%E5%90%8E%E7%BC%80"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">点后缀</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86%E2%80%8B"><span class="toc-nav-number">4.5.1.</span> <span class="toc-nav-text">原理​</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87-4"><span class="toc-nav-number">4.5.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98-4"><span class="toc-nav-number">4.5.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%A9%BA%E6%A0%BC"><span class="toc-nav-number">4.6.</span> <span class="toc-nav-text">空格</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86-4"><span class="toc-nav-number">4.6.1.</span> <span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87-5"><span class="toc-nav-number">4.6.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98-5"><span class="toc-nav-number">4.6.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#DATA"><span class="toc-nav-number">4.7.</span> <span class="toc-nav-text">::$DATA</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86-5"><span class="toc-nav-number">4.7.1.</span> <span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87-6"><span class="toc-nav-number">4.7.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98-6"><span class="toc-nav-number">4.7.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#MIME%E7%BB%95%E8%BF%87"><span class="toc-nav-number">4.8.</span> <span class="toc-nav-text">MIME绕过</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86-6"><span class="toc-nav-number">4.8.1.</span> <span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87-7"><span class="toc-nav-number">4.8.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98-7"><span class="toc-nav-number">4.8.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%8C%E5%90%8E%E7%BC%80"><span class="toc-nav-number">4.9.</span> <span class="toc-nav-text">双后缀</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86-7"><span class="toc-nav-number">4.9.1.</span> <span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87-8"><span class="toc-nav-number">4.9.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98-8"><span class="toc-nav-number">4.9.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#00%E6%88%AA%E6%96%AD"><span class="toc-nav-number">4.10.</span> <span class="toc-nav-text">%00截断</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86-8"><span class="toc-nav-number">4.10.1.</span> <span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87-9"><span class="toc-nav-number">4.10.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98-9"><span class="toc-nav-number">4.10.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#0x00%E6%88%AA%E6%96%AD"><span class="toc-nav-number">4.11.</span> <span class="toc-nav-text">0x00截断</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86-9"><span class="toc-nav-number">4.11.1.</span> <span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87-10"><span class="toc-nav-number">4.11.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98-10"><span class="toc-nav-number">4.11.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B4%E9%83%A8"><span class="toc-nav-number">4.12.</span> <span class="toc-nav-text">文件头部</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86-10"><span class="toc-nav-number">4.12.1.</span> <span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87-11"><span class="toc-nav-number">4.12.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98-11"><span class="toc-nav-number">4.12.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#getimagesize"><span class="toc-nav-number">4.13.</span> <span class="toc-nav-text">getimagesize</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86-11"><span class="toc-nav-number">4.13.1.</span> <span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87-12"><span class="toc-nav-number">4.13.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98-12"><span class="toc-nav-number">4.13.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#exif-imagetype"><span class="toc-nav-number">4.14.</span> <span class="toc-nav-text">exif_imagetype</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%8E%9F%E7%90%86-12"><span class="toc-nav-number">4.14.1.</span> <span class="toc-nav-text">原理</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BB%95%E8%BF%87-13"><span class="toc-nav-number">4.14.2.</span> <span class="toc-nav-text">绕过</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AE%9E%E6%88%98-13"><span class="toc-nav-number">4.14.3.</span> <span class="toc-nav-text">实战</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89"><span class="toc-nav-number">4.15.</span> <span class="toc-nav-text">条件竞争</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Referer"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Referer</span></a></li></ol>
+    
+  </div>
+</aside>
+
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2021/01/22/upload-file/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://www.si1ent.xyz/css/images/logo.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://www.si1ent.xyz/css/images/logo.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "si1ent";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Upload File",
+        owner: "si1ent",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    </p>
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/?spm=a2c4g.11186623.J_9220772140.115.26b47b3dkZ3BnL#/Integrated/index"><p class="copyright">
+    皖ICP备19004273号-1
+  </p>
+    </a>
+</footer>
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

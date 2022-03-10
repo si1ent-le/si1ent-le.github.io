@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="si1ent">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      PHP变量覆盖漏洞学习 | si1ent
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>si1ent</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>PHP变量覆盖漏洞学习</h2>
+  <p class="post-date">2020-10-31</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h4 id="漏洞概述"><a href="#漏洞概述" class="headerlink" title="漏洞概述"></a>漏洞概述</h4><p>变量覆盖即通过外部输入将某个变量的值给覆盖掉。</p>
+<p>通常将可以用自定义的参数值替换原有变量值的情况称为变量覆盖漏洞。</p>
+<h4 id="漏洞函数"><a href="#漏洞函数" class="headerlink" title="漏洞函数"></a>漏洞函数</h4><p><code>register_globals</code></p>
+<p><code>extract</code></p>
+<p><code> parse_str</code></p>
+<p><code>mb_parse_str</code></p>
+<p><code>import_request_variables</code></p>
+<p><code>$$</code></p>
+<h4 id="漏洞环境"><a href="#漏洞环境" class="headerlink" title="漏洞环境"></a>漏洞环境</h4><h5 id="介绍"><a href="#介绍" class="headerlink" title="$$ 介绍"></a>$$ 介绍</h5><p>$$这种写法称为<code>可变变量</code></p>
+<h6 id="与-区别"><a href="#与-区别" class="headerlink" title="$与$\$区别"></a><code>$与$\$区别</code></h6><p><code>$var</code>      #一个正常的变量，名称为：var，可以存储任何类型值：string、int、bool等。</p>
+<p><code>$$var</code>    #一个引用变量，用于存储$var的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(&quot;Content-type:text&#x2F;html;charset&#x3D;utf-8&quot;);</span><br><span class="line">$a &#x3D; &quot;abc&quot;;</span><br><span class="line">$$a &#x3D; 369;</span><br><span class="line">echo $a.&quot;&lt;br&#x2F;&gt;&quot;;	#输出abc</span><br><span class="line">echo $$a.&quot;&lt;br&#x2F;&gt;&quot;;	#输出369</span><br><span class="line">echo $abc;				#输出369</span><br><span class="line"></span><br><span class="line">phpinfo();</span><br><span class="line">?&gt;</span><br><span class="line">如下所示</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201021200033539.png" alt="image-20201021200033539"></p>
+<p><code>$$</code>导致的变量覆盖问题在CTF代码审计题目中经常在<code>foreach</code>中出现，使用<code>foreach</code>来遍历数组中的值，然后再将获取到的数组键名作为变量，数组中的键值作为变量的值。因此就产生了变量覆盖漏洞。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">foreach (array(&#39;_COOKIE&#39;,&#39;_POST&#39;,&#39;_GET&#39;) as $_request)</span><br><span class="line">&#123;s</span><br><span class="line">    foreach ($$_request as $_key&#x3D;&gt;$_value)  </span><br><span class="line">    &#123;</span><br><span class="line">        $$_key&#x3D;  $_value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$id &#x3D; isset($id) ? $id : &quot;test&quot;;</span><br><span class="line">if($id &#x3D;&#x3D;&#x3D; &quot;si1ent&quot;) &#123;</span><br><span class="line">    echo &quot;flag&#123;have_fun-ctf~&#125;&quot;;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	echo &quot;Nothing...&quot;;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;dvwa.me:8888&#x2F;var_ctf.php?id&#x3D;1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201021200537872.png" alt="image-20201021200537872"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;dvwa.me:8888&#x2F;var_ctf.php?id&#x3D;si1ent</span><br><span class="line">GET、POST或COOKIE请求方式均可，传入id&#x3D;si1ent后，在foreach语句中，$_key为id，$_value为si1ent，进而$$_key为$id，从而实现了变量覆盖获得flag值。</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201021200559430.png" alt="image-20201021200559430"></p>
+<h5 id="import-request-variables"><a href="#import-request-variables" class="headerlink" title="import_request_variables"></a>import_request_variables</h5><p>支持版本：PHP 4 &gt;= 4.1.0 PHP 5 &lt; 5.4.0</p>
+<p>import_request_variables()函数将GET、POST、Cookies中的变量导入到全局。</p>
+<h6 id="PHP-Version-5-3-29"><a href="#PHP-Version-5-3-29" class="headerlink" title="PHP Version 5.3.29"></a>PHP Version 5.3.29</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$auth &#x3D; &#39;0&#39;;</span><br><span class="line">import_request_variables(&#39;P&#39;);</span><br><span class="line"></span><br><span class="line">if ($auth &#x3D;&#x3D;&#x3D; &#39;0&#39;) &#123;</span><br><span class="line">	echo &quot;private&quot;; #私有</span><br><span class="line">&#125;else&#123;</span><br><span class="line">	echo &quot;public&quot;;  #全局</span><br><span class="line">&#125;</span><br><span class="line">phpinfo();</span><br><span class="line">?&gt;</span><br><span class="line">执行结果如下</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201031141343648.png" alt="image-20201031141343648"></p>
+<p>POST提交</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http://dvwa.me:8888/import_request_test.php</span><br><span class="line">POST提交</span><br><span class="line">auth=123</span><br><span class="line">如下存在变量覆盖</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201031142415111.png" alt="image-20201031142415111"></p>
+<h6 id="PHP-Version-5-6-40"><a href="#PHP-Version-5-6-40" class="headerlink" title="PHP Version 5.6.40"></a>PHP Version 5.6.40</h6><p>访问后直接报错无法解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;dvwa.me:8888&#x2F;import_request_test.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201031143301288.png" alt="image-20201031143301288"></p>
+<h5 id="parse-str"><a href="#parse-str" class="headerlink" title="parse_str"></a>parse_str</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">parse_str() 函数用于把查询字符串解析到变量中，如果没有array参数，则由该函数设置的变量将覆盖已存在的同名变量。</span><br><span class="line">PHP官方建议：极度不建议 在没有 result 参数的情况下使用此函数，并且在 PHP 7.2 中将废弃不设置参数的行为。</span><br></pre></td></tr></table></figure>
+
+<h6 id="函数介绍"><a href="#函数介绍" class="headerlink" title="函数介绍"></a>函数介绍</h6><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(PHP <span class="number">4</span>, PHP <span class="number">5</span>, PHP <span class="number">7</span>)</span><br><span class="line">parse_str — 将字符串解析成多个变量</span><br><span class="line">parse_str ( <span class="keyword">string</span> $encoded_string [, <span class="keyword">array</span> &amp;$result ] ) : <span class="keyword">void</span></span><br><span class="line"></span><br><span class="line">如果 encoded_string 是 URL 传递入的查询字符串（query <span class="keyword">string</span>），则将它解析为变量并设置到当前作用域（如果提供了 result 则会设置到该数组里 ）。</span><br><span class="line">encoded_string		<span class="comment"># 输入的字符串。</span></span><br><span class="line">result 						<span class="comment"># 如果设置了第二个变量 result， 变量将会以数组元素的形式存入到这个数组，作为替代。</span></span><br></pre></td></tr></table></figure>
+
+<p>演示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">&#x2F;*</span><br><span class="line">$auth &#x3D; &#39;test&#39;;</span><br><span class="line">import_request_variables(&#39;P&#39;);</span><br><span class="line"></span><br><span class="line">if ($auth &#x3D;&#x3D;&#x3D; &#39;0&#39;) &#123;</span><br><span class="line">	echo &quot;private&quot;; #私有</span><br><span class="line">&#125;else&#123;</span><br><span class="line">	echo &quot;public&quot;;  #全局</span><br><span class="line">&#125;</span><br><span class="line">*&#x2F;</span><br><span class="line">$b &#x3D; 0;</span><br><span class="line">parse_str(&#39;b&#x3D;2&#39;);</span><br><span class="line">print_r($b);	# 此时$b变量值已经修改了</span><br><span class="line"></span><br><span class="line">phpinfo();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201031155535112.png" alt="image-20201031155535112"></p>
+<h6 id="CTF试题"><a href="#CTF试题" class="headerlink" title="CTF试题"></a>CTF试题</h6><p>以下CTF试题参考网上；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">$flag &#x3D; &#39;flag&#123;V4ri4ble_M4y_Be_C0verEd&#125;&#39;;</span><br><span class="line">if (empty($_GET[&#39;b&#39;])) &#123;</span><br><span class="line">    show_source(__FILE__);</span><br><span class="line">    die();</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    $a &#x3D; &quot;www.sqlsec.com&quot;;</span><br><span class="line">    $b &#x3D; $_GET[&#39;b&#39;];</span><br><span class="line">    @parse_str($b);</span><br><span class="line">    if ($a[0] !&#x3D; &#39;QNKCDZO&#39; &amp;&amp; md5($a[0]) &#x3D;&#x3D; md5(&#39;QNKCDZO&#39;)) &#123;</span><br><span class="line">        echo $flag;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        exit(&#39;your answer is wrong~&#39;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@parse_str($b);</span><br><span class="line">这里使用了parse_str函数来传递b的变量值</span><br><span class="line">if ($a[0] !&#x3D; &#39;QNKCDZO&#39; &amp;&amp; md5($a[0]) &#x3D;&#x3D; md5(&#39;QNKCDZO&#39;))</span><br><span class="line">利用PHP针对hash值比较，产生的安全隐患；密码经过hash后，值将都是以0E开头；那么PHP会认为它们的值都是0.</span><br></pre></td></tr></table></figure>
+
+<p>因为这里用到了<code>parse_str</code>函数来传递<code>b</code>，if语句的条件是拿<code>$a[0]</code>来比较的，因为这里的变量a的值已经是固定的了。<br>整体代码乍看起来又不可能，但是利用变量覆盖函数的缺陷这里可以对<code>a</code>的变量进行重新赋值，后面的的if语句再利用本文前面提到的<code>md5()</code>比较缺陷进行绕过：</p>
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201031160328223.png" alt="image-20201031160328223"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;dvwa.me:8888&#x2F;import_request_test.php?b&#x3D;a[0]&#x3D;a</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201031160405044.png" alt="image-20201031160405044"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;dvwa.me:8888&#x2F;import_request_test.php?b&#x3D;a[0]&#x3D;240610708</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201031160454609.png" alt="image-20201031160454609"></p>
+<h5 id="mb-parse-str"><a href="#mb-parse-str" class="headerlink" title="mb_parse_str"></a>mb_parse_str</h5><h6 id="函数介绍-1"><a href="#函数介绍-1" class="headerlink" title="函数介绍"></a>函数介绍</h6><p>(PHP 4 &gt;= 4.0.6, PHP 5, PHP 7)</p>
+<p>mb_parse_str — 解析 GET/POST/COOKIE 数据并设置全局变量。</p>
+<p>和<code>parse_str</code>函数基本一致</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mb_parse_str ( string $encoded_string [, array &amp;$result ] ) : bool</span><br><span class="line">encoded_string			# URL 编码过的数据。</span><br><span class="line">result							# 一个 array，包含解码过的、编码转换后的值。</span><br></pre></td></tr></table></figure>
+
+<p>解析 GET/POST/COOKIE 数据并设置全局变量。 由于 PHP 不提供原始 POST/COOKIE 数据，目前它仅能够用于 GET 数据。 它解析了 URL 编码过的数据，检测其编码，并转换编码为内部编码，然后设置其值为 array 的 <code>result</code> 或者全局变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$b &#x3D; &#39;0&#39;;</span><br><span class="line">mb_parse_str(&#39;b&#x3D;123123&#39;);</span><br><span class="line">print_r($b);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201031165954876.png" alt="image-20201031165954876"></p>
+<h5 id="extract"><a href="#extract" class="headerlink" title="extract"></a>extract</h5><h6 id="函数介绍-2"><a href="#函数介绍-2" class="headerlink" title="函数介绍"></a>函数介绍</h6><p>(PHP 4, PHP 5, PHP 7)</p>
+<p>extract — 从数组中将变量导入到当前的符号表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">extract ( array &amp;$array [, int $flags &#x3D; EXTR_OVERWRITE [, string $prefix &#x3D; NULL ]] ) : int</span><br><span class="line">array</span><br><span class="line">一个关联数组。此函数会将键名当作变量名，值作为变量的值。 对每个键／值对都会在当前的符号表中建立变量，并受到 flags 和 prefix 参数的影响。</span><br><span class="line">flags</span><br><span class="line">对待非法／数字和冲突的键名的方法将根据取出标记 flags 参数决定。可以是以下值之一：</span><br><span class="line">EXTR_OVERWRITE</span><br><span class="line">如果有冲突，覆盖已有的变量。</span><br><span class="line">EXTR_SKIP</span><br><span class="line">如果有冲突，不覆盖已有的变量。(常采用的防御方式)</span><br></pre></td></tr></table></figure>
+
+<p>本函数用来将变量从数组中导入到当前的符号表中。</p>
+<p>检查每个键名看是否可以作为一个合法的变量名，同时也检查和符号表中已有的变量名的冲突。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$b &#x3D; &#39;1&#39;;</span><br><span class="line">extract($_GET);</span><br><span class="line">if ($b &#x3D;&#x3D; 2)&#123;</span><br><span class="line">    echo &quot;123&quot;;		# 当参数值给a&#x3D;2时会输出&quot;123&quot;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    echo &quot;321&quot;;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201031170729698.png" alt="image-20201031170729698"></p>
+<h5 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h5><h6 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h6><p><code>php.ini</code>中有一项为<code>register_globals</code>，即注册全局变量，当<code>register_globals=On</code>时，传递过来的值会被直接的注册为全局变量直接使用，而<code>register_globals=Off</code>时，我们需要到特定的数组里去得到它。</p>
+<p><strong>注意：register_globals已自 PHP 5.3.0 起废弃并将自 PHP 5.4.0 起移除。</strong></p>
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201031171309810.png" alt="image-20201031171309810"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo &quot;Register_globals: &quot; . (int)ini_get(&quot;register_globals&quot;) . &quot;&lt;br&#x2F;&gt;&quot;;</span><br><span class="line">if ($a) &#123;</span><br><span class="line">  echo &quot;si1ent!&quot;;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:&#x2F;&#x2F;dvwa.me:8888&#x2F;import_request_test.php?a&#x3D;123</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201031173147773.png" alt="image-20201031173147773"></p>
+<p>全局变量关闭</p>
+<p>在访问时将不会输出任何值</p>
+<p><img src="/images/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/image-20201031173259646.png" alt="image-20201031173259646"></p>
+<h4 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h4><p>1、以上产生漏洞PHP 7版本部分已经修复</p>
+<p>2、部分修复方式可参考<code>php.net</code>官方修复</p>
+<p>3、参考网络检索</p>
+<h4 id="Referer"><a href="#Referer" class="headerlink" title="Referer"></a>Referer</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;blog.51cto.com&#x2F;12332766&#x2F;2121012</span><br><span class="line">https:&#x2F;&#x2F;www.mi1k7ea.com&#x2F;2019&#x2F;06&#x2F;20&#x2F;PHP%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E&#x2F;#0x02-register-globals%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96</span><br><span class="line">PHP Hash比较Bug</span><br><span class="line">http:&#x2F;&#x2F;www.freebuf.com&#x2F;news&#x2F;67007.html</span><br></pre></td></tr></table></figure>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#变量覆盖" >
+    <span class="tag-code">变量覆盖</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/10/22/Sysmon%E5%AD%A6%E4%B9%A0/">
+        <span class="nav-arrow">← </span>
+        
+          Sysmon学习
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/11/07/VIM%E5%BF%85%E7%9F%A5%E5%90%8D%E8%AF%8D/">
+        
+          Vim必知名词
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%A6%82%E8%BF%B0"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">漏洞概述</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%87%BD%E6%95%B0"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">漏洞函数</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E7%8E%AF%E5%A2%83"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">漏洞环境</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">$$ 介绍</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E4%B8%8E-%E5%8C%BA%E5%88%AB"><span class="toc-nav-number">3.1.1.</span> <span class="toc-nav-text">$与$\$区别</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#import-request-variables"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">import_request_variables</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#PHP-Version-5-3-29"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">PHP Version 5.3.29</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#PHP-Version-5-6-40"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">PHP Version 5.6.40</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#parse-str"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">parse_str</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D"><span class="toc-nav-number">3.3.1.</span> <span class="toc-nav-text">函数介绍</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#CTF%E8%AF%95%E9%A2%98"><span class="toc-nav-number">3.3.2.</span> <span class="toc-nav-text">CTF试题</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#mb-parse-str"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">mb_parse_str</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D-1"><span class="toc-nav-number">3.4.1.</span> <span class="toc-nav-text">函数介绍</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#extract"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">extract</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D-2"><span class="toc-nav-number">3.5.1.</span> <span class="toc-nav-text">函数介绍</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-nav-number">3.6.</span> <span class="toc-nav-text">全局变量</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#%E4%BB%8B%E7%BB%8D-1"><span class="toc-nav-number">3.6.1.</span> <span class="toc-nav-text">介绍</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">漏洞修复</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Referer"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Referer</span></a></li></ol>
+    
+  </div>
+</aside>
+
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2020/10/31/PHP变量覆盖漏洞/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://www.si1ent.xyz/css/images/logo.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://www.si1ent.xyz/css/images/logo.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "si1ent";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "PHP变量覆盖漏洞学习",
+        owner: "si1ent",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    </p>
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/?spm=a2c4g.11186623.J_9220772140.115.26b47b3dkZ3BnL#/Integrated/index"><p class="copyright">
+    皖ICP备19004273号-1
+  </p>
+    </a>
+</footer>
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

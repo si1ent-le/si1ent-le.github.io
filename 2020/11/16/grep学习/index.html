@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="si1ent">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      grep学习 | si1ent
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+    
+<script src="/js/gitment.js"></script>
+
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>si1ent</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>grep学习</h2>
+  <p class="post-date">2020-11-16</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h4 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h4><p><strong>grep</strong>（global search regular expression(RE) and print out the line，全面搜索正则表达式并把行打印出来）是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。</p>
+<h4 id="option"><a href="#option" class="headerlink" title="option"></a>option</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">-a 不要忽略二进制数据。</span><br><span class="line">-A&lt;显示列数&gt; 除了显示符合范本样式的那一行之外，并显示该行之后的内容。</span><br><span class="line">-b 在显示符合范本样式的那一行之外，并显示该行之前的内容。</span><br><span class="line">-c 计算符合范本样式的列数。</span><br><span class="line">-C&lt;显示列数&gt;或-&lt;显示列数&gt;  除了显示符合范本样式的那一列之外，并显示该列之前后的内容。</span><br><span class="line">-d&lt;进行动作&gt; 当指定要查找的是目录而非文件时，必须使用这项参数，否则grep命令将回报信息并停止动作。</span><br><span class="line">-e&lt;范本样式&gt; 指定字符串作为查找文件内容的范本样式。</span><br><span class="line">-E 将范本样式为延伸的普通表示法来使用，意味着使用能使用扩展正则表达式。</span><br><span class="line">-f&lt;范本文件&gt; 指定范本文件，其内容有一个或多个范本样式，让grep查找符合范本条件的文件内容，格式为每一列的范本样式。</span><br><span class="line">-F 将范本样式视为固定字符串的列表。</span><br><span class="line">-G 将范本样式视为普通的表示法来使用。</span><br><span class="line">-h 在显示符合范本样式的那一列之前，不标示该列所属的文件名称。</span><br><span class="line">-H 在显示符合范本样式的那一列之前，标示该列的文件名称。</span><br><span class="line">-i 忽略字符大小写的差别。</span><br><span class="line">-l 列出文件内容符合指定的范本样式的文件名称。</span><br><span class="line">-L 列出文件内容不符合指定的范本样式的文件名称。</span><br><span class="line">-n 在显示符合范本样式的那一列之前，标示出该列的编号。</span><br><span class="line">-q 不显示任何信息。</span><br><span class="line">-R/-r 此参数的效果和指定“-d recurse”参数相同。</span><br><span class="line">-s 不显示错误信息。</span><br><span class="line">-v 反转查找。</span><br><span class="line">-w 只显示全字符合的列。</span><br><span class="line">-x 只显示全列符合的列。</span><br><span class="line">-y 此参数效果跟“-i”相同。</span><br><span class="line">-o 只输出文件中匹配到的部分。</span><br></pre></td></tr></table></figure>
+
+<h4 id="规则表达式"><a href="#规则表达式" class="headerlink" title="规则表达式"></a>规则表达式</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">^    # 锚定行的开始 如：&#x27;^grep&#x27;匹配所有以grep开头的行。    </span><br><span class="line"><span class="meta">$</span><span class="bash">    <span class="comment"># 锚定行的结束 如：&#x27;grep$&#x27; 匹配所有以grep结尾的行。</span></span></span><br><span class="line">.    # 匹配一个非换行符的字符 如：&#x27;gr.p&#x27;匹配gr后接一个任意字符，然后是p。    </span><br><span class="line">*    # 匹配零个或多个先前字符 如：&#x27;*grep&#x27;匹配所有一个或多个空格后紧跟grep的行。    </span><br><span class="line">.*   # 一起用代表任意字符。   </span><br><span class="line">[]   # 匹配一个指定范围内的字符，如&#x27;[Gg]rep&#x27;匹配Grep和grep。    </span><br><span class="line">[^]  # 匹配一个不在指定范围内的字符，如：&#x27;[^A-FH-Z]rep&#x27;匹配不包含A-R和T-Z的一个字母开头，紧跟rep的行。    </span><br><span class="line">\(..\)  # 标记匹配字符，如&#x27;\(love\)&#x27;，love被标记为1。    </span><br><span class="line">\&lt;      # 锚定单词的开始，如:&#x27;\&lt;grep&#x27;匹配包含以grep开头的单词的行。    </span><br><span class="line">\&gt;      # 锚定单词的结束，如&#x27;grep\&gt;&#x27;匹配包含以grep结尾的单词的行。    </span><br><span class="line">x\&#123;m\&#125;  # 重复字符x，m次，如：&#x27;0\&#123;5\&#125;&#x27;匹配包含5个o的行。    </span><br><span class="line">x\&#123;m,\&#125;   # 重复字符x,至少m次，如：&#x27;o\&#123;5,\&#125;&#x27;匹配至少有5个o的行。    </span><br><span class="line">x\&#123;m,n\&#125;  # 重复字符x，至少m次，不多于n次，如：&#x27;o\&#123;5,10\&#125;&#x27;匹配5--10个o的行。   </span><br><span class="line">\w    # 匹配文字和数字字符，也就是[A-Za-z0-9]，如：&#x27;G\w*p&#x27;匹配以G后跟零个或多个文字或数字字符，然后是p。   </span><br><span class="line">\W    # \w的反置形式，匹配一个或多个非单词字符，如点号句号等。   </span><br><span class="line">\b    # 单词锁定符，如: &#x27;\bgrep\b&#x27;只匹配grep.</span><br></pre></td></tr></table></figure>
+
+<h4 id="grep常用"><a href="#grep常用" class="headerlink" title="grep常用"></a>grep常用</h4><h5 id="单文件中搜索单词"><a href="#单文件中搜索单词" class="headerlink" title="单文件中搜索单词"></a>单文件中搜索单词</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  weibo git:(layout-style) grep &quot;false&quot; server.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/grep/image-20201106210144942.png" alt="image-20201106210144942"></p>
+<h5 id="多文件中搜索单词"><a href="#多文件中搜索单词" class="headerlink" title="多文件中搜索单词"></a>多文件中搜索单词</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  weibo git:(layout-style) grep &quot;false&quot; server.php composer.json composer.lock</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/grep/image-20201106210248522.png" alt="image-20201106210248522"></p>
+<h5 id="输出包含字符外"><a href="#输出包含字符外" class="headerlink" title="输出包含字符外"></a>输出包含字符外</h5><p><code>-v</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grep -v &quot;strings&quot; file_name</span><br><span class="line">➜  Mysql_data git:(master) ✗ grep -v &quot;from&quot; mysql_data.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/grep/image-20201116090648762.png" alt="image-20201116090648762"></p>
+<h5 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h5><p><code>-E</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  weibo git:(layout-style) grep -E &quot;test&quot; composer.json</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/grep/image-20201107102323927.png" alt="image-20201107102323927"></p>
+<h5 id="只输出文件匹配到字符串"><a href="#只输出文件匹配到字符串" class="headerlink" title="只输出文件匹配到字符串"></a>只输出文件匹配到字符串</h5><p><code>-o</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  weibo git:(layout-style) grep -o &quot;test&quot; composer.json</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/grep/image-20201107102617329.png" alt="image-20201107102617329"></p>
+<h5 id="输出指定行号"><a href="#输出指定行号" class="headerlink" title="输出指定行号"></a>输出指定行号</h5><p><code>-n</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  Mysql_data git:(master) ✗ grep -n &quot;from&quot; mysql_data.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/grep/image-20201116090226143.png" alt="image-20201116090226143"></p>
+<h5 id="忽略大小写"><a href="#忽略大小写" class="headerlink" title="忽略大小写"></a>忽略大小写</h5><p><code>-i</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  Mysql_data git:(master) ✗ grep -n -i &quot;from&quot; mysql_data.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/grep/image-20201116090400585.png" alt="image-20201116090400585"></p>
+<h5 id="统计出现次数"><a href="#统计出现次数" class="headerlink" title="统计出现次数"></a>统计出现次数</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  Mysql_data git:(master) ✗ grep -n -i -c &quot;from&quot; mysql_data.py</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/grep/image-20201116090519109.png" alt="image-20201116090519109"></p>
+<h5 id="递归搜索"><a href="#递归搜索" class="headerlink" title="递归搜索"></a>递归搜索</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 当前目录进行</span></span><br><span class="line">➜  Mysql_data git:(master) ✗ grep &quot;sql&quot; . -r -n</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/grep/image-20201116093619173.png" alt="image-20201116093619173"></p>
+<p>其他参数进行网络检索。</p>
+<h4 id="Referer"><a href="#Referer" class="headerlink" title="Referer"></a>Referer</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;wangchujiang.com&#x2F;linux-command&#x2F;c&#x2F;grep.html</span><br></pre></td></tr></table></figure>
+
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#学习记录" >
+    <span class="tag-code">学习记录</span>
+  </a>
+
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/11/07/VIM/">
+        <span class="nav-arrow">← </span>
+        
+          Vim学习记录
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/11/27/CVE-2020-14882/">
+        
+          CVE-2020-14882
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#grep"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">grep</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#option"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">option</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#%E8%A7%84%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">规则表达式</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#grep%E5%B8%B8%E7%94%A8"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">grep常用</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8D%95%E6%96%87%E4%BB%B6%E4%B8%AD%E6%90%9C%E7%B4%A2%E5%8D%95%E8%AF%8D"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">单文件中搜索单词</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%A4%9A%E6%96%87%E4%BB%B6%E4%B8%AD%E6%90%9C%E7%B4%A2%E5%8D%95%E8%AF%8D"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">多文件中搜索单词</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E8%BE%93%E5%87%BA%E5%8C%85%E5%90%AB%E5%AD%97%E7%AC%A6%E5%A4%96"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">输出包含字符外</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">正则匹配</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%8F%AA%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%E5%8C%B9%E9%85%8D%E5%88%B0%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-nav-number">4.5.</span> <span class="toc-nav-text">只输出文件匹配到字符串</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E8%BE%93%E5%87%BA%E6%8C%87%E5%AE%9A%E8%A1%8C%E5%8F%B7"><span class="toc-nav-number">4.6.</span> <span class="toc-nav-text">输出指定行号</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E5%BF%BD%E7%95%A5%E5%A4%A7%E5%B0%8F%E5%86%99"><span class="toc-nav-number">4.7.</span> <span class="toc-nav-text">忽略大小写</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E7%BB%9F%E8%AE%A1%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0"><span class="toc-nav-number">4.8.</span> <span class="toc-nav-text">统计出现次数</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#%E9%80%92%E5%BD%92%E6%90%9C%E7%B4%A2"><span class="toc-nav-number">4.9.</span> <span class="toc-nav-text">递归搜索</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Referer"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Referer</span></a></li></ol>
+    
+  </div>
+</aside>
+
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2020/11/16/grep学习/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://www.si1ent.xyz/css/images/logo.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://www.si1ent.xyz/css/images/logo.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "si1ent";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "grep学习",
+        owner: "si1ent",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2022 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    </p>
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/?spm=a2c4g.11186623.J_9220772140.115.26b47b3dkZ3BnL#/Integrated/index"><p class="copyright">
+    皖ICP备19004273号-1
+  </p>
+    </a>
+</footer>
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>
